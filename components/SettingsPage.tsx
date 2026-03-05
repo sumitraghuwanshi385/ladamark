@@ -42,20 +42,29 @@ const CrossIcon = ({ className = "w-4 h-4" }) => (
 interface SettingsPageProps {
   theme: 'light' | 'dark';
   setTheme: (theme: 'light' | 'dark') => void;
+
   onClearCache: () => void;
   onLogout: () => void;
+
   labeledItems: LabeledItem[];
+
   currency: string;
   setCurrency: (c: string) => void;
+
   onOpenInfoModal: (view: InfoModalView) => (e: React.MouseEvent) => void;
+
   profile: UserProfile;
   setProfile: (p: UserProfile) => void;
+
   addToast: (message: string, type?: 'success' | 'error') => void;
   setView: (view: View) => void;
+
   aiSpeedMode: AISpeedMode;
   setAiSpeedMode: (mode: AISpeedMode) => void;
+
   showConfidenceScore: boolean;
   setShowConfidenceScore: (show: boolean) => void;
+
   plan: Plan;
   quota: {
     daily: { used: number; limit: number };
@@ -71,6 +80,7 @@ const currencies = [
   { code: 'INR', name: 'Indian Rupee' }, { code: 'BRL', name: 'Brazilian Real' },
 ];
 
+// --- SUB-COMPONENTS ---
 const Card: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => (
   <div className={`bg-[var(--background-secondary)] border border-[var(--border-primary)] rounded-2xl p-6 ${className}`}>
     {children}
@@ -109,11 +119,14 @@ const SettingRow: React.FC<{ icon: React.ReactNode; title: string; description: 
   </div>
 );
 
+// ---------------- PROFILE CARD (draft only) ----------------
 const ProfileCard: React.FC<{
   draftName: string;
   setDraftName: (s: string) => void;
+
   draftPicPreview: string;
   setDraftPicPreview: (s: string) => void;
+
   setAvatarFile: (f: File | null) => void;
 }> = ({ draftName, setDraftName, draftPicPreview, setDraftPicPreview, setAvatarFile }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -121,8 +134,10 @@ const ProfileCard: React.FC<{
   const handlePicChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
     setAvatarFile(file);
-    setDraftPicPreview(URL.createObjectURL(file));
+    const preview = URL.createObjectURL(file);
+    setDraftPicPreview(preview);
   };
 
   const textInputClass =
@@ -159,7 +174,7 @@ const ProfileCard: React.FC<{
       </div>
 
       <p className="mt-4 text-xs text-[var(--text-muted)]">
-        Rename tab apply hoga jab aap upar <strong>Save Changes</strong> click karoge.
+        Changes will be saved when you click <strong>Save Changes</strong> at the bottom.
       </p>
     </Card>
   );
@@ -186,12 +201,16 @@ const SecurityCard: React.FC<{ setView: (view: View) => void }> = ({ setView }) 
 const GeneralSettingsCard: React.FC<{
   draftTheme: 'light' | 'dark';
   setDraftTheme: (t: 'light' | 'dark') => void;
+
   draftCurrency: string;
   setDraftCurrency: (c: string) => void;
+
   draftAiSpeedMode: AISpeedMode;
   setDraftAiSpeedMode: (m: AISpeedMode) => void;
+
   draftShowConfidenceScore: boolean;
   setDraftShowConfidenceScore: (b: boolean) => void;
+
   plan: Plan;
 }> = ({
   draftTheme, setDraftTheme,
@@ -204,7 +223,9 @@ const GeneralSettingsCard: React.FC<{
   const isPro = plan === 'pro';
 
   useEffect(() => {
-    if (!isPro && draftAiSpeedMode === 'fast') setDraftAiSpeedMode('normal');
+    if (!isPro && draftAiSpeedMode === 'fast') {
+      setDraftAiSpeedMode('normal');
+    }
   }, [isPro, draftAiSpeedMode, setDraftAiSpeedMode]);
 
   const handleSpeedModeChange = (mode: AISpeedMode) => {
@@ -232,13 +253,21 @@ const GeneralSettingsCard: React.FC<{
         <SettingRow icon={<SpeedIcon />} title="Default AI Labelling Speed Mode" description="Fast mode uses less thinking time for quicker analysis.">
           <div className="flex items-center gap-1 bg-[var(--background-tertiary)] p-1 rounded-lg">
             <button onClick={() => handleSpeedModeChange('normal')} className={`px-3 py-1 text-sm font-semibold rounded-md transition-colors ${draftAiSpeedMode === 'normal' ? 'bg-[var(--background-primary)] text-[var(--text-primary)] shadow-sm' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}>Normal</button>
-            <button
-              onClick={() => handleSpeedModeChange('fast')}
-              disabled={!isPro}
-              className={`px-3 py-1 text-sm font-semibold rounded-md transition-colors ${draftAiSpeedMode === 'fast' && isPro ? 'bg-[var(--background-primary)] text-[var(--text-primary)] shadow-sm' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'} disabled:cursor-not-allowed disabled:opacity-60`}
-            >
-              Fast (Pro)
-            </button>
+
+            <div className="relative group">
+              <button
+                onClick={() => handleSpeedModeChange('fast')}
+                disabled={!isPro}
+                className={`px-3 py-1 text-sm font-semibold rounded-md transition-colors ${draftAiSpeedMode === 'fast' && isPro ? 'bg-[var(--background-primary)] text-[var(--text-primary)] shadow-sm' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'} disabled:cursor-not-allowed disabled:opacity-60`}
+              >
+                Fast (Pro)
+              </button>
+              {!isPro && (
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max px-3 py-1.5 bg-[var(--background-tertiary)] border border-[var(--border-secondary)] text-[var(--text-primary)] text-xs font-medium rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+                  Upgrade to Pro to use Fast mode.
+                </div>
+              )}
+            </div>
           </div>
         </SettingRow>
 
@@ -246,6 +275,10 @@ const GeneralSettingsCard: React.FC<{
           <ToggleSwitch checked={draftShowConfidenceScore} onChange={setDraftShowConfidenceScore} />
         </SettingRow>
       </div>
+
+      <p className="mt-4 text-xs text-[var(--text-muted)]">
+        Changes will be saved when you click <strong>Save Changes</strong> at the bottom.
+      </p>
     </Card>
   );
 };
@@ -282,6 +315,31 @@ const PlansAndLimitsCard: React.FC<{
         </div>
 
         <div>
+          <h4 className="text-sm font-semibold mb-2 text-[var(--text-primary)]">Usage Quotas</h4>
+          <div className="space-y-3">
+            <div>
+              <div className="flex justify-between text-xs mb-1">
+                <span className="font-medium text-[var(--text-secondary)]">Daily Quota</span>
+                <span className="font-bold text-[var(--text-primary)]">{quota.daily.used} / {quota.daily.limit}</span>
+              </div>
+              <div className="w-full bg-[var(--background-tertiary)] rounded-full h-2.5">
+                <div className="bg-[var(--accent-primary)] h-2.5 rounded-full" style={{ width: `${dailyProgress}%` }}></div>
+              </div>
+            </div>
+
+            <div>
+              <div className="flex justify-between text-xs mb-1">
+                <span className="font-medium text-[var(--text-secondary)]">Monthly Quota</span>
+                <span className="font-bold text-[var(--text-primary)]">{quota.monthly.used} / {quota.monthly.limit}</span>
+              </div>
+              <div className="w-full bg-[var(--background-tertiary)] rounded-full h-2.5">
+                <div className="bg-[var(--accent-primary)] h-2.5 rounded-full" style={{ width: `${monthlyProgress}%` }}></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
           <h4 className="text-sm font-semibold mb-2 text-[var(--text-primary)]">What's included in my plan?</h4>
           <ul className="space-y-2 text-sm">
             {currentPlanDetails.features.map(feature => (
@@ -294,6 +352,7 @@ const PlansAndLimitsCard: React.FC<{
         </div>
 
         <div className="border-t border-[var(--border-primary)] pt-4 flex flex-col sm:flex-row justify-between items-center gap-2">
+          <p className="text-sm text-[var(--text-muted)]">Next invoice on Oct 25, 2024</p>
           <button onClick={() => setView('payment-details')} className="text-sm font-semibold text-[var(--accent-primary)] hover:underline">View Payment Details</button>
         </div>
       </div>
@@ -311,7 +370,7 @@ const DataPrivacyCard: React.FC<{
     <Card>
       <CardHeader icon={<LockClosedIcon />} title="Data & Privacy" />
       <div className="divide-y divide-[var(--border-primary)]">
-        <SettingRow icon={<DownloadIcon />} title="Export Your Data" description="Free plan: 5 exports/day (CSV only).">
+        <SettingRow icon={<DownloadIcon />} title="Export Your Data" description="Download all your labeled data. Formats depend on your plan.">
           <button onClick={onExportClick} className={buttonClasses}>Export Data</button>
         </SettingRow>
         <SettingRow icon={<BookOpenIcon />} title="Privacy Policy" description="Review our commitment to your data privacy.">
@@ -337,7 +396,8 @@ const DangerZoneCard: React.FC<{
       <div>
         <h4 className="font-semibold text-[var(--text-primary)]">Clear History</h4>
         <p className="text-sm text-[var(--text-secondary)] mt-1">
-          This will delete all <strong className="text-red-400">{labeledItemsCount} labeled items</strong> from your account. This action cannot be undone.
+          This will delete all <strong className="text-red-400">{labeledItemsCount} labeled items</strong> from your account (Firestore + Cloudinary).
+          This action cannot be undone.
         </p>
       </div>
       <button onClick={onClearCacheClick} className="flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-lg transition-colors bg-red-600/80 text-white hover:bg-red-600 flex-shrink-0">
@@ -348,9 +408,7 @@ const DangerZoneCard: React.FC<{
     <div className="flex flex-col md:flex-row items-start justify-between gap-4 p-4 bg-[var(--background-primary)] rounded-lg border border-red-500/20">
       <div>
         <h4 className="font-semibold text-[var(--text-primary)]">Delete Account</h4>
-        <p className="text-sm text-[var(--text-secondary)] mt-1">
-          (Abhi implement nahi hai) – confirm ke baad logout ho jayega.
-        </p>
+        <p className="text-sm text-[var(--text-secondary)] mt-1">Permanently delete your account and all associated data. This action is irreversible.</p>
       </div>
       <button onClick={onDeleteAccountClick} className="flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-lg transition-colors bg-red-600 text-white hover:bg-red-500 flex-shrink-0">
         <TrashIcon className="w-4 h-4" /> Delete Account
@@ -359,10 +417,11 @@ const DangerZoneCard: React.FC<{
   </div>
 );
 
-// --- MAIN ---
+// --- MAIN PAGE COMPONENT ---
 const SettingsPage: React.FC<SettingsPageProps> = (props) => {
   const { onClearCache, addToast, onLogout } = props;
 
+  // drafts (only saved on Save Changes)
   const [draftTheme, setDraftTheme] = useState<'light' | 'dark'>(props.theme);
   const [draftCurrency, setDraftCurrency] = useState(props.currency);
   const [draftAiSpeedMode, setDraftAiSpeedMode] = useState<AISpeedMode>(props.aiSpeedMode);
@@ -373,8 +432,8 @@ const SettingsPage: React.FC<SettingsPageProps> = (props) => {
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
 
   const [isSaving, setIsSaving] = useState(false);
-  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
 
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [modalConfig, setModalConfig] = useState<{
     isOpen: boolean;
     title: string;
@@ -382,11 +441,23 @@ const SettingsPage: React.FC<SettingsPageProps> = (props) => {
     onConfirm: () => void;
   }>({ isOpen: false, title: '', message: '', onConfirm: () => {} });
 
-  // keep drafts in sync if props change
-  useEffect(() => setDraftTheme(props.theme), [props.theme]);
-  useEffect(() => setDraftCurrency(props.currency), [props.currency]);
-  useEffect(() => setDraftAiSpeedMode(props.aiSpeedMode), [props.aiSpeedMode]);
-  useEffect(() => setDraftShowConfidenceScore(props.showConfidenceScore), [props.showConfidenceScore]);
+  // keep drafts in sync when props change (from Firestore snapshot)
+  useEffect(() => {
+    setDraftTheme(props.theme);
+  }, [props.theme]);
+
+  useEffect(() => {
+    setDraftCurrency(props.currency);
+  }, [props.currency]);
+
+  useEffect(() => {
+    setDraftAiSpeedMode(props.aiSpeedMode);
+  }, [props.aiSpeedMode]);
+
+  useEffect(() => {
+    setDraftShowConfidenceScore(props.showConfidenceScore);
+  }, [props.showConfidenceScore]);
+
   useEffect(() => {
     setDraftName(props.profile.name);
     setDraftPicPreview(props.profile.profilePic);
@@ -396,7 +467,7 @@ const SettingsPage: React.FC<SettingsPageProps> = (props) => {
     setModalConfig({
       isOpen: true,
       title: 'Are you sure?',
-      message: 'This will permanently delete your full history (Firestore + Cloudinary). This cannot be undone.',
+      message: 'This will permanently delete your full history (Firestore + Cloudinary). This action cannot be undone.',
       onConfirm: () => {
         onClearCache();
         setModalConfig(prev => ({ ...prev, isOpen: false }));
@@ -407,10 +478,10 @@ const SettingsPage: React.FC<SettingsPageProps> = (props) => {
   const handleDeleteAccountClick = () => {
     setModalConfig({
       isOpen: true,
-      title: 'Delete Account?',
-      message: 'Account delete abhi implement nahi hai. Confirm karne par logout ho jayega.',
+      title: 'Delete Your Account?',
+      message: 'This will permanently delete your account and all data. This is irreversible. Are you sure you want to proceed?',
       onConfirm: () => {
-        onLogout(); // ✅ now used => TS warning gone
+        addToast('Account deletion not implemented yet.', 'error');
         setModalConfig(prev => ({ ...prev, isOpen: false }));
       },
     });
@@ -425,46 +496,49 @@ const SettingsPage: React.FC<SettingsPageProps> = (props) => {
 
     setIsSaving(true);
     try {
-      const nextName = draftName.trim() || 'User';
-      const normalizedSpeed: AISpeedMode = props.plan === 'pro' ? draftAiSpeedMode : 'normal';
+      // enforce pro speed
+      const normalizedSpeed: AISpeedMode =
+        props.plan === 'pro' ? draftAiSpeedMode : 'normal';
 
-      // ✅ Always update name + settings in Firestore (rename fix)
+      // 1) Save settings to Firestore
       await updateDoc(doc(db, 'users', user.uid), {
-        name: nextName,
         'settings.currency': draftCurrency,
         'settings.aiSpeedMode': normalizedSpeed,
         'settings.showConfidenceScore': draftShowConfidenceScore,
         updatedAt: serverTimestamp(),
       });
 
-      // apply locally too
+      // 2) Save theme locally (app behavior)
       props.setTheme(draftTheme);
+
+      // 3) Apply locally too (instant UI)
       props.setCurrency(draftCurrency);
       props.setAiSpeedMode(normalizedSpeed);
       props.setShowConfidenceScore(draftShowConfidenceScore);
-      props.setProfile({ name: nextName, profilePic: props.profile.profilePic });
 
-      // ✅ Avatar upload only if selected
-      if (avatarFile) {
-        const token = await user.getIdToken();
-        const fd = new FormData();
-        fd.append('name', nextName);
-        fd.append('avatar', avatarFile);
+      // 4) Update profile (name + optional avatar) via backend (Cloudinary)
+      const token = await user.getIdToken();
+      const fd = new FormData();
+      fd.append('name', draftName.trim() || 'User');
+      if (avatarFile) fd.append('avatar', avatarFile);
 
-        const resp = await fetch(`${BACKEND_URL}/api/update-profile`, {
-          method: 'POST',
-          headers: { Authorization: `Bearer ${token}` },
-          body: fd,
+      const resp = await fetch(`${BACKEND_URL}/api/update-profile`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+        body: fd,
+      });
+
+      const json = await resp.json();
+      if (!resp.ok || !json?.ok) {
+        addToast(json?.error || 'Profile update failed', 'error');
+      } else {
+        // update local state (Firestore snapshot will also update)
+        const nextName = draftName.trim() || 'User';
+        props.setProfile({
+          name: nextName,
+          profilePic: json?.profile?.profilePic || draftPicPreview,
         });
-
-        const json = await resp.json();
-        if (!resp.ok || !json?.ok) {
-          addToast(json?.error || 'Avatar upload failed', 'error');
-        } else {
-          const newPic = json?.profile?.profilePic;
-          if (newPic) props.setProfile({ name: nextName, profilePic: newPic });
-          setAvatarFile(null);
-        }
+        setAvatarFile(null);
       }
 
       addToast('All settings saved successfully!', 'success');
@@ -526,7 +600,11 @@ const SettingsPage: React.FC<SettingsPageProps> = (props) => {
         plan={props.plan}
       />
 
-      <PlansAndLimitsCard setView={props.setView} plan={props.plan} quota={props.quota} />
+      <PlansAndLimitsCard
+        setView={props.setView}
+        plan={props.plan}
+        quota={props.quota}
+      />
 
       <DataPrivacyCard setView={props.setView} onExportClick={() => setIsExportModalOpen(true)} />
 
