@@ -38,8 +38,9 @@ const LoginPage: React.FC<{ onClose: () => void; onLoginSuccess: () => void; onS
       await signInWithPopup(auth, googleProvider);
       onLoginSuccess();
     } catch (err: any) {
-      setError('Failed to login with Google.');
-      console.error(err);
+  console.error(err?.code, err?.message, err);
+  setError(`${err?.code || 'auth/error'}: ${err?.message || 'Failed to login with Google.'}`);
+
     } finally {
       setLoading(false);
     }
