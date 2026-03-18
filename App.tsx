@@ -279,32 +279,6 @@ if (data?.usage?.monthly?.month !== currentMonthStr) {
     setModalView('none');
   };
 
-  // Welcome modal save => sync currency + name + avatar
-  const handleWelcomeModalClose = async (updatedProfile: UserProfile, updatedCurrency: string, avatarFile?: File | null) => {
-    try {
-      const user = auth.currentUser;
-      if (!user) return;
-
-      // save currency + name to Firestore
-      try {
-  await updateDoc(doc(db, 'users', user.uid), {
-    name: updatedProfile.name,
-    'settings.currency': updatedCurrency,
-  });
-} catch (e) {
-  console.error(e);
-}
-
-      // 🔥 FIRESTORE SAVE (safe)
-try {
-  await updateDoc(doc(db, 'users', user.uid), {
-    name: updatedProfile.name,
-    'settings.currency': updatedCurrency,
-  });
-} catch (e) {
-  console.error("Firestore error:", e);
-}
-
 const handleWelcomeModalClose = async (
   updatedProfile: UserProfile,
   updatedCurrency: string,
