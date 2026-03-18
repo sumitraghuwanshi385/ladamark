@@ -123,12 +123,18 @@ const SettingRow: React.FC<{ icon: React.ReactNode; title: string; description: 
 const ProfileCard: React.FC<{
   draftName: string;
   setDraftName: (s: string) => void;
-
   draftPicPreview: string;
   setDraftPicPreview: (s: string) => void;
-
   setAvatarFile: (f: File | null) => void;
-}> = ({ draftName, setDraftName, draftPicPreview, setDraftPicPreview, setAvatarFile }) => {
+  setIsEditing: (value: boolean) => void;
+}> = ({
+  draftName,
+  setDraftName,
+  draftPicPreview,
+  setDraftPicPreview,
+  setAvatarFile,
+  setIsEditing,
+}) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handlePicChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -209,6 +215,7 @@ const SecurityCard: React.FC<{ setView: (view: View) => void }> = ({ setView }) 
 const GeneralSettingsCard: React.FC<{
   draftTheme: 'light' | 'dark';
   setDraftTheme: (t: 'light' | 'dark') => void;
+setTheme: (t: 'light' | 'dark') => void;
 
   draftCurrency: string;
   setDraftCurrency: (c: string) => void;
@@ -221,7 +228,7 @@ const GeneralSettingsCard: React.FC<{
 
   plan: Plan;
 }> = ({
-  draftTheme, setDraftTheme,
+  draftTheme, setDraftTheme,setTheme,
   draftCurrency, setDraftCurrency,
   draftAiSpeedMode, setDraftAiSpeedMode,
   draftShowConfidenceScore, setDraftShowConfidenceScore,
@@ -247,8 +254,24 @@ const GeneralSettingsCard: React.FC<{
       <div className="divide-y divide-[var(--border-primary)]">
         <SettingRow icon={<EyeIcon />} title="Appearance" description="Customize how the app looks and feels.">
           <div className="flex items-center gap-1 bg-[var(--background-tertiary)] p-1 rounded-lg">
-            <button onClick={() => setDraftTheme('light')} className={`px-3 py-1 text-sm font-semibold rounded-md transition-colors ${draftTheme === 'light' ? 'bg-[var(--background-primary)] text-[var(--text-primary)] shadow-sm' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}>Light</button>
-            <button onClick={() => setDraftTheme('dark')} className={`px-3 py-1 text-sm font-semibold rounded-md transition-colors ${draftTheme === 'dark' ? 'bg-[var(--background-primary)] text-[var(--text-primary)] shadow-sm' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}>Dark</button>
+            <button
+  onClick={() => {
+    setDraftTheme('light');
+    props.setTheme('light');
+  }}
+  className={`px-3 py-1 text-sm font-semibold rounded-md transition-colors ${draftTheme === 'light' ? 'bg-[var(--background-primary)] text-[var(--text-primary)] shadow-sm' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
+>
+  Light
+</button>
+            <button
+  onClick={() => {
+    setDraftTheme('dark');
+    props.setTheme('dark');
+  }}
+  className={`px-3 py-1 text-sm font-semibold rounded-md transition-colors ${draftTheme === 'dark' ? 'bg-[var(--background-primary)] text-[var(--text-primary)] shadow-sm' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
+>
+  Dark
+</button>
           </div>
         </SettingRow>
 
@@ -584,6 +607,8 @@ name: draftName.trim() || 'User',
       }
 
       addToast('All settings saved successfully!', 'success');
+setIsEditing(false);
+setHasChanges(false);
     } catch (e: any) {
       console.error(e);
       addToast(e?.message || 'Failed to save settings.', 'error');
@@ -623,12 +648,13 @@ name: draftName.trim() || 'User',
       </div>
 
       <ProfileCard
-        draftName={draftName}
-        setDraftName={setDraftName}
-        draftPicPreview={draftPicPreview}
-        setDraftPicPreview={setDraftPicPreview}
-        setAvatarFile={setAvatarFile}
-      />
+  draftName={draftName}
+  setDraftName={setDraftName}
+  draftPicPreview={draftPicPreview}
+  setDraftPicPreview={setDraftPicPreview}
+  setAvatarFile={setAvatarFile}
+  setIsEditing={setIsEditing}
+/>
 
       <SecurityCard setView={props.setView} />
 
