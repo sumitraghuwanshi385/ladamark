@@ -295,25 +295,36 @@ if (data?.usage?.monthly?.month !== currentMonthStr) {
   console.error(e);
 }
 
-      // if avatar file selected => upload via backend
-      if (avatarFile) {
-        const token = await user.getIdToken();
-        const fd = new FormData();
-        fd.append('name', updatedProfile.name);
-        fd.append('avatar', avatarFile);
+      // 🔥 FIRESTORE SAVE (safe)
+try {
+  await updateDoc(doc(db, 'users', user.uid), {
+    name: updatedProfile.name,
+    'settings.currency': updatedCurrency,
+  });
+} catch (e) {
+  console.error("Firestore error:", e);
+}
 
-        await fetch(`${BACKEND_URL}/api/update-profile`, {
-          method: 'POST',
-          headers: { Authorization: `Bearer ${token}` },
-          body: fd,
-        });
-        // profilePic will update automatically via onSnapshot
-      }
+// 🔥 API CALL (NON-BLOCKING)
+if (avatarFile) {
+  try {
+    const token = await user.getIdToken();
+    const fd = new FormData();
+    fd.append('name', updatedProfile.name);
+    fd.append('avatar', avatarFile);
 
-      setShowWelcomeModal(false);
-    } catch (e) {
-      console.error(e);
-      setShowWelcomeModal(false);
+    fetch(`${BACKEND_URL}/api/update-profile`, {  // ❌ await hata diya
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}` },
+      body: fd,
+    });
+  } catch (e) {
+    console.error("Upload error:", e);
+  }
+}
+
+// 🔥 ALWAYS CLOSE (IMPORTANT)
+setShowWelcomeModal(false);
     }
   };
 
