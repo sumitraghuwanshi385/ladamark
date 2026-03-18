@@ -54,6 +54,7 @@ const useLocalStorage = <T,>(key: string, initialValue: T): [T, React.Dispatch<R
 export type UserProfile = {
   name: string;
   profilePic: string;
+  email: string;
 };
 
 const getModalTitle = (view: InfoModalView) => {
@@ -93,9 +94,10 @@ const App: React.FC = () => {
 
   const [currency, setCurrency] = useLocalStorage('app-currency', 'USD');
   const [profile, setProfile] = useState<UserProfile>({
-    name: 'Guest',
-    profilePic: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop',
-  });
+  name: 'Guest',
+  profilePic: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop',
+  email: '', 
+});
   const [categoryFilter, setCategoryFilter] = useState('all');
 
   useEffect(() => {
@@ -159,9 +161,10 @@ const App: React.FC = () => {
           setPlan((data.plan as Plan) || 'free');
 
           setProfile({
-            name: data.name || user.displayName || 'User',
-            profilePic: data.profilePic || user.photoURL || DEFAULT_PROFILE_PIC,
-          });
+  name: data.name || user.displayName || 'User',
+  profilePic: data.profilePic || user.photoURL || DEFAULT_PROFILE_PIC,
+  email: data.email || user.email || '',
+});
 
           const c = data?.settings?.currency;
           if (c) setCurrency(c);
