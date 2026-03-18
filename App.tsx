@@ -95,7 +95,7 @@ const App: React.FC = () => {
   const [currency, setCurrency] = useLocalStorage('app-currency', 'USD');
   const [profile, setProfile] = useState<UserProfile>({
   name: 'Ladamark User',
-  profilePic: 'https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || "User")}&background=ff0000&color=fff',
+  profilePic: "https://ui-avatars.com/api/?name=User&background=ff0000&color=fff",
   email: '', 
 });
   const [categoryFilter, setCategoryFilter] = useState('all');
@@ -305,28 +305,45 @@ try {
   console.error("Firestore error:", e);
 }
 
-// 🔥 API CALL (NON-BLOCKING)
-if (avatarFile) {
-  try {
-    const token = await user.getIdToken();
-    const fd = new FormData();
-    fd.append('name', updatedProfile.name);
-    fd.append('avatar', avatarFile);
+const handleWelcomeModalClose = async (
+  updatedProfile: UserProfile,
+  updatedCurrency: string,
+  avatarFile?: File | null
+) => {
+  const user = auth.currentUser;
+  if (!user) return;
 
-    fetch(`${BACKEND_URL}/api/update-profile`, {  // ❌ await hata diya
-      method: 'POST',
-      headers: { Authorization: `Bearer ${token}` },
-      body: fd,
+  // 🔥 FIRESTORE SAVE
+  try {
+    await updateDoc(doc(db, 'users', user.uid), {
+      name: updatedProfile.name,
+      'settings.currency': updatedCurrency,
     });
   } catch (e) {
-    console.error("Upload error:", e);
+    console.error("Firestore error:", e);
   }
-}
 
-// 🔥 ALWAYS CLOSE (IMPORTANT)
-setShowWelcomeModal(false);
+  // 🔥 API CALL (NON-BLOCKING)
+  if (avatarFile) {
+    try {
+      const token = await user.getIdToken();
+      const fd = new FormData();
+      fd.append('name', updatedProfile.name);
+      fd.append('avatar', avatarFile);
+
+      fetch(`${BACKEND_URL}/api/update-profile`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+        body: fd,
+      });
+    } catch (e) {
+      console.error("Upload error:", e);
     }
-  };
+  }
+
+  // 🔥 ALWAYS CLOSE
+  setShowWelcomeModal(false);
+};
 
   const handleLogout = async () => {
     await signOut(auth);
