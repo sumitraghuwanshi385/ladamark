@@ -473,6 +473,7 @@ const MainApplication: React.FC<MainApplicationProps> = ({
           categoryFilter={categoryFilter}
           setCategoryFilter={setCategoryFilter}
           plan={plan}
+currency={currency}
         />;
       case 'history':
         return <HistoryPage labeledItems={labeledItems} onDeleteItems={handleDeleteItems} onReanalyzeItem={handleReanalyzeItem} />;
