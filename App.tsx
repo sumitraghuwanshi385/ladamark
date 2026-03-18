@@ -171,7 +171,7 @@ const [quota, setQuota] = useState({
     name: data.name || user.displayName || 'User',
     profilePic: data.profilePic 
   ? data.profilePic 
-  : `https://ui-avatars.com/api/?name=${encodeURIComponent(data.name || 'User')}&background=ff0000&color=fff`,
+: `https://ui-avatars.com/api/?name=${encodeURIComponent(data.name || 'User')}&background=ff0000&color=fff`,
     email: data.email || user.email || '',
   });
 
@@ -192,16 +192,24 @@ if (!localStorage.getItem("themeLoaded")) {
   const currentMonthStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
 
   // DAILY
-let dailyCount = data?.usage?.daily?.count || 0;
-if (data?.usage?.daily?.date !== todayStr) {
-  dailyCount = 0;
-}
+  let dailyCount = data?.usage?.daily?.count || 0;
+  if (data?.usage?.daily?.date !== todayStr) {
+    dailyCount = 0;
 
-// MONTHLY
-let monthlyCount = data?.usage?.monthly?.count || 0;
-if (data?.usage?.monthly?.month !== currentMonthStr) {
-  monthlyCount = 0;
-}
+    await updateDoc(userDocRef, {
+      'usage.daily': { date: todayStr, count: 0 }
+    });
+  }
+
+  // MONTHLY
+  let monthlyCount = data?.usage?.monthly?.count || 0;
+  if (data?.usage?.monthly?.month !== currentMonthStr) {
+    monthlyCount = 0;
+
+    await updateDoc(userDocRef, {
+      'usage.monthly': { month: currentMonthStr, count: 0 }
+    });
+  }
 
   const isPro = data?.plan === 'pro';
 
