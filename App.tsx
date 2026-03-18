@@ -125,6 +125,7 @@ const unsubAuth = onAuthStateChanged(auth, async (user) => {
     }
 
     setIsAuthenticated(true);
+setIsLoadingAuth(false);
 
     const userDocRef = doc(db, "users", user.uid);
     const snap = await getDoc(userDocRef);
@@ -162,8 +163,6 @@ const unsubAuth = onAuthStateChanged(auth, async (user) => {
 
     // live sync user doc  
   unsubUserDoc = onSnapshot(userDocRef, async (docSnap) => {
-
-setIsLoadingAuth(false);
 
 const data: any = docSnap.data() || {};
 
