@@ -237,6 +237,8 @@ setTheme: (t: 'light' | 'dark') => void;
   const selectClass = "w-40 bg-[var(--background-tertiary)] border border-[var(--border-secondary)] rounded-md py-1.5 px-2 text-sm text-[var(--text-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--accent-primary)] transition-colors";
   const isPro = plan === 'pro';
 
+const [openCurrency, setOpenCurrency] = useState(false);
+
   useEffect(() => {
     if (!isPro && draftAiSpeedMode === 'fast') {
       setDraftAiSpeedMode('normal');
@@ -276,9 +278,32 @@ setTheme: (t: 'light' | 'dark') => void;
         </SettingRow>
 
         <SettingRow icon={<CreditCardIcon />} title="Default Currency" description="Set your preferred currency for pricing tools.">
-          <select value={draftCurrency} onChange={e => setDraftCurrency(e.target.value)} className={selectClass}>
-            {currencies.map(c => (<option key={c.code} value={c.code}>{c.code} - {c.name}</option>))}
-          </select>
+          
+<div className="relative w-40">
+  <button
+    onClick={() => setOpenCurrency(!openCurrency)}
+    className="w-full bg-[var(--background-tertiary)] border border-[var(--border-secondary)] rounded-md py-1.5 px-2 text-sm text-left"
+  >
+    {draftCurrency}
+  </button>
+
+  {openCurrency && (
+    <div className="absolute z-50 mt-1 w-full bg-[var(--background-secondary)] border border-[var(--border-primary)] rounded-md shadow-lg max-h-40 overflow-auto">
+      {currencies.map(c => (
+        <div
+          key={c.code}
+          onClick={() => {
+            setDraftCurrency(c.code);
+            setOpenCurrency(false);
+          }}
+          className="px-3 py-2 text-sm hover:bg-[var(--background-hover)] cursor-pointer"
+        >
+          {c.code} - {c.name}
+        </div>
+      ))}
+    </div>
+  )}
+</div>
         </SettingRow>
 
         <SettingRow icon={<SpeedIcon />} title="Default AI Labelling Speed Mode" description="Fast mode uses less thinking time for quicker analysis.">
@@ -558,9 +583,11 @@ useEffect(() => {
       // 1) Save settings to Firestore
       await updateDoc(doc(db, 'users', user.uid), {
 name: draftName.trim() || 'User',
+
         'settings.currency': draftCurrency,
         'settings.aiSpeedMode': normalizedSpeed,
         'settings.showConfidenceScore': draftShowConfidenceScore,
+'settings.theme': draftTheme,
         updatedAt: serverTimestamp(),
       });
 
@@ -590,15 +617,49 @@ name: draftName.trim() || 'User',
       } else {
         // update local state (Firestore snapshot will also update)
         const nextName = draftName.trim() || 'User';
-        props.setProfile({
+        
+const newProfilePic = json?.profile?.profilePic || draftPicPreview;
+
+props.setProfile({
   ...props.profile,
-          name: nextName,
-          profilePic: json?.profile?.profilePic || draftPicPreview,
-        });
+  name: nextName,
+  profilePic: newProfilePic,
+});
+
+// ✅ Firestore sync
+await updateDoc(doc(db, 'users', user.uid), {
+  profilePic: newProfilePic,
+});
         setAvatarFile(null);
       }
 
-      addToast('All settings saved successfully!', 'success');
+      let messages = [];
+
+if (draftName !== props.profile.name) {
+  messages.push("Name updated");
+}
+
+if (avatarFile) {
+  messages.push("Profile image updated");
+}
+
+if (draftShowConfidenceScore !== props.showConfidenceScore) {
+  messages.push(
+    draftShowConfidenceScore
+      ? "AI confidence enabled"
+      : "AI confidence disabled"
+  );
+}
+
+if (draftCurrency !== props.currency) {
+  messages.push(`Currency: ${draftCurrency}`);
+}
+
+if (messages.length === 0) {
+  messages.push("Settings updated");
+}
+
+addToast(messages.join(" • "), "success");
 setIsEditing(false);
 setHasChanges(false);
     } catch (e: any) {
