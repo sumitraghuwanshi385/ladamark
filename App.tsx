@@ -178,8 +178,9 @@ const [quota, setQuota] = useState({
   // ✅ settings
   const settings = data.settings || {};
   setCurrency(settings.currency || 'USD');
-  if (settings.theme && settings.theme !== theme) {
-  setTheme(settings.theme);
+if (!localStorage.getItem("themeLoaded")) {
+  setTheme(settings.theme || 'light');
+  localStorage.setItem("themeLoaded", "true");
 }
 
   // =========================
