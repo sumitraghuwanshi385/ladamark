@@ -32,8 +32,6 @@ const [isSaving, setIsSaving] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleSave = () => {
-  setIsSaving(true);
-
   onClose(
     { name: name.trim() || 'User', profilePic: profilePicPreview },
     currency,
