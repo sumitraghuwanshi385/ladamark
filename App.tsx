@@ -127,12 +127,6 @@ const unsubAuth = onAuthStateChanged(auth, async (user) => {
     setIsAuthenticated(true);
 setIsLoadingAuth(false);
 
-setProfile({
-  name: user.displayName || user.email?.split("@")[0] || "User",
-  profilePic: user.photoURL || DEFAULT_PROFILE_PIC,
-  email: user.email || '',
-});
-
     const userDocRef = doc(db, "users", user.uid);
     const snap = await getDoc(userDocRef);
 
@@ -204,12 +198,20 @@ const currentMonthStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padSt
 let dailyCount = data?.usage?.daily?.count || 0;
 if (data?.usage?.daily?.date !== todayStr) {
   dailyCount = 0;
+
+  await updateDoc(userDocRef, {  
+    'usage.daily': { date: todayStr, count: 0 }  
+  });
 }
 
 // MONTHLY
 let monthlyCount = data?.usage?.monthly?.count || 0;
 if (data?.usage?.monthly?.month !== currentMonthStr) {
   monthlyCount = 0;
+
+  await updateDoc(userDocRef, {  
+    'usage.monthly': { month: currentMonthStr, count: 0 }  
+  });
 }
 
 const isPro = data?.plan === 'pro';
