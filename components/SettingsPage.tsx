@@ -600,36 +600,53 @@ name: draftName.trim() || 'User',
       props.setShowConfidenceScore(draftShowConfidenceScore);
 
       // 4) Update profile (name + optional avatar) via backend (Cloudinary)
-      const token = await user.getIdToken();
-      const fd = new FormData();
-      fd.append('name', draftName.trim() || 'User');
-      if (avatarFile) fd.append('avatar', avatarFile);
+      // 🔥 SAFE TOKEN
+let token = "";
+try {
+  token = await user.getIdToken();
+} catch (e) {
+  console.error("Token error:", e);
+}
 
-      const resp = await fetch(`${BACKEND_URL}/api/update-profile`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${token}` },
-        body: fd,
-      });
+// 🔥 FORM DATA
+const fd = new FormData();
+fd.append('name', draftName.trim() || 'User');
+if (avatarFile) fd.append('avatar', avatarFile);
 
-      const json = await resp.json();
-      if (!resp.ok || !json?.ok) {
-        addToast(json?.error || 'Profile update failed', 'error');
-      } else {
-        // update local state (Firestore snapshot will also update)
-        const nextName = draftName.trim() || 'User';
-        
-const newProfilePic = json?.profile?.profilePic || draftPicPreview;
+// 🔥 NON-BLOCKING API CALL (NO FREEZE)
+fetch(`${BACKEND_URL}/api/update-profile`, {
+  method: 'POST',
+  headers: { Authorization: `Bearer ${token}` },
+  body: fd,
+})
+  .then(res => res.json())
+  .then(json => {
+    if (!json?.ok) {
+      addToast(json?.error || 'Profile update failed', 'error');
+      return;
+    }
 
-props.setProfile({
-  ...props.profile,
-  name: nextName,
-  profilePic: newProfilePic,
-});
+    // ✅ SUCCESS UI UPDATE
+    const nextName = draftName.trim() || 'User';
+    const newProfilePic = json?.profile?.profilePic || draftPicPreview;
+
+    props.setProfile({
+      ...props.profile,
+      name: nextName,
+      profilePic: newProfilePic,
+    });
+
+  })
+  .catch(err => {
+    console.error("Upload error:", err);
+    addToast("Upload failed", "error");
+  });
 
 // ✅ Firestore sync
-await updateDoc(doc(db, 'users', user.uid), {
+updateDoc(doc(db, 'users', user.uid), {
   profilePic: newProfilePic,
-});
+}).catch(console.error);
+
         setAvatarFile(null);
       }
 
