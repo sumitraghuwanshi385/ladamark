@@ -553,7 +553,7 @@ name: draftName.trim() || 'User',
   };
 
   return (
-    <section className="space-y-4 max-w-3xl mx-auto">
+    <section className="space-y-4 w-full max-w-3xl mx-auto px-4 overflow-x-hidden">
       <ConfirmationModal
         isOpen={modalConfig.isOpen}
         onClose={() => setModalConfig(prev => ({ ...prev, isOpen: false }))}
