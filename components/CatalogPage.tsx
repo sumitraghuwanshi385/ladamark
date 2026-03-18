@@ -25,6 +25,7 @@ interface CatalogPageProps {
     categoryFilter: string;
     setCategoryFilter: (filter: string) => void;
     plan: Plan;
+currency: string;
 }
 
 const attributeColors = ['bg-green-400', 'bg-pink-400', 'bg-blue-400', 'bg-purple-400', 'bg-indigo-400', 'bg-cyan-400', 'bg-rose-400', 'bg-teal-400'];
@@ -165,7 +166,7 @@ const BulkActionBar: React.FC<{
     </div>
 );
 
-const CatalogPage: React.FC<CatalogPageProps> = ({ labeledItems, onDeleteItems, categoryFilter, setCategoryFilter, plan }) => {
+const CatalogPage: React.FC<CatalogPageProps> = ({ labeledItems, onDeleteItems, categoryFilter, setCategoryFilter, plan, currency }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [collapsedCategories, setCollapsedCategories] = useState<Set<string>>(new Set());
     const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set());
