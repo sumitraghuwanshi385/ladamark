@@ -502,6 +502,7 @@ const SettingsPage: React.FC<SettingsPageProps> = (props) => {
 
       // 1) Save settings to Firestore
       await updateDoc(doc(db, 'users', user.uid), {
+name: draftName.trim() || 'User',
         'settings.currency': draftCurrency,
         'settings.aiSpeedMode': normalizedSpeed,
         'settings.showConfidenceScore': draftShowConfidenceScore,
@@ -535,6 +536,7 @@ const SettingsPage: React.FC<SettingsPageProps> = (props) => {
         // update local state (Firestore snapshot will also update)
         const nextName = draftName.trim() || 'User';
         props.setProfile({
+  ...props.profile,
           name: nextName,
           profilePic: json?.profile?.profilePic || draftPicPreview,
         });
