@@ -157,18 +157,35 @@ const App: React.FC = () => {
 
         // live sync user doc
         unsubUserDoc = onSnapshot(userDocRef, (docSnap) => {
-          const data: any = docSnap.data() || {};
-          setPlan((data.plan as Plan) || 'free');
+  const data: any = docSnap.data() || {};
 
-          setProfile({
-  name: data.name || user.displayName || 'User',
-  profilePic: data.profilePic || user.photoURL || DEFAULT_PROFILE_PIC,
-  email: data.email || user.email || '',
+  
+  setPlan((data.plan as Plan) || 'free');
+
+  
+  setProfile({
+    name: data.name || user.displayName || 'User',
+    profilePic: data.profilePic || user.photoURL || DEFAULT_PROFILE_PIC,
+    email: data.email || user.email || '',
+  });
+
+  
+  const settings = data.settings || {};
+
+  setCurrency(settings.currency || 'USD');
+
+  
+  setTheme(settings.theme || 'light');
+
+  
+  if (settings.aiSpeedMode) {
+    
+  }
+
+  if (settings.showConfidenceScore !== undefined) {
+    
+  }
 });
-
-          const c = data?.settings?.currency;
-          if (c) setCurrency(c);
-        });
 
       } catch (err) {
         console.error("Auth/Firestore sync error:", err);
