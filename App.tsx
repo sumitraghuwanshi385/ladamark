@@ -286,10 +286,14 @@ if (data?.usage?.monthly?.month !== currentMonthStr) {
       if (!user) return;
 
       // save currency + name to Firestore
-      await updateDoc(doc(db, 'users', user.uid), {
-        name: updatedProfile.name,
-        'settings.currency': updatedCurrency,
-      });
+      try {
+  await updateDoc(doc(db, 'users', user.uid), {
+    name: updatedProfile.name,
+    'settings.currency': updatedCurrency,
+  });
+} catch (e) {
+  console.error(e);
+}
 
       // if avatar file selected => upload via backend
       if (avatarFile) {
