@@ -94,9 +94,9 @@ return 'light';
 
 const [currency, setCurrency] = useLocalStorage('app-currency', 'USD');
 const [profile, setProfile] = useState<UserProfile>({
-name: 'Guest',
-profilePic: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop',
-email: '',
+  name: '',
+  profilePic: '',
+  email: '',
 });
 const [categoryFilter, setCategoryFilter] = useState('all');
 const [quota, setQuota] = useState({
