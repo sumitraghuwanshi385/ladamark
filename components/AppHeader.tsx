@@ -1,7 +1,3 @@
-
-
-
-
 import React, { useState, useEffect, useRef } from 'react';
 import { type View } from './MainApplication';
 import { type UserProfile } from '../App';
@@ -124,7 +120,9 @@ const AppHeader: React.FC<AppHeaderProps> = ({ onMenuClick, onLogout, setView, t
                             <div className="absolute right-0 mt-2 w-56 bg-[var(--background-primary)] border border-[var(--border-secondary)] rounded-lg shadow-2xl z-20 overflow-hidden animate-fade-in-up" style={{animationDuration: '0.2s'}}>
                                 <div className="p-2 border-b border-[var(--border-primary)]">
                                     <p className="text-sm font-semibold text-[var(--text-primary)] px-2 truncate">{profile.name}</p>
-                                    <p className="text-xs text-[var(--text-muted)] px-2">user@example.com</p>
+                                    <p className="text-xs text-[var(--text-muted)] px-2">
+  {profile.email || "No email"}
+</p>
                                 </div>
                                 <div className="p-2 border-b border-[var(--border-primary)]">
                                     <p className="px-2 text-xs font-semibold text-[var(--text-muted)] uppercase mb-1">Monthly Usage</p>
