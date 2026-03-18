@@ -299,24 +299,24 @@ const handleWelcomeModalClose = async (
 
   // 🔥 API CALL (NON-BLOCKING)
   if (avatarFile) {
-    try {
-      const token = await user.getIdToken();
-      const fd = new FormData();
-      fd.append('name', updatedProfile.name);
-      fd.append('avatar', avatarFile);
+  try {
+    const token = await user.getIdToken();
+    const fd = new FormData();
+    fd.append('name', updatedProfile.name);
+    fd.append('avatar', avatarFile);
 
-      fetch(`${BACKEND_URL}/api/update-profile`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${token}` },
-        body: fd,
-      });
-    } catch (e) {
-      console.error("Upload error:", e);
-    }
+    await fetch(`${BACKEND_URL}/api/update-profile`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}` },
+      body: fd,
+    });
+
+  } catch (e) {
+    console.error("Upload error:", e);
   }
+}
 
-  // 🔥 ALWAYS CLOSE
-  setShowWelcomeModal(false);
+setShowWelcomeModal(false); 
 };
 
   const handleLogout = async () => {
