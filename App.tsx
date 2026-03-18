@@ -200,7 +200,7 @@ setProfile({
 name: data.name || user.displayName || 'User',
 profilePic: data.profilePic
 ? data.profilePic
-: https://ui-avatars.com/api/?name=${encodeURIComponent(data.name || 'User')}&background=ff0000&color=fff,
+: `https://ui-avatars.com/api/?name=${encodeURIComponent(data.name || 'User')}&background=ff0000&color=fff`,
 email: data.email || user.email || '',
 });
 
@@ -218,7 +218,7 @@ localStorage.setItem("themeLoaded", "true");
 
 const now = new Date();
 const todayStr = now.toISOString().split("T")[0];
-const currentMonthStr = ${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')};
+const currentMonthStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
 
 // DAILY
 let dailyCount = data?.usage?.daily?.count || 0;
