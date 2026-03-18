@@ -1,4 +1,4 @@
-Catalog page - import React, { useState, useMemo, useEffect, useRef } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { type LabeledItem, type AiResponseData, type Attribute } from './MainApplication';
 import { type Plan } from './plans';
 import ExportModal from './ExportModal';
