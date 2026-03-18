@@ -22,6 +22,22 @@ import { auth, db } from './firebase';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { doc, getDoc, onSnapshot, setDoc, updateDoc } from 'firebase/firestore';
 
+const DebugBox = ({ msg }: { msg: string }) => (
+  <div style={{
+    position: "fixed",
+    top: 10,
+    left: 10,
+    background: "black",
+    color: "lime",
+    padding: "10px",
+    zIndex: 9999,
+    fontSize: "12px",
+    maxWidth: "90%"
+  }}>
+    {msg}
+  </div>
+);
+
 export type InfoModalView = 'none' | 'about' | 'contact' | 'terms' | 'privacy';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8080';
@@ -85,6 +101,7 @@ const [showWelcomeModal, setShowWelcomeModal] = useState(false);
 
 const [plan, setPlan] = useState<Plan>('free');
 const [isLoadingAuth, setIsLoadingAuth] = useState(true);
+const [debugMsg, setDebugMsg] = useState("APP START");
 
 const [theme, setTheme] = useState<'light' | 'dark'>(() => {
 const savedTheme = localStorage.getItem('theme');
@@ -111,26 +128,36 @@ const DEFAULT_PROFILE_PIC =
 
 "https://ui-avatars.com/api/?name=User&background=ff0000&color=fff&size=256";
 
-const unsubAuth = onAuthStateChanged(auth, async (user) => {  
-  try {  
-    if (unsubUserDoc) {  
-      unsubUserDoc();  
-      unsubUserDoc = null;  
-    }  
+const unsubAuth = onAuthStateChanged(auth, async (user) => {
+  setDebugMsg("AUTH FIRED");
+  setIsLoadingAuth(false); // 🔥 sabse important
 
-    if (!user) {  
-      setIsAuthenticated(false);  
-      setIsLoadingAuth(false);  
-      return;  
-    }  
+  try {
+    if (unsubUserDoc) {
+      unsubUserDoc();
+      unsubUserDoc = null;
+    }
 
-    setIsAuthenticated(true);  
+    if (!user) {
+      setDebugMsg("NO USER");
+      setIsAuthenticated(false);
+      return;
+    }
 
-    const userDocRef = doc(db, "users", user.uid);  
-    const snap = await getDoc(userDocRef);  
+    setDebugMsg("USER LOGGED IN");
 
-    const todayStr = new Date().toISOString().split("T")[0];  
-    const currentMonthStr = todayStr.substring(0, 7);  
+    setIsAuthenticated(true);
+
+    const userDocRef = doc(db, "users", user.uid);
+
+    const snap = await getDoc(userDocRef);
+
+    setDebugMsg("FIRESTORE FETCHED");
+
+    const todayStr = new Date().toISOString().split("T")[0];
+    const currentMonthStr = todayStr.substring(0, 7);
+
+    // 👇 yaha se tera existing code same rehne de
 
     if (!snap.exists()) {  
       await setDoc(userDocRef, {  
@@ -326,11 +353,14 @@ setInfoModalView(view);
 };
 
 if (isLoadingAuth) {
-return (
-<div className="h-screen flex items-center justify-center bg-[var(--background-primary)] text-[var(--text-primary)]">
-Loading...
-</div>
-);
+  return (
+    <>
+      <DebugBox msg={debugMsg} />
+      <div className="h-screen flex items-center justify-center">
+        Loading...
+      </div>
+    </>
+  );
 }
 
 if (isAuthenticated) {
