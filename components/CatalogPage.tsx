@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
+import { convertPrice, formatCurrency } from './currency'; 
 import { type LabeledItem, type AiResponseData, type Attribute } from './MainApplication';
 import { type Plan } from './plans';
 import ExportModal from './ExportModal';
@@ -57,9 +58,10 @@ const getSeoColorClasses = (key: string) => {
 // --- CHILD COMPONENTS ---
 const CatalogCard: React.FC<{
     item: LabeledItem;
+currency: string;
     isSelected: boolean;
     onToggleSelect: (isSelected: boolean) => void;
-}> = ({ item, isSelected, onToggleSelect }) => {
+}> = ({ item, currency, isSelected, onToggleSelect }) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const { productName, description, priceRange, category, attributes, seoKeywords } = item.data;
 
@@ -88,7 +90,17 @@ const CatalogCard: React.FC<{
                 <div className="p-4 border-t border-[var(--border-primary)] space-y-4 animate-fade-in-up" style={{animationDuration: '0.3s'}}>
                     <div>
                         <h4 className="text-xs font-semibold uppercase text-[var(--text-muted)] flex items-center gap-2 mb-2"><PriceRangeIcon /> Price Suggestion</h4>
-                        <p className="font-semibold text-lg text-[var(--text-primary)]">{priceRange.currency} {priceRange.min} - {priceRange.max}</p>
+                        <p className="font-semibold text-lg text-[var(--text-primary)]">
+  {formatCurrency(
+    convertPrice(priceRange.min, priceRange.currency, currency),
+    currency
+  )}
+  {" - "}
+  {formatCurrency(
+    convertPrice(priceRange.max, priceRange.currency, currency),
+    currency
+  )}
+</p>
                     </div>
                     <div>
                         <h4 className="text-xs font-semibold uppercase text-[var(--text-muted)] flex items-center gap-2 mb-2"><ControlsIcon /> Attributes</h4>
@@ -310,11 +322,12 @@ const CatalogPage: React.FC<CatalogPageProps> = ({ labeledItems, onDeleteItems, 
                                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                                         {items.map(item => (
                                             <CatalogCard
-                                                key={item.id}
-                                                item={item}
-                                                isSelected={selectedItems.has(item.id)}
-                                                onToggleSelect={(isSelected) => handleToggleItemSelected(item.id, isSelected)}
-                                            />
+  key={item.id}
+  item={item}
+  currency={currency}
+  isSelected={selectedItems.has(item.id)}
+  onToggleSelect={(isSelected) => handleToggleItemSelected(item.id, isSelected)}
+/>
                                         ))}
                                     </div>
                                 )}
