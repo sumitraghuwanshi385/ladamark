@@ -127,6 +127,12 @@ const unsubAuth = onAuthStateChanged(auth, async (user) => {
     setIsAuthenticated(true);
 setIsLoadingAuth(false);
 
+setProfile({
+  name: user.displayName || user.email?.split("@")[0] || "User",
+  profilePic: user.photoURL || DEFAULT_PROFILE_PIC,
+  email: user.email || '',
+});
+
     const userDocRef = doc(db, "users", user.uid);
     const snap = await getDoc(userDocRef);
 
