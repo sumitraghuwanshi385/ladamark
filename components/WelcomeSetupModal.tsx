@@ -31,21 +31,14 @@ const [isSaving, setIsSaving] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleSave = async () => {
-  try {
-    setIsSaving(true);
+  const handleSave = () => {
+  setIsSaving(true);
 
-    await onClose(
-      { name: name.trim() || 'User', profilePic: profilePicPreview },
-      currency,
-      avatarFile
-    );
-
-  } catch (e) {
-    console.error(e);
-  } finally {
-    setIsSaving(false); // 🔥 MOST IMPORTANT
-  }
+  onClose(
+    { name: name.trim() || 'User', profilePic: profilePicPreview },
+    currency,
+    avatarFile
+  );
 };
 
   const handlePicChange = (e: React.ChangeEvent<HTMLInputElement>) => {
