@@ -612,43 +612,41 @@ try {
 const fd = new FormData();
 fd.append('name', draftName.trim() || 'User');
 if (avatarFile) {
-  fd.append('avatar', avatarFile);
+  try {
+    fd.append('avatar', avatarFile);
 
-  fetch(`${BACKEND_URL}/api/update-profile`, {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${token}` },
-    body: fd,
-  })
-    .then(res => res.json())
-    .then(json => {
-      if (!json?.ok) {
-        addToast(json?.error || 'Profile update failed', 'error');
-        return;
-      }
-
-      const nextName = draftName.trim() || 'User';
-      const newProfilePic = json?.profile?.profilePic || draftPicPreview;
-
-      props.setProfile({
-        ...props.profile,
-        name: nextName,
-        profilePic: newProfilePic,
-      });
-
-      // ✅ Firestore update
-      updateDoc(doc(db, 'users', user.uid), {
-        profilePic: newProfilePic,
-      }).catch(console.error);
-    })
-    .catch(err => {
-      console.error("Upload error:", err);
-      addToast("Upload failed", "error");
+    const res = await fetch(`${BACKEND_URL}/api/update-profile`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}` },
+      body: fd,
     });
 
-  // ✅ yahi hona chahiye
-  setAvatarFile(null);
-}
+    const json = await res.json();
 
+    if (!json?.ok) {
+      throw new Error(json?.error || 'Profile update failed');
+    }
+
+    const nextName = draftName.trim() || 'User';
+    const newProfilePic = json?.profile?.profilePic || draftPicPreview;
+
+    props.setProfile({
+      ...props.profile,
+      name: nextName,
+      profilePic: newProfilePic,
+    });
+
+    await updateDoc(doc(db, 'users', user.uid), {
+      profilePic: newProfilePic,
+    });
+
+    setAvatarFile(null);
+
+  } catch (err) {
+    console.error("Upload error:", err);
+    addToast("Upload failed", "error");
+  }
+}
       let messages = [];
 
 if (draftName !== props.profile.name) {
