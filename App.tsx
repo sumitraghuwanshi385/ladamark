@@ -94,8 +94,8 @@ const App: React.FC = () => {
 
   const [currency, setCurrency] = useLocalStorage('app-currency', 'USD');
   const [profile, setProfile] = useState<UserProfile>({
-  name: 'Guest',
-  profilePic: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop',
+  name: 'Ladamark User',
+  profilePic: 'https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || "User")}&background=ff0000&color=fff',
   email: '', 
 });
   const [categoryFilter, setCategoryFilter] = useState('all');
@@ -204,24 +204,16 @@ if (!localStorage.getItem("themeLoaded")) {
   const currentMonthStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
 
   // DAILY
-  let dailyCount = data?.usage?.daily?.count || 0;
-  if (data?.usage?.daily?.date !== todayStr) {
-    dailyCount = 0;
+let dailyCount = data?.usage?.daily?.count || 0;
+if (data?.usage?.daily?.date !== todayStr) {
+  dailyCount = 0;
+}
 
-    await updateDoc(userDocRef, {
-      'usage.daily': { date: todayStr, count: 0 }
-    });
-  }
-
-  // MONTHLY
-  let monthlyCount = data?.usage?.monthly?.count || 0;
-  if (data?.usage?.monthly?.month !== currentMonthStr) {
-    monthlyCount = 0;
-
-    await updateDoc(userDocRef, {
-      'usage.monthly': { month: currentMonthStr, count: 0 }
-    });
-  }
+// MONTHLY
+let monthlyCount = data?.usage?.monthly?.count || 0;
+if (data?.usage?.monthly?.month !== currentMonthStr) {
+  monthlyCount = 0;
+}
 
   const isPro = data?.plan === 'pro';
 
