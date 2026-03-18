@@ -135,7 +135,7 @@ const [quota, setQuota] = useState({
           await setDoc(userDocRef, {
             email: user.email,
             name: user.displayName || user.email?.split("@")[0] || "User",
-            profilePic: user.photoURL || DEFAULT_PROFILE_PIC,
+            profilePic: user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || "User")}&background=ff0000&color=fff`,
             plan: "free",
             createdAt: new Date().toISOString(),
             usage: {
@@ -169,14 +169,18 @@ const [quota, setQuota] = useState({
   // ✅ profile
   setProfile({
     name: data.name || user.displayName || 'User',
-    profilePic: data.profilePic || user.photoURL || DEFAULT_PROFILE_PIC,
+    profilePic: data.profilePic 
+  ? data.profilePic 
+  : `https://ui-avatars.com/api/?name=${encodeURIComponent(data.name || 'User')}&background=ff0000&color=fff`,
     email: data.email || user.email || '',
   });
 
   // ✅ settings
   const settings = data.settings || {};
   setCurrency(settings.currency || 'USD');
-  setTheme(settings.theme || 'light');
+  if (settings.theme && settings.theme !== theme) {
+  setTheme(settings.theme);
+}
 
   // =========================
   // 🔥 QUOTA LOGIC
