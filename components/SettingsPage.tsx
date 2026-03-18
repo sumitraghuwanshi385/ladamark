@@ -636,17 +636,14 @@ fetch(`${BACKEND_URL}/api/update-profile`, {
       profilePic: newProfilePic,
     });
 
+  updateDoc(doc(db, 'users', user.uid), {
+      profilePic: newProfilePic,
+    }).catch(console.error);
   })
   .catch(err => {
     console.error("Upload error:", err);
     addToast("Upload failed", "error");
   });
-
-// ✅ Firestore sync
-updateDoc(doc(db, 'users', user.uid), {
-  profilePic: newProfilePic,
-}).catch(console.error);
-
         setAvatarFile(null);
       }
 
