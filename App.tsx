@@ -163,6 +163,8 @@ const unsubAuth = onAuthStateChanged(auth, async (user) => {
     // live sync user doc  
   unsubUserDoc = onSnapshot(userDocRef, async (docSnap) => {
 
+setIsLoadingAuth(false);
+
 const data: any = docSnap.data() || {};
 
 // ✅ plan
