@@ -27,12 +27,26 @@ const WelcomeSetupModal: React.FC<WelcomeSetupModalProps> = ({ onClose, initialP
   const [profilePicPreview, setProfilePicPreview] = useState(initialProfile.profilePic);
   const [currency, setCurrency] = useState(initialCurrency);
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
+const [isSaving, setIsSaving] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleSave = () => {
-    onClose({ name: name.trim() || 'User', profilePic: profilePicPreview }, currency, avatarFile);
-  };
+  const handleSave = async () => {
+  try {
+    setIsSaving(true);
+
+    await onClose(
+      { name: name.trim() || 'User', profilePic: profilePicPreview },
+      currency,
+      avatarFile
+    );
+
+  } catch (e) {
+    console.error(e);
+  } finally {
+    setIsSaving(false); // 🔥 MOST IMPORTANT
+  }
+};
 
   const handlePicChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -92,11 +106,12 @@ const WelcomeSetupModal: React.FC<WelcomeSetupModalProps> = ({ onClose, initialP
 
         <div className="mt-8">
           <button
-            onClick={handleSave}
-            className="w-full glowing-button flex justify-center py-3.5 px-4 border border-transparent rounded-full shadow-sm text-base font-bold text-white bg-[var(--accent-secondary)] hover:bg-[var(--accent-secondary-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[var(--background-secondary)] focus:ring-[var(--accent-primary)] transition-all duration-300"
-          >
-            Save & Continue
-          </button>
+  onClick={handleSave}
+  disabled={isSaving}
+  className="w-full glowing-button flex justify-center py-3.5 px-4 border border-transparent rounded-full shadow-sm text-base font-bold text-white bg-[var(--accent-secondary)] hover:bg-[var(--accent-secondary-hover)] disabled:opacity-60"
+>
+  {isSaving ? "Saving..." : "Save & Continue"}
+</button>
         </div>
       </div>
     </div>
