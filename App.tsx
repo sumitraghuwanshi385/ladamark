@@ -99,12 +99,16 @@ const App: React.FC = () => {
   email: '', 
 });
   const [categoryFilter, setCategoryFilter] = useState('all');
+const [quota, setQuota] = useState({
+  daily: { used: 0, limit: 5 },
+  monthly: { used: 0, limit: 150 },
+});
 
   useEffect(() => {
     let unsubUserDoc: null | (() => void) = null;
 
     const DEFAULT_PROFILE_PIC =
-      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop";
+  "https://ui-avatars.com/api/?name=User&background=ff0000&color=fff&size=256";
 
     const unsubAuth = onAuthStateChanged(auth, async (user) => {
       try {
@@ -156,26 +160,65 @@ const App: React.FC = () => {
         }
 
         // live sync user doc
-        unsubUserDoc = onSnapshot(userDocRef, (docSnap) => {
+      unsubUserDoc = onSnapshot(userDocRef, async (docSnap) => {
   const data: any = docSnap.data() || {};
 
-  
+  // ✅ plan
   setPlan((data.plan as Plan) || 'free');
 
-  
+  // ✅ profile
   setProfile({
     name: data.name || user.displayName || 'User',
     profilePic: data.profilePic || user.photoURL || DEFAULT_PROFILE_PIC,
     email: data.email || user.email || '',
   });
 
-  
+  // ✅ settings
   const settings = data.settings || {};
-
   setCurrency(settings.currency || 'USD');
-
-  
   setTheme(settings.theme || 'light');
+
+  // =========================
+  // 🔥 QUOTA LOGIC
+  // =========================
+
+  const now = new Date();
+  const todayStr = now.toISOString().split("T")[0];
+  const currentMonthStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+
+  // DAILY
+  let dailyCount = data?.usage?.daily?.count || 0;
+  if (data?.usage?.daily?.date !== todayStr) {
+    dailyCount = 0;
+
+    await updateDoc(userDocRef, {
+      'usage.daily': { date: todayStr, count: 0 }
+    });
+  }
+
+  // MONTHLY
+  let monthlyCount = data?.usage?.monthly?.count || 0;
+  if (data?.usage?.monthly?.month !== currentMonthStr) {
+    monthlyCount = 0;
+
+    await updateDoc(userDocRef, {
+      'usage.monthly': { month: currentMonthStr, count: 0 }
+    });
+  }
+
+  const isPro = data?.plan === 'pro';
+
+  // ✅ FINAL QUOTA SET
+  setQuota({
+    daily: {
+      used: dailyCount,
+      limit: isPro ? 20 : 5,
+    },
+    monthly: {
+      used: monthlyCount,
+      limit: isPro ? 600 : 150,
+    },
+  });
 
   
   if (settings.aiSpeedMode) {
@@ -293,6 +336,7 @@ const App: React.FC = () => {
           currency={currency}
           setCurrency={setCurrency}
           plan={plan}
+quota={quota}
           categoryFilter={categoryFilter}
           setCategoryFilter={setCategoryFilter}
         />
