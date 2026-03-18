@@ -124,6 +124,7 @@ const [quota, setQuota] = useState({
         }
 
         setIsAuthenticated(true);
+setIsLoadingAuth(false);
 
         const userDocRef = doc(db, "users", user.uid);
         const snap = await getDoc(userDocRef);
