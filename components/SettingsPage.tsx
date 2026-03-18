@@ -257,7 +257,7 @@ setTheme: (t: 'light' | 'dark') => void;
             <button
   onClick={() => {
     setDraftTheme('light');
-    props.setTheme('light');
+    setTheme('light');
   }}
   className={`px-3 py-1 text-sm font-semibold rounded-md transition-colors ${draftTheme === 'light' ? 'bg-[var(--background-primary)] text-[var(--text-primary)] shadow-sm' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
 >
@@ -266,7 +266,7 @@ setTheme: (t: 'light' | 'dark') => void;
             <button
   onClick={() => {
     setDraftTheme('dark');
-    props.setTheme('dark');
+    setTheme('dark');
   }}
   className={`px-3 py-1 text-sm font-semibold rounded-md transition-colors ${draftTheme === 'dark' ? 'bg-[var(--background-primary)] text-[var(--text-primary)] shadow-sm' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
 >
@@ -500,30 +500,22 @@ const [hasChanges, setHasChanges] = useState(false);
 
 
 useEffect(() => {
-  if (
+  const isChanged =
     draftName !== props.profile.name ||
     draftCurrency !== props.currency ||
     draftTheme !== props.theme ||
     draftAiSpeedMode !== props.aiSpeedMode ||
     draftShowConfidenceScore !== props.showConfidenceScore ||
-    avatarFile
-  ) {
-    setHasChanges(true);
-  } else {
-    setHasChanges(false);
-  }
+    !!avatarFile;
+
+  setHasChanges(isChanged);
 }, [
   draftName,
   draftCurrency,
   draftTheme,
   draftAiSpeedMode,
   draftShowConfidenceScore,
-  avatarFile,
-  props.profile.name,
-  props.currency,
-  props.theme,
-  props.aiSpeedMode,
-  props.showConfidenceScore
+  avatarFile
 ]);
 
   const handleClearCacheClick = () => {
@@ -661,6 +653,7 @@ setHasChanges(false);
       <GeneralSettingsCard
         draftTheme={draftTheme}
         setDraftTheme={setDraftTheme}
+setTheme={props.setTheme}
         draftCurrency={draftCurrency}
         setDraftCurrency={setDraftCurrency}
         draftAiSpeedMode={draftAiSpeedMode}
