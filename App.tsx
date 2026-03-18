@@ -125,6 +125,11 @@ const [quota, setQuota] = useState({
 
         setIsAuthenticated(true);
 setIsLoadingAuth(false);
+setProfile({
+  name: user.displayName || user.email?.split("@")[0] || "User",
+  profilePic: user.photoURL || DEFAULT_PROFILE_PIC,
+  email: user.email || '',
+});
 
         const userDocRef = doc(db, "users", user.uid);
         const snap = await getDoc(userDocRef);
@@ -168,13 +173,19 @@ setIsLoadingAuth(false);
   setPlan((data.plan as Plan) || 'free');
 
   // ✅ profile
-  setProfile({
-    name: data.name || user.displayName || 'User',
-    profilePic: data.profilePic 
-  ? data.profilePic 
-  : `https://ui-avatars.com/api/?name=${encodeURIComponent(data.name || 'User')}&background=ff0000&color=fff`,
-    email: data.email || user.email || '',
-  });
+  const newProfile = {
+  name: data?.name ?? user.displayName ?? user.email?.split("@")[0] ?? "User",
+  profilePic: data?.profilePic ?? user.photoURL ?? DEFAULT_PROFILE_PIC,
+  email: data?.email ?? user.email ?? '',
+};
+
+if (
+  profile.name !== newProfile.name ||
+  profile.profilePic !== newProfile.profilePic ||
+  profile.email !== newProfile.email
+) {
+  setProfile(newProfile);
+}
 
   // ✅ settings
   const settings = data.settings || {};
@@ -247,7 +258,7 @@ if (!localStorage.getItem("themeLoaded")) {
       unsubAuth();
       if (unsubUserDoc) unsubUserDoc();
     };
-  }, [setCurrency]);
+  }, []);
 
   useEffect(() => {
     document.documentElement.className = theme;
