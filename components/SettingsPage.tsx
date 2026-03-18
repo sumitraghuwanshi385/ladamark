@@ -135,6 +135,7 @@ const ProfileCard: React.FC<{
     const file = e.target.files?.[0];
     if (!file) return;
 
+setIsEditing(true);
     setAvatarFile(file);
     const preview = URL.createObjectURL(file);
     setDraftPicPreview(preview);
@@ -165,7 +166,14 @@ const ProfileCard: React.FC<{
       <div className="mt-6 space-y-4">
         <div>
           <label className="text-sm font-semibold text-[var(--text-secondary)] mb-1.5 block">Full Name</label>
-          <input type="text" value={draftName} onChange={(e) => setDraftName(e.target.value)} className={textInputClass} />
+          <input
+  type="text"
+  value={draftName}
+  onChange={(e) => {
+    setIsEditing(true);
+    setDraftName(e.target.value);
+  }}
+ className={textInputClass} />
         </div>
         <div>
           <label className="text-sm font-semibold text-[var(--text-secondary)] mb-1.5 block">Email Address</label>
@@ -426,12 +434,14 @@ const SettingsPage: React.FC<SettingsPageProps> = (props) => {
   const [draftCurrency, setDraftCurrency] = useState(props.currency);
   const [draftAiSpeedMode, setDraftAiSpeedMode] = useState<AISpeedMode>(props.aiSpeedMode);
   const [draftShowConfidenceScore, setDraftShowConfidenceScore] = useState(props.showConfidenceScore);
+const [isEditing, setIsEditing] = useState(false);
 
   const [draftName, setDraftName] = useState(props.profile.name);
   const [draftPicPreview, setDraftPicPreview] = useState(props.profile.profilePic);
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
 
   const [isSaving, setIsSaving] = useState(false);
+const [hasChanges, setHasChanges] = useState(false);
 
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [modalConfig, setModalConfig] = useState<{
@@ -459,9 +469,39 @@ const SettingsPage: React.FC<SettingsPageProps> = (props) => {
   }, [props.showConfidenceScore]);
 
   useEffect(() => {
+  if (!isEditing) {
     setDraftName(props.profile.name);
     setDraftPicPreview(props.profile.profilePic);
-  }, [props.profile]);
+  }
+}, [props.profile.name, props.profile.profilePic, isEditing]);
+
+
+useEffect(() => {
+  if (
+    draftName !== props.profile.name ||
+    draftCurrency !== props.currency ||
+    draftTheme !== props.theme ||
+    draftAiSpeedMode !== props.aiSpeedMode ||
+    draftShowConfidenceScore !== props.showConfidenceScore ||
+    avatarFile
+  ) {
+    setHasChanges(true);
+  } else {
+    setHasChanges(false);
+  }
+}, [
+  draftName,
+  draftCurrency,
+  draftTheme,
+  draftAiSpeedMode,
+  draftShowConfidenceScore,
+  avatarFile,
+  props.profile.name,
+  props.currency,
+  props.theme,
+  props.aiSpeedMode,
+  props.showConfidenceScore
+]);
 
   const handleClearCacheClick = () => {
     setModalConfig({
@@ -571,13 +611,15 @@ name: draftName.trim() || 'User',
           <p className="text-md text-[var(--text-secondary)]">Manage your account and application preferences.</p>
         </div>
 
-        <button
-          onClick={handleSaveAllChanges}
-          disabled={isSaving}
-          className="px-5 py-2 text-sm font-bold rounded-lg transition-colors bg-[var(--accent-primary)] text-white hover:bg-[var(--accent-primary-hover)] disabled:opacity-60 disabled:cursor-not-allowed"
-        >
-          {isSaving ? 'Saving...' : 'Save Changes'}
-        </button>
+        {hasChanges && (
+  <button
+    onClick={handleSaveAllChanges}
+    disabled={isSaving}
+    className="px-4 py-1.5 text-xs font-bold rounded-md bg-[var(--accent-primary)] text-white hover:opacity-90"
+  >
+    {isSaving ? 'Saving...' : 'Save'}
+  </button>
+)}
       </div>
 
       <ProfileCard
