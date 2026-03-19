@@ -65,8 +65,8 @@ interface SidebarProps {
     userName: string;
     plan: Plan;
 
-    isDarkMode: boolean;
-    toggleTheme: () => void;
+    theme: 'light' | 'dark';
+    setTheme: (theme: 'light' | 'dark') => void;
 }
 
 const NavLink: React.FC<{isActive: boolean; onClick: () => void; children: React.ReactNode; count?: number}> = ({isActive, onClick, children, count}) => (
@@ -87,8 +87,8 @@ const Sidebar: React.FC<SidebarProps> = ({
   onLogout, 
   userName, 
   plan,
-  isDarkMode,
-  toggleTheme
+  theme,
+  setTheme
 }) => {
 
     const handleNav = (targetView: View) => {
@@ -149,32 +149,35 @@ const Sidebar: React.FC<SidebarProps> = ({
                     </div>
                 )}
 
-{/* THEME TOGGLE */}
-<div className="px-2 mb-4 relative z-50">
-  <div className="flex items-center justify-between bg-[var(--background-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5 relative z-50">
-    
-    <div className="flex items-center gap-2 text-sm font-semibold text-[var(--text-primary)]">
-      {isDarkMode ? '🌙 Dark Mode' : '☀️ Light Mode'}
-    </div>
 
+{/* THEME SWITCH */}
+<div className="px-2 mb-4">
+  <div className="flex items-center justify-between bg-[var(--background-primary)] border border-[var(--border-primary)] rounded-xl p-1">
+    
     <button
-      onClick={(e) => {
-        e.stopPropagation();
-        toggleTheme();
-      }}
-      className={`relative w-11 h-6 rounded-full transition-colors duration-300 ${
-        isDarkMode ? 'bg-[var(--accent-primary)]' : 'bg-gray-300'
+      onClick={() => setTheme('light')}
+      className={`w-1/2 px-3 py-1.5 text-sm font-semibold rounded-lg transition ${
+        theme === 'light'
+          ? 'bg-[var(--background-secondary)] text-[var(--text-primary)] shadow-sm'
+          : 'text-[var(--text-secondary)]'
       }`}
     >
-      <span
-        className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-md transform transition-transform duration-300 ${
-          isDarkMode ? 'translate-x-5' : ''
-        }`}
-      />
+      ☀️ Light
+    </button>
+
+    <button
+      onClick={() => setTheme('dark')}
+      className={`w-1/2 px-3 py-1.5 text-sm font-semibold rounded-lg transition ${
+        theme === 'dark'
+          ? 'bg-[var(--background-secondary)] text-[var(--text-primary)] shadow-sm'
+          : 'text-[var(--text-secondary)]'
+      }`}
+    >
+      🌙 Dark
     </button>
 
   </div>
-</div>
+</div>>
 
                 <div className="space-y-1.5 border-t border-[var(--border-primary)] pt-3 mt-auto">
                      <NavLink isActive={view === 'controls' || view === 'payment-details'} onClick={() => handleNav('controls')}>
