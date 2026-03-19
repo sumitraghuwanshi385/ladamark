@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { type LabeledItem } from './MainApplication';
 import ConfirmationModal from './ConfirmationModal';
 
@@ -84,6 +84,25 @@ const HistoryTableRow: React.FC<{ item: LabeledItem, onDelete: () => void, onRea
 // --- MAIN PAGE COMPONENT ---
 const HistoryPage: React.FC<HistoryPageProps> = ({ labeledItems, onDeleteItems, onReanalyzeItem }) => {
     const [searchQuery, setSearchQuery] = useState('');
+const [openStatus, setOpenStatus] = useState(false);
+const [openDate, setOpenDate] = useState(false);
+
+const statusRef = useRef<HTMLDivElement>(null);
+const dateRef = useRef<HTMLDivElement>(null);
+useEffect(() => {
+  const handleClickOutside = (e: MouseEvent) => {
+    if (statusRef.current && !statusRef.current.contains(e.target as Node)) {
+      setOpenStatus(false);
+    }
+    if (dateRef.current && !dateRef.current.contains(e.target as Node)) {
+      setOpenDate(false);
+    }
+  };
+
+  document.addEventListener('mousedown', handleClickOutside);
+  return () => document.removeEventListener('mousedown', handleClickOutside);
+}, []);
+
     const [statusFilter, setStatusFilter] = useState<StatusType | 'all'>('all');
     const [dateFilter, setDateFilter] = useState('all');
     const [startDate, setStartDate] = useState('');
@@ -235,33 +254,109 @@ const HistoryPage: React.FC<HistoryPageProps> = ({ labeledItems, onDeleteItems, 
             </div>
             
             <div className="bg-[var(--background-secondary)] border border-[var(--border-primary)] rounded-2xl p-4 sm:p-6 space-y-4">
-                <div className="flex flex-col sm:flex-row gap-4">
-                    <div className="relative flex-grow">
-                        <input
-                            type="text"
-                            placeholder="Search by product name or tag..."
-                            value={searchQuery}
-                            onChange={e => setSearchQuery(e.target.value)}
-                            className="w-full bg-[var(--background-primary)] border border-[var(--border-secondary)] rounded-md py-2 px-4 text-sm text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]"
-                        />
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <FilterSelect value={statusFilter} onChange={e => setStatusFilter(e.target.value as any)}>
-                            <option value="all">All Statuses</option>
-                            <option value="Labeled">Labeled</option>
-                            <option value="Needs Review">Needs Review</option>
-                            <option value="Incomplete">Incomplete</option>
-                        </FilterSelect>
-                         <FilterSelect value={dateFilter} onChange={e => setDateFilter(e.target.value)}>
-                            <option value="all">All Time</option>
-                            <option value="today">Today</option>
-                            <option value="yesterday">Yesterday</option>
-                            <option value="7d">Last 7 Days</option>
-                            <option value="30d">Last 30 Days</option>
-                            <option value="custom">Custom Range</option>
-                        </FilterSelect>
-                    </div>
-                </div>
+              <div className="flex flex-col sm:flex-row items-center gap-4">
+
+{/* SEARCH */}
+<div className="relative flex-grow group">
+  <input
+    type="text"
+    placeholder="Search by product name or tag..."
+    value={searchQuery}
+    onChange={e => setSearchQuery(e.target.value)}
+    className="w-full bg-[var(--background-primary)] border border-[var(--border-secondary)] rounded-md py-2 pl-4 pr-10 text-sm text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]"
+  />
+
+  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+    <svg
+      className="w-4 h-4 text-[var(--text-muted)] group-focus-within:text-[var(--accent-primary)]"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+    >
+      <circle cx="11" cy="11" r="8"/>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+    </svg>
+  </div>
+</div>
+
+{/* DROPDOWNS */}
+<div className="flex items-center gap-2 w-full sm:w-auto">
+
+{/* STATUS */}
+<div ref={statusRef} className="relative w-full sm:w-48">
+  <button
+    onClick={(e) => {
+      e.stopPropagation();
+      setOpenStatus(prev => !prev);
+    }}
+    className="w-full flex items-center justify-between bg-[var(--background-primary)] border border-[var(--border-secondary)] rounded-md py-2 px-3 text-sm text-[var(--text-primary)]"
+  >
+    <span>{statusFilter === 'all' ? 'All Status' : statusFilter}</span>
+    <ChevronDownIcon className={`w-4 h-4 transition ${openStatus ? 'rotate-180' : ''}`} />
+  </button>
+
+  {openStatus && (
+    <div className="absolute mt-2 w-full bg-[var(--background-secondary)] border border-[var(--border-primary)] rounded-xl shadow-xl z-50">
+      {['all','Labeled','Needs Review','Incomplete'].map(opt => (
+        <div
+          key={opt}
+          onClick={() => {
+            setStatusFilter(opt as any);
+            setOpenStatus(false);
+          }}
+          className="px-3 py-2 text-sm cursor-pointer hover:bg-[var(--background-hover)]"
+        >
+          <div className="flex justify-between">
+            <span>{opt === 'all' ? 'All Status' : opt}</span>
+            {statusFilter === opt && <span>✓</span>}
+          </div>
+        </div>
+      ))}
+    </div>
+  )}
+</div>
+
+{/* DATE */}
+<div ref={dateRef} className="relative w-full sm:w-48">
+  <button
+    onClick={(e) => {
+      e.stopPropagation();
+      setOpenDate(prev => !prev);
+    }}
+    className="w-full flex items-center justify-between bg-[var(--background-primary)] border border-[var(--border-secondary)] rounded-md py-2 px-3 text-sm text-[var(--text-primary)]"
+  >
+    <span>{dateFilter === 'all' ? 'All Time' : dateFilter}</span>
+    <ChevronDownIcon className={`w-4 h-4 transition ${openDate ? 'rotate-180' : ''}`} />
+  </button>
+
+  {openDate && (
+    <div className="absolute mt-2 w-full bg-[var(--background-secondary)] border border-[var(--border-primary)] rounded-xl shadow-xl z-50">
+      {['all','today','yesterday','7d','30d','custom'].map(opt => (
+        <div
+          key={opt}
+          onClick={() => {
+            setDateFilter(opt);
+            setOpenDate(false);
+          }}
+          className="px-3 py-2 text-sm cursor-pointer hover:bg-[var(--background-hover)] capitalize"
+        >
+          <div className="flex justify-between">
+            <span>
+              {opt === 'all' ? 'All Time' :
+               opt === '7d' ? 'Last 7 Days' :
+               opt === '30d' ? 'Last 30 Days' : opt}
+            </span>
+            {dateFilter === opt && <span>✓</span>}
+          </div>
+        </div>
+      ))}
+    </div>
+  )}
+</div>
+
+</div>
+</div>
                 {dateFilter === 'custom' && (
                     <div className="flex flex-col sm:flex-row items-center gap-2 animate-fade-in-up" style={{animationDuration: '0.3s'}}>
                         <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} className="w-full sm:w-auto bg-[var(--background-primary)] border border-[var(--border-secondary)] rounded-lg py-2 px-3 text-sm text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)] transition-colors" />
