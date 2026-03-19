@@ -64,6 +64,9 @@ interface SidebarProps {
     onLogout: () => void;
     userName: string;
     plan: Plan;
+
+    isDarkMode: boolean;
+    toggleTheme: () => void;
 }
 
 const NavLink: React.FC<{isActive: boolean; onClick: () => void; children: React.ReactNode; count?: number}> = ({isActive, onClick, children, count}) => (
@@ -75,8 +78,19 @@ const NavLink: React.FC<{isActive: boolean; onClick: () => void; children: React
     </button>
 );
 
-const Sidebar: React.FC<SidebarProps> = ({ view, setView, onClose, labeledItemsCount, pendingFilesCount, onLogout, userName, plan }) => {
-    
+const Sidebar: React.FC<SidebarProps> = ({ 
+  view, 
+  setView, 
+  onClose, 
+  labeledItemsCount, 
+  pendingFilesCount, 
+  onLogout, 
+  userName, 
+  plan,
+  isDarkMode,
+  toggleTheme
+}) => {
+
     const handleNav = (targetView: View) => {
         setView(targetView);
         onClose();
@@ -134,6 +148,30 @@ const Sidebar: React.FC<SidebarProps> = ({ view, setView, onClose, labeledItemsC
                         </button>
                     </div>
                 )}
+
+{/* THEME TOGGLE */}
+<div className="px-2 mb-4">
+  <div className="flex items-center justify-between bg-[var(--background-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5">
+    
+    <div className="flex items-center gap-2 text-sm font-semibold text-[var(--text-primary)]">
+      {isDarkMode ? '🌙 Dark Mode' : '☀️ Light Mode'}
+    </div>
+
+    <button
+      onClick={toggleTheme}
+      className={`relative w-11 h-6 rounded-full transition-colors duration-300 ${
+        isDarkMode ? 'bg-[var(--accent-primary)]' : 'bg-gray-300'
+      }`}
+    >
+      <span
+        className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-md transform transition-transform duration-300 ${
+          isDarkMode ? 'translate-x-5' : ''
+        }`}
+      />
+    </button>
+
+  </div>
+</div>
 
                 <div className="space-y-1.5 border-t border-[var(--border-primary)] pt-3 mt-auto">
                      <NavLink isActive={view === 'controls' || view === 'payment-details'} onClick={() => handleNav('controls')}>
