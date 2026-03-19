@@ -329,13 +329,28 @@ useEffect(() => {
 
             <div className="bg-[var(--background-primary)] border border-[var(--border-primary)] rounded-2xl p-4 space-y-4">
                 <div className="flex flex-col md:flex-row items-center gap-4">
-                    <input
-                        type="search"
-                        placeholder="Search by product name or attribute..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full md:w-auto flex-grow bg-[var(--background-secondary)] border border-[var(--border-secondary)] rounded-lg py-2.5 px-4 text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)] transition-colors"
-                    />
+                    <div className="relative w-full md:w-auto flex-grow">
+  <input
+    type="search"
+    placeholder="Search by product name or attribute..."
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+    className="w-full bg-[var(--background-secondary)] border border-[var(--border-secondary)] rounded-lg py-2.5 pl-4 pr-10 text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)] transition-colors"
+  />
+
+  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+    <svg
+      className="w-4 h-4 text-[var(--text-muted)]"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+    >
+      <circle cx="11" cy="11" r="8"/>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+    </svg>
+  </div>
+</div>
                      <div ref={categoryRef} className="relative w-full md:w-48">
   <button
     onClick={() => setOpenCategory(prev => !prev)}
