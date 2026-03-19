@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { increment } from 'firebase/firestore';
 import AppHeader from './AppHeader';
 import Dashboard from './Dashboard';
 import AILabellingPage from './AILabellingPage';
@@ -354,9 +355,9 @@ const todayStr = now.toISOString().split("T")[0];
 const currentMonthStr = todayStr.substring(0, 7);
 
 await updateDoc(userRef, {
-  'usage.daily.count': (usage.daily.count || 0) + 1,
+  'usage.daily.count': increment(1),
   'usage.daily.date': todayStr,
-  'usage.monthly.count': (usage.monthly.count || 0) + 1,
+  'usage.monthly.count': increment(1),
   'usage.monthly.month': currentMonthStr,
 });
 
