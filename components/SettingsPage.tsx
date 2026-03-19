@@ -435,11 +435,15 @@ const DataPrivacyCard: React.FC<{
 
 const DangerZoneCard: React.FC<{
   onClearCacheClick: () => void;
-  onDeleteAccountClick: () => void;
   labeledItemsCount: number;
-}> = ({ onClearCacheClick, onDeleteAccountClick, labeledItemsCount }) => (
+  isClearing: boolean;
+}> = ({ onClearCacheClick, labeledItemsCount, isClearing }) => (
+
   <div className="bg-red-900/10 dark:bg-red-500/5 border border-red-500/20 rounded-2xl p-6 space-y-4">
-    <h3 className="text-xl font-bold text-[var(--text-primary)]">Data Management</h3>
+    <div className="flex items-center gap-2">
+  <LockClosedIcon className="w-5 h-5 text-[var(--accent-primary)]" />
+  <h3 className="text-xl font-bold text-[var(--text-primary)]">Data Management</h3>
+</div>
 
     <div className="flex flex-col md:flex-row items-start justify-between gap-4 p-4 bg-[var(--background-primary)] rounded-lg border border-red-500/20">
       <div>
@@ -449,9 +453,22 @@ const DangerZoneCard: React.FC<{
           This action cannot be undone.
         </p>
       </div>
-      <button onClick={onClearCacheClick} className="flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-lg transition-colors bg-red-600/80 text-white hover:bg-red-600 flex-shrink-0">
-        <TrashIcon className="w-4 h-4" /> Clear History
-      </button>
+      <button
+  onClick={onClearCacheClick}
+  disabled={isClearing}
+  className="flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-lg transition-colors bg-red-600/80 text-white hover:bg-red-600 flex-shrink-0 disabled:opacity-60 disabled:cursor-not-allowed"
+>
+  {isClearing ? (
+    <>
+      <span className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></span>
+      Clearing...
+    </>
+  ) : (
+    <>
+      <TrashIcon className="w-4 h-4" /> Clear History
+    </>
+  )}
+</button>
     </div>
   </div>
 );
@@ -470,6 +487,7 @@ const [isEditing, setIsEditing] = useState(false);
   const [draftName, setDraftName] = useState(props.profile.name);
   const [draftPicPreview, setDraftPicPreview] = useState(props.profile.profilePic);
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
+const [isClearing, setIsClearing] = useState(false);
 
   const [isSaving, setIsSaving] = useState(false);
 const [hasChanges, setHasChanges] = useState(false);
@@ -527,28 +545,21 @@ useEffect(() => {
 ]);
 
   const handleClearCacheClick = () => {
-    setModalConfig({
-      isOpen: true,
-      title: 'Are you sure?',
-      message: 'This will permanently delete your full history (Firestore + Cloudinary). This action cannot be undone.',
-      onConfirm: () => {
-        onClearCache();
+  setModalConfig({
+    isOpen: true,
+    title: 'Are you sure?',
+    message: 'This will permanently delete your full history. This action cannot be undone.',
+    onConfirm: async () => {
+      setIsClearing(true);
+      try {
+        await onClearCache();
+      } finally {
+        setIsClearing(false);
         setModalConfig(prev => ({ ...prev, isOpen: false }));
-      },
-    });
-  };
-
-  const handleDeleteAccountClick = () => {
-    setModalConfig({
-      isOpen: true,
-      title: 'Delete Your Account?',
-      message: 'This will permanently delete your account and all data. This is irreversible. Are you sure you want to proceed?',
-      onConfirm: () => {
-        addToast('Account deletion not implemented yet.', 'error');
-        setModalConfig(prev => ({ ...prev, isOpen: false }));
-      },
-    });
-  };
+      }
+    },
+  });
+};
 
   const handleSaveAllChanges = async () => {
     const user = auth.currentUser;
@@ -728,10 +739,10 @@ setTheme={props.setTheme}
       <DataPrivacyCard setView={props.setView} onExportClick={() => setIsExportModalOpen(true)} />
 
       <DangerZoneCard
-        onClearCacheClick={handleClearCacheClick}
-        onDeleteAccountClick={handleDeleteAccountClick}
-        labeledItemsCount={props.labeledItems.length}
-      />
+  onClearCacheClick={handleClearCacheClick}
+  labeledItemsCount={props.labeledItems.length}
+  isClearing={isClearing}
+/>
 
       {isExportModalOpen && (
         <ExportModal
