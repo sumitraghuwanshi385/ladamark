@@ -646,7 +646,7 @@ try {
   console.error("Upload error:", err);
   addToast("Upload failed", "error");
 }
-}
+
       let messages = [];
 
 if (draftName !== props.profile.name) {
