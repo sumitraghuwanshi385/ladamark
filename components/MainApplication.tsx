@@ -347,19 +347,6 @@ const MainApplication: React.FC<MainApplicationProps> = ({
       throw new Error(json?.error || 'Save failed');
     }
 
-// 🔥 UPDATE USAGE (EXACT LOCATION)
-const userRef = doc(db, 'users', user.uid);
-
-const now = new Date();
-const todayStr = now.toISOString().split("T")[0];
-const currentMonthStr = todayStr.substring(0, 7);
-
-await updateDoc(userRef, {
-  'usage.daily.count': increment(1),
-  'usage.daily.date': todayStr,
-  'usage.monthly.count': increment(1),
-  'usage.monthly.month': currentMonthStr,
-});
 
     handleRemovePendingFile(file);
     addToast('Saved to cloud catalog.', 'success');
