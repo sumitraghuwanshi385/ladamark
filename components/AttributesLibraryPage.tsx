@@ -206,6 +206,26 @@ const ProductAttributesCard: React.FC<{
 
 const AttributesLibraryPage: React.FC<AttributesLibraryPageProps> = ({ labeledItems, onUpdateItem, addToast }) => {
     const [searchQuery, setSearchQuery] = useState('');
+const [openCategory, setOpenCategory] = useState(false);
+const [openDate, setOpenDate] = useState(false);
+
+const categoryRef = useRef<HTMLDivElement>(null);
+const dateRef = useRef<HTMLDivElement>(null);
+
+useEffect(() => {
+  const handleClickOutside = (e: MouseEvent) => {
+    if (categoryRef.current && !categoryRef.current.contains(e.target as Node)) {
+      setOpenCategory(false);
+    }
+    if (dateRef.current && !dateRef.current.contains(e.target as Node)) {
+      setOpenDate(false);
+    }
+  };
+
+  document.addEventListener('mousedown', handleClickOutside);
+  return () => document.removeEventListener('mousedown', handleClickOutside);
+}, []);
+
     const [categoryFilter, setCategoryFilter] = useState('all');
     const [dateFilter, setDateFilter] = useState('all');
     const [startDate, setStartDate] = useState('');
@@ -316,24 +336,78 @@ const AttributesLibraryPage: React.FC<AttributesLibraryPageProps> = ({ labeledIt
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="w-full md:w-auto flex-grow bg-[var(--background-secondary)] border border-[var(--border-secondary)] rounded-lg py-2.5 px-4 text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)] transition-colors"
                     />
-                     <select 
-                        value={categoryFilter}
-                        onChange={(e) => setCategoryFilter(e.target.value)}
-                        className="w-full md:w-auto bg-[var(--background-secondary)] border border-[var(--border-secondary)] rounded-lg py-2.5 px-3 text-[var(--text-primary)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)] transition-colors"
-                    >
-                        <option value="all">All Categories</option>
-                        {allCategories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
-                    </select>
-                    <select 
-                        value={dateFilter}
-                        onChange={(e) => setDateFilter(e.target.value)}
-                        className="w-full md:w-auto bg-[var(--background-secondary)] border border-[var(--border-secondary)] rounded-lg py-2.5 px-3 text-[var(--text-primary)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)] transition-colors"
-                    >
-                        <option value="all">All Time</option>
-                        <option value="today">Today</option>
-                        <option value="yesterday">Yesterday</option>
-                        <option value="custom">Custom Range</option>
-                    </select>
+                     <div ref={categoryRef} className="relative w-full md:w-48">
+  <button
+    onClick={() => setOpenCategory(prev => !prev)}
+    className="w-full flex items-center justify-between bg-[var(--background-secondary)] border border-[var(--border-secondary)] rounded-lg py-2.5 px-3 text-sm text-[var(--text-primary)] hover:border-[var(--accent-primary)] transition"
+  >
+    <span>{categoryFilter === 'all' ? 'All Categories' : categoryFilter}</span>
+    <ChevronDownIcon className={`w-4 h-4 transition ${openCategory ? 'rotate-180' : ''}`} />
+  </button>
+
+  {openCategory && (
+    <div className="absolute mt-2 w-full bg-[var(--background-secondary)] border border-[var(--border-primary)] rounded-xl shadow-xl z-50 overflow-hidden">
+      
+      <div
+        onClick={() => {
+          setCategoryFilter('all');
+          setOpenCategory(false);
+        }}
+        className={`px-3 py-2 text-sm cursor-pointer hover:bg-[var(--background-hover)] ${
+          categoryFilter === 'all' ? 'bg-[var(--accent-bg-muted)] text-[var(--accent-primary)]' : ''
+        }`}
+      >
+        All Categories
+      </div>
+
+      {allCategories.map(cat => (
+        <div
+          key={cat}
+          onClick={() => {
+            setCategoryFilter(cat);
+            setOpenCategory(false);
+          }}
+          className={`px-3 py-2 text-sm cursor-pointer hover:bg-[var(--background-hover)] ${
+            categoryFilter === cat ? 'bg-[var(--accent-bg-muted)] text-[var(--accent-primary)]' : ''
+          }`}
+        >
+          {cat}
+        </div>
+      ))}
+    </div>
+  )}
+</div>
+                    <div ref={dateRef} className="relative w-full md:w-48">
+  <button
+    onClick={() => setOpenDate(prev => !prev)}
+    className="w-full flex items-center justify-between bg-[var(--background-secondary)] border border-[var(--border-secondary)] rounded-lg py-2.5 px-3 text-sm text-[var(--text-primary)] hover:border-[var(--accent-primary)] transition"
+  >
+    <span className="capitalize">
+      {dateFilter === 'all' ? 'All Time' : dateFilter}
+    </span>
+    <ChevronDownIcon className={`w-4 h-4 transition ${openDate ? 'rotate-180' : ''}`} />
+  </button>
+
+  {openDate && (
+    <div className="absolute mt-2 w-full bg-[var(--background-secondary)] border border-[var(--border-primary)] rounded-xl shadow-xl z-50 overflow-hidden">
+      
+      {['all', 'today', 'yesterday', 'custom'].map(option => (
+        <div
+          key={option}
+          onClick={() => {
+            setDateFilter(option);
+            setOpenDate(false);
+          }}
+          className={`px-3 py-2 text-sm cursor-pointer hover:bg-[var(--background-hover)] capitalize ${
+            dateFilter === option ? 'bg-[var(--accent-bg-muted)] text-[var(--accent-primary)]' : ''
+          }`}
+        >
+          {option === 'all' ? 'All Time' : option}
+        </div>
+      ))}
+    </div>
+  )}
+</div>
                 </div>
                  {dateFilter === 'custom' && (
                     <div className="flex flex-col sm:flex-row items-center gap-2 animate-fade-in-up" style={{animationDuration: '0.3s'}}>
