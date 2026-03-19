@@ -173,10 +173,12 @@ const ProductAttributesCard: React.FC<{
 
     return (
         <div className="bg-[var(--background-secondary)] border border-[var(--border-primary)] rounded-2xl p-4 transition-all duration-300 hover:shadow-xl hover:shadow-[var(--accent-shadow)]">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full min-w-0">
                 <img src={item.imageUrl} alt={item.fileName} className="w-16 h-16 object-cover rounded-lg flex-shrink-0 bg-[var(--background-tertiary)]"/>
-                <div className="flex-grow min-w-0">
-                    <h4 className="font-semibold text-md text-[var(--text-primary)] truncate">{item.data.productName}</h4>
+                <div className="flex-1 min-w-0 overflow-hidden">
+                    <h4 className="font-semibold text-md text-[var(--text-primary)] truncate w-full block break-words">
+  {item.data.productName}
+</h4>
                     <p className="text-sm text-[var(--text-muted)]">
                         {attributes.length} attribute{attributes.length !== 1 ? 's' : ''} generated
                     </p>
