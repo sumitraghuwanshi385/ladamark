@@ -150,15 +150,18 @@ const Sidebar: React.FC<SidebarProps> = ({
                 )}
 
 {/* THEME TOGGLE */}
-<div className="px-2 mb-4">
-  <div className="flex items-center justify-between bg-[var(--background-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5">
+<div className="px-2 mb-4 relative z-50">
+  <div className="flex items-center justify-between bg-[var(--background-primary)] border border-[var(--border-primary)] rounded-xl px-3 py-2.5 relative z-50">
     
     <div className="flex items-center gap-2 text-sm font-semibold text-[var(--text-primary)]">
       {isDarkMode ? '🌙 Dark Mode' : '☀️ Light Mode'}
     </div>
 
     <button
-      onClick={toggleTheme}
+      onClick={(e) => {
+        e.stopPropagation();
+        toggleTheme();
+      }}
       className={`relative w-11 h-6 rounded-full transition-colors duration-300 ${
         isDarkMode ? 'bg-[var(--accent-primary)]' : 'bg-gray-300'
       }`}
