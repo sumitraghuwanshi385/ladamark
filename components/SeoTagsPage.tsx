@@ -73,10 +73,10 @@ const ProductSeoCard: React.FC<{
             <div className="flex-grow min-w-0">
                 <h4 className="font-semibold text-md text-[var(--text-primary)] truncate" title={item.data.productName}>{item.data.productName}</h4>
                 <p className="text-sm text-[var(--text-muted)] mt-1">
-                    {item.data.seoKeywords.length} SEO tag{item.data.seoKeywords.length !== 1 ? 's' : ''} generated
-                </p>
+    {(item.data.seoKeywords || []).length} SEO tag{(item.data.seoKeywords || []).length !== 1 ? 's' : ''} generated
+</p>
                 <div className="flex flex-wrap items-center gap-2 mt-2">
-                    {item.data.seoKeywords.map(kw => (
+                    {(item.data.seoKeywords || []).map(kw => (
                          <div key={kw} className={`inline-flex items-center gap-1.5 text-xs font-medium pl-2.5 pr-1 py-1 rounded-full border transition-colors max-w-full ${getSeoColorClasses(kw)}`}>
                             <span className="truncate" title={kw}>{kw}</span>
                             <button onClick={() => onRemoveTagClick(item.id, kw)} className="p-0.5 rounded-full text-[var(--text-muted)] hover:bg-red-500/20 hover:text-red-300 transition-colors flex-shrink-0"><XIcon /></button>
@@ -158,7 +158,7 @@ useEffect(() => {
             const query = searchQuery.toLowerCase();
             if (query && !(
                 item.data.productName.toLowerCase().includes(query) ||
-                item.data.seoKeywords.some(kw => kw.toLowerCase().includes(query))
+                (item.data.seoKeywords || []).some(kw => kw.toLowerCase().includes(query))
             )) {
                 return false;
             }
@@ -168,7 +168,8 @@ useEffect(() => {
     }, [labeledItems, categoryFilter, searchQuery, dateFilter, startDate, endDate]);
 
     const totalSeoTags = useMemo(() => {
-        return filteredItems.reduce((acc, item) => acc + item.data.seoKeywords.length, 0);
+        return filteredItems.reduce((acc, item) => acc + (item.data.seoKeywords || []).length, 0);
+
     }, [filteredItems]);
     
     const getStatTitle = () => {
@@ -219,7 +220,7 @@ useEffect(() => {
     const handleExport = () => {
         let csvContent = "data:text/csv;charset=utf-8,Product Name,SEO Keywords\n";
         filteredItems.forEach(item => {
-            const keywords = `"${item.data.seoKeywords.join(', ')}"`;
+            const keywords = `"${(item.data.seoKeywords || []).join(', ')}"`;
             const productName = `"${item.data.productName.replace(/"/g, '""')}"`;
             csvContent += `${productName},${keywords}\n`;
         });
