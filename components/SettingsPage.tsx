@@ -11,6 +11,11 @@ import { doc, updateDoc, serverTimestamp } from 'firebase/firestore';
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:8080";
 
 // --- ICONS ---
+const ChevronDownIcon = ({className="w-5 h-5"}) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
+  </svg>
+);
 const SettingsIcon = ({ className = "w-6 h-6" }) => <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06-.06a1.65 1.65 0 0 0-.33-1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>;
 const UserCircleIcon = ({ className = "w-5 h-5" }) => <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" /></svg>;
 const EyeIcon = ({ className = "w-5 h-5" }) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}><path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>;
@@ -279,16 +284,18 @@ const [openCurrency, setOpenCurrency] = useState(false);
 
         <SettingRow icon={<CreditCardIcon />} title="Default Currency" description="Set your preferred currency for pricing tools.">
           
-<div className="relative w-40">
+<div className="relative w-48">
   <button
-    onClick={() => setOpenCurrency(!openCurrency)}
-    className="w-full bg-[var(--background-tertiary)] border border-[var(--border-secondary)] rounded-md py-1.5 px-2 text-sm text-left"
+    onClick={() => setOpenCurrency(prev => !prev)}
+    className="w-full flex items-center justify-between bg-[var(--background-tertiary)] border border-[var(--border-secondary)] rounded-lg py-2 px-3 text-sm text-[var(--text-primary)] hover:border-[var(--accent-primary)] transition"
   >
-    {draftCurrency}
+    <span className="truncate">{draftCurrency}</span>
+    <ChevronDownIcon className={`w-4 h-4 transition-transform ${openCurrency ? 'rotate-180' : ''}`} />
   </button>
 
   {openCurrency && (
-    <div className="absolute z-50 mt-1 w-full bg-[var(--background-secondary)] border border-[var(--border-primary)] rounded-md shadow-lg max-h-40 overflow-auto">
+    <div className="absolute mt-2 w-full bg-[var(--background-secondary)] border border-[var(--border-primary)] rounded-xl shadow-xl z-50 overflow-hidden animate-fade-in-up max-h-56 overflow-y-auto">
+      
       {currencies.map(c => (
         <div
           key={c.code}
@@ -296,9 +303,12 @@ const [openCurrency, setOpenCurrency] = useState(false);
             setDraftCurrency(c.code);
             setOpenCurrency(false);
           }}
-          className="px-3 py-2 text-sm hover:bg-[var(--background-hover)] cursor-pointer"
+          className={`px-3 py-2 text-sm cursor-pointer flex justify-between items-center hover:bg-[var(--background-hover)] ${
+            draftCurrency === c.code ? 'bg-[var(--accent-bg-muted)] text-[var(--accent-primary)]' : ''
+          }`}
         >
-          {c.code} - {c.name}
+          <span>{c.code}</span>
+          {draftCurrency === c.code && <CheckIcon className="w-4 h-4" />}
         </div>
       ))}
     </div>
