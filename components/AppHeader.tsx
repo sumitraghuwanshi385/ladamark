@@ -97,7 +97,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ onMenuClick, onLogout, setView, t
 
     return (
         <header className="fixed top-0 left-0 right-0 z-30 bg-[var(--background-secondary-translucent)] backdrop-blur-lg border-b border-[var(--border-primary)]">
-            <div className="container mx-auto px-4 sm:px-6 py-2.5 flex items-center justify-between gap-4">
+            <div className="w-full px-4 sm:px-6 py-2.5 flex items-center justify-between">
                 {/* Left Section */}
                 <div className="flex items-center justify-start">
                     <button onClick={onMenuClick} className="p-2 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--background-tertiary)] transition-colors">
