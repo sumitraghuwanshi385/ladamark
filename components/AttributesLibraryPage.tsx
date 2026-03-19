@@ -332,7 +332,7 @@ const handleExport = () => {
 };
 
     return (
-        <section className="space-y-6 w-full max-w-7xl mx-auto px-4">
+        <section className="space-y-6 w-full px-2 sm:px-4 md:px-6">
              <ConfirmationModal
                 isOpen={modalConfig.isOpen}
                 onClose={() => setModalConfig(prev => ({ ...prev, isOpen: false }))}
@@ -359,7 +359,7 @@ const handleExport = () => {
     Export Attributes
   </button>
 </div>
-            <p className="text-md text-[var(--text-secondary)] w-full">
+            <p className="text-md text-[var(--text-secondary)] max-w-3xl">
                 View and manage all labeled attributes extracted from your images. Click on any attribute key or value to edit it directly.
             </p>
 
@@ -371,8 +371,8 @@ const handleExport = () => {
             </div>
 
             <div className="bg-[var(--background-primary)] border border-[var(--border-primary)] rounded-2xl p-4 space-y-4">
-                <div className="flex flex-col md:flex-row items-center gap-4">
-                    <div className="relative w-full md:w-auto flex-grow">
+                <div className="flex flex-col md:flex-row items-stretch gap-4 w-full">
+                    <div className="relative w-full md:w-auto flex-grow group">
   <input
     type="search"
     placeholder="Search by product name or attribute..."
@@ -394,9 +394,12 @@ const handleExport = () => {
     </svg>
   </div>
 </div>
-                     <div ref={categoryRef} className="relative w-full md:w-48">
+                     <div ref={categoryRef} className="relative w-full md:w-56">
   <button
-    onClick={() => setOpenCategory(prev => !prev)}
+    onClick={(e) => {
+  e.stopPropagation();
+  setOpenCategory(prev => !prev);
+}}
     className="w-full flex items-center justify-between bg-[var(--background-secondary)] border border-[var(--border-secondary)] rounded-lg py-2.5 px-3 text-sm text-[var(--text-primary)] hover:border-[var(--accent-primary)] transition"
   >
     <span>{categoryFilter === 'all' ? 'All Categories' : categoryFilter}</span>
@@ -435,9 +438,12 @@ const handleExport = () => {
     </div>
   )}
 </div>
-                    <div ref={dateRef} className="relative w-full md:w-48">
+                    <div ref={dateRef} className="relative w-full md:w-56">
   <button
-    onClick={() => setOpenDate(prev => !prev)}
+    onClick={(e) => {
+  e.stopPropagation();
+  setOpenDate(prev => !prev);
+}}
     className="w-full flex items-center justify-between bg-[var(--background-secondary)] border border-[var(--border-secondary)] rounded-lg py-2.5 px-3 text-sm text-[var(--text-primary)] hover:border-[var(--accent-primary)] transition"
   >
     <span className="capitalize">
