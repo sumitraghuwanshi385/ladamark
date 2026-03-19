@@ -199,23 +199,6 @@ setIsEditing(true);
   );
 };
 
-const SecurityCard: React.FC<{ setView: (view: View) => void }> = ({ setView }) => (
-  <Card>
-    <CardHeader icon={<LockClosedIcon />} title="Security" />
-    <div className="flex items-center justify-between gap-4 py-4">
-      <div>
-        <h4 className="font-semibold text-[var(--text-primary)]">Password</h4>
-        <p className="text-sm text-[var(--text-secondary)]">Change your password to keep your account secure.</p>
-      </div>
-      <button
-        onClick={() => setView('change-password')}
-        className="px-5 py-2 text-sm font-bold rounded-lg transition-colors bg-[var(--accent-bg-muted)] text-[var(--accent-text-primary)] hover:bg-[var(--accent-bg-subtle)]"
-      >
-        Change Password
-      </button>
-    </div>
-  </Card>
-);
 
 const GeneralSettingsCard: React.FC<{
   draftTheme: 'light' | 'dark';
@@ -456,28 +439,18 @@ const DangerZoneCard: React.FC<{
   labeledItemsCount: number;
 }> = ({ onClearCacheClick, onDeleteAccountClick, labeledItemsCount }) => (
   <div className="bg-red-900/10 dark:bg-red-500/5 border border-red-500/20 rounded-2xl p-6 space-y-4">
-    <h3 className="text-xl font-bold text-red-400">Danger Zone</h3>
+    <h3 className="text-xl font-bold text-[var(--text-primary)]">Data Management</h3>
 
     <div className="flex flex-col md:flex-row items-start justify-between gap-4 p-4 bg-[var(--background-primary)] rounded-lg border border-red-500/20">
       <div>
         <h4 className="font-semibold text-[var(--text-primary)]">Clear History</h4>
         <p className="text-sm text-[var(--text-secondary)] mt-1">
-          This will delete all <strong className="text-red-400">{labeledItemsCount} labeled items</strong> from your account (Firestore + Cloudinary).
+          This will delete all <strong className="text-red-400">{labeledItemsCount} labeled items</strong> from your account permanently.
           This action cannot be undone.
         </p>
       </div>
       <button onClick={onClearCacheClick} className="flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-lg transition-colors bg-red-600/80 text-white hover:bg-red-600 flex-shrink-0">
         <TrashIcon className="w-4 h-4" /> Clear History
-      </button>
-    </div>
-
-    <div className="flex flex-col md:flex-row items-start justify-between gap-4 p-4 bg-[var(--background-primary)] rounded-lg border border-red-500/20">
-      <div>
-        <h4 className="font-semibold text-[var(--text-primary)]">Delete Account</h4>
-        <p className="text-sm text-[var(--text-secondary)] mt-1">Permanently delete your account and all associated data. This action is irreversible.</p>
-      </div>
-      <button onClick={onDeleteAccountClick} className="flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-lg transition-colors bg-red-600 text-white hover:bg-red-500 flex-shrink-0">
-        <TrashIcon className="w-4 h-4" /> Delete Account
       </button>
     </div>
   </div>
@@ -732,8 +705,6 @@ setHasChanges(false);
   setAvatarFile={setAvatarFile}
   setIsEditing={setIsEditing}
 />
-
-      <SecurityCard setView={props.setView} />
 
       <GeneralSettingsCard
         draftTheme={draftTheme}
