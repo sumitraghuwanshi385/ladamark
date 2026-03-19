@@ -101,6 +101,26 @@ const SeoTagsPage: React.FC<{
     addToast: (message: string, type?: 'success' | 'error') => void;
 }> = ({ labeledItems, onUpdateItem, addToast }) => {
     const [searchQuery, setSearchQuery] = useState('');
+const [openCategory, setOpenCategory] = useState(false);
+const [openDate, setOpenDate] = useState(false);
+
+const categoryRef = useRef<HTMLDivElement>(null);
+const dateRef = useRef<HTMLDivElement>(null);
+
+useEffect(() => {
+  const handleClickOutside = (e: MouseEvent) => {
+    if (categoryRef.current && !categoryRef.current.contains(e.target as Node)) {
+      setOpenCategory(false);
+    }
+    if (dateRef.current && !dateRef.current.contains(e.target as Node)) {
+      setOpenDate(false);
+    }
+  };
+
+  document.addEventListener('mousedown', handleClickOutside);
+  return () => document.removeEventListener('mousedown', handleClickOutside);
+}, []);
+
     const [categoryFilter, setCategoryFilter] = useState('all');
     const [dateFilter, setDateFilter] = useState('all');
     const [startDate, setStartDate] = useState('');
@@ -245,31 +265,106 @@ const SeoTagsPage: React.FC<{
             
             <div className="bg-[var(--background-primary)] border border-[var(--border-primary)] rounded-2xl p-4 space-y-4">
                 <div className="flex flex-col md:flex-row items-center gap-4">
-                    <input
-                        type="search"
-                        placeholder="Search by product name or tag..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full md:w-auto flex-grow bg-[var(--background-secondary)] border border-[var(--border-secondary)] rounded-lg py-2.5 px-4 text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)] transition-colors"
-                    />
-                    <select 
-                        value={categoryFilter}
-                        onChange={(e) => setCategoryFilter(e.target.value)}
-                        className="w-full md:w-auto bg-[var(--background-secondary)] border border-[var(--border-secondary)] rounded-lg py-2.5 px-3 text-[var(--text-primary)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)] transition-colors"
-                    >
-                        <option value="all">All Categories</option>
-                        {allCategories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
-                    </select>
-                    <select 
-                        value={dateFilter}
-                        onChange={(e) => setDateFilter(e.target.value)}
-                        className="w-full md:w-auto bg-[var(--background-secondary)] border border-[var(--border-secondary)] rounded-lg py-2.5 px-3 text-[var(--text-primary)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)] transition-colors"
-                    >
-                        <option value="all">All Time</option>
-                        <option value="today">Today</option>
-                        <option value="yesterday">Yesterday</option>
-                        <option value="custom">Custom Range</option>
-                    </select>
+                    <div className="relative w-full md:w-auto flex-grow group">
+  <input
+    type="search"
+    placeholder="Search by product name or tag..."
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+    className="w-full bg-[var(--background-secondary)] border border-[var(--border-secondary)] rounded-lg py-2.5 pl-4 pr-10 text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)] transition-colors"
+  />
+
+  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+    <svg
+      className="w-4 h-4 text-[var(--text-muted)] group-focus-within:text-[var(--accent-primary)]"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+    >
+      <circle cx="11" cy="11" r="8"/>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+    </svg>
+  </div>
+</div>
+                    <div ref={categoryRef} className="relative w-full md:w-56">
+  <button
+    onClick={(e) => {
+      e.stopPropagation();
+      setOpenCategory(prev => !prev);
+    }}
+    className="w-full flex items-center justify-between bg-[var(--background-secondary)] border border-[var(--border-secondary)] rounded-lg py-2.5 px-3 text-sm text-[var(--text-primary)] hover:border-[var(--accent-primary)] transition"
+  >
+    <span>{categoryFilter === 'all' ? 'All Categories' : categoryFilter}</span>
+    <ChevronDownIcon className={`w-4 h-4 transition ${openCategory ? 'rotate-180' : ''}`} />
+  </button>
+
+  {openCategory && (
+    <div className="absolute mt-2 w-full bg-[var(--background-secondary)] border border-[var(--border-primary)] rounded-xl shadow-xl z-50 max-h-60 overflow-y-auto">
+      
+      <div
+        onClick={() => {
+          setCategoryFilter('all');
+          setOpenCategory(false);
+        }}
+        className="px-3 py-2 text-sm cursor-pointer hover:bg-[var(--background-hover)]"
+      >
+        All Categories
+      </div>
+
+      {allCategories.map(cat => (
+        <div
+          key={cat}
+          onClick={() => {
+            setCategoryFilter(cat);
+            setOpenCategory(false);
+          }}
+          className="px-3 py-2 text-sm cursor-pointer hover:bg-[var(--background-hover)]"
+        >
+          <div className="flex justify-between">
+            <span>{cat}</span>
+            {categoryFilter === cat && <span>✓</span>}
+          </div>
+        </div>
+      ))}
+    </div>
+  )}
+</div>
+                    <div ref={dateRef} className="relative w-full md:w-56">
+  <button
+    onClick={(e) => {
+      e.stopPropagation();
+      setOpenDate(prev => !prev);
+    }}
+    className="w-full flex items-center justify-between bg-[var(--background-secondary)] border border-[var(--border-secondary)] rounded-lg py-2.5 px-3 text-sm text-[var(--text-primary)] hover:border-[var(--accent-primary)] transition"
+  >
+    <span className="capitalize">
+      {dateFilter === 'all' ? 'All Time' : dateFilter}
+    </span>
+    <ChevronDownIcon className={`w-4 h-4 transition ${openDate ? 'rotate-180' : ''}`} />
+  </button>
+
+  {openDate && (
+    <div className="absolute mt-2 w-full bg-[var(--background-secondary)] border border-[var(--border-primary)] rounded-xl shadow-xl z-50 max-h-60 overflow-y-auto">
+      
+      {['all', 'today', 'yesterday', 'custom'].map(option => (
+        <div
+          key={option}
+          onClick={() => {
+            setDateFilter(option);
+            setOpenDate(false);
+          }}
+          className="px-3 py-2 text-sm cursor-pointer hover:bg-[var(--background-hover)] capitalize"
+        >
+          <div className="flex justify-between">
+            <span>{option === 'all' ? 'All Time' : option}</span>
+            {dateFilter === option && <span>✓</span>}
+          </div>
+        </div>
+      ))}
+    </div>
+  )}
+</div>
                 </div>
                  {dateFilter === 'custom' && (
                     <div className="flex flex-col sm:flex-row items-center gap-2 animate-fade-in-up" style={{animationDuration: '0.3s'}}>
