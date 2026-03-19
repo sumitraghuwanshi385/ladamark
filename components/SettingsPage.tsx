@@ -611,40 +611,41 @@ try {
 // 🔥 FORM DATA
 const fd = new FormData();
 fd.append('name', draftName.trim() || 'User');
-if (avatarFile) {
-  fd.append('avatar', avatarFile);
 
-  const res = await fetch(`${BACKEND_URL}/api/update-profile`, {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${token}` },
-    body: fd,
-  });
+try {
+  if (avatarFile) {
+    fd.append('avatar', avatarFile);
 
-  const json = await res.json();
-
-  if (!json?.ok) {
-    addToast(json?.error || 'Profile update failed', 'error');
-  } else {
-    const newProfilePic = json?.profile?.profilePic || draftPicPreview;
-
-    props.setProfile({
-      ...props.profile,
-      name: draftName.trim() || 'User',
-      profilePic: newProfilePic,
+    const res = await fetch(`${BACKEND_URL}/api/update-profile`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}` },
+      body: fd,
     });
 
-    await updateDoc(doc(db, 'users', user.uid), {
-      profilePic: newProfilePic,
-    });
+    const json = await res.json();
+
+    if (!json?.ok) {
+      addToast(json?.error || 'Profile update failed', 'error');
+    } else {
+      const newProfilePic = json?.profile?.profilePic || draftPicPreview;
+
+      props.setProfile({
+        ...props.profile,
+        name: draftName.trim() || 'User',
+        profilePic: newProfilePic,
+      });
+
+      await updateDoc(doc(db, 'users', user.uid), {
+        profilePic: newProfilePic,
+      });
+    }
+
+    setAvatarFile(null);
   }
-
-  setAvatarFile(null);
-
-
-  } catch (err) {
-    console.error("Upload error:", err);
-    addToast("Upload failed", "error");
-  }
+} catch (err) {
+  console.error("Upload error:", err);
+  addToast("Upload failed", "error");
+}
 }
       let messages = [];
 
