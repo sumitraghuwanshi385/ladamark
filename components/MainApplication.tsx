@@ -350,6 +350,20 @@ const MainApplication: React.FC<MainApplicationProps> = ({
     addToast('Saved to cloud catalog.', 'success');
   };
 
+// 🔥 UPDATE USAGE (VERY IMPORTANT)
+const userRef = doc(db, 'users', user.uid);
+
+const now = new Date();
+const todayStr = now.toISOString().split("T")[0];
+const currentMonthStr = todayStr.substring(0, 7);
+
+await updateDoc(userRef, {
+  'usage.daily.count': usage.daily.count + 1,
+  'usage.daily.date': todayStr,
+  'usage.monthly.count': usage.monthly.count + 1,
+  'usage.monthly.month': currentMonthStr,
+});
+
   const handleLogoutAndCloseSidebar = () => {
     setIsSidebarOpen(false);
     onLogout();
