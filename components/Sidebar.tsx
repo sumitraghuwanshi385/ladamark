@@ -177,7 +177,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     </button>
 
   </div>
-</div>>
+</div>
 
                 <div className="space-y-1.5 border-t border-[var(--border-primary)] pt-3 mt-auto">
                      <NavLink isActive={view === 'controls' || view === 'payment-details'} onClick={() => handleNav('controls')}>
