@@ -3,6 +3,12 @@ import { type LabeledItem, type AiResponseData, type Attribute } from './MainApp
 import ConfirmationModal from './ConfirmationModal';
 
 // --- ICONS ---
+const DownloadIcon = ({ className = "w-4 h-4" }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+  </svg>
+);
+
 const ControlsIcon = ({className="w-6 h-6"}) => <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M3 4.75h18M3 12h18M3 19.25h18M8.25 2.75v4M15.75 10v4M12 17.25v4" /></svg>;
 const ChevronDownIcon = ({ className = "w-5 h-5" }) => <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>;
 const EditIcon = ({className="w-4 h-4"}) => <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" /></svg>;
@@ -300,6 +306,31 @@ useEffect(() => {
         setModalConfig({ ...config, isOpen: true });
     };
 
+const handleExport = () => {
+  let csvContent = "data:text/csv;charset=utf-8,Product Name,Attribute Key,Attribute Value,Confidence\n";
+
+  filteredItems.forEach(item => {
+    (item.data.attributes || []).forEach(attr => {
+      const row = [
+        `"${item.data.productName.replace(/"/g, '""')}"`,
+        `"${attr.key}"`,
+        `"${attr.value}"`,
+        `${(attr.confidence * 100).toFixed(0)}%`
+      ].join(',');
+
+      csvContent += row + "\n";
+    });
+  });
+
+  const encodedUri = encodeURI(csvContent);
+  const link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", "attributes_export.csv");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
     return (
         <section className="space-y-6 max-w-5xl mx-auto">
              <ConfirmationModal
@@ -313,9 +344,21 @@ useEffect(() => {
                 title={modalConfig.title}
                 message={modalConfig.message}
             />
-            <h2 className="text-xl font-bold text-[var(--text-primary)] flex items-center gap-3">
-                <ControlsIcon className="w-6 h-6 text-[var(--accent-primary)]" /> Attributes Library
-            </h2>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+  <h2 className="text-xl font-bold text-[var(--text-primary)] flex items-center gap-3">
+    <ControlsIcon className="w-6 h-6 text-[var(--accent-primary)]" />
+    Attributes Library
+  </h2>
+
+  <button
+    onClick={handleExport}
+    disabled={filteredItems.length === 0}
+    className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition-colors bg-[var(--accent-primary)] text-white hover:bg-[var(--accent-primary-hover)] disabled:bg-gray-500 disabled:cursor-not-allowed"
+  >
+    <DownloadIcon />
+    Export Attributes
+  </button>
+</div>
             <p className="text-md text-[var(--text-secondary)] max-w-3xl">
                 View and manage all labeled attributes extracted from your images. Click on any attribute key or value to edit it directly.
             </p>
