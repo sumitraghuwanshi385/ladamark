@@ -359,7 +359,7 @@ const handleExport = () => {
     Export Attributes
   </button>
 </div>
-            <p className="text-md text-[var(--text-secondary)] max-w-3xl">
+            <p className="text-md text-[var(--text-secondary)] w-full">
                 View and manage all labeled attributes extracted from your images. Click on any attribute key or value to edit it directly.
             </p>
 
