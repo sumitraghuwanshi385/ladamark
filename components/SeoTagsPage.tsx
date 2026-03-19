@@ -74,16 +74,16 @@ const ProductSeoCard: React.FC<{
     };
 
     return (
-        <div className="bg-[var(--background-secondary)] border border-[var(--border-primary)] rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center gap-4 transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-[var(--accent-shadow)]">
+        <div className="bg-[var(--background-secondary)] border border-[var(--border-primary)] rounded-2xl p-4 flex flex-col sm:flex-row items-start gap-4 w-full transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-[var(--accent-shadow)]">
             <img src={item.imageUrl} alt={item.fileName} className="w-16 h-16 object-cover rounded-lg flex-shrink-0 bg-[var(--background-tertiary)]"/>
-            <div className="flex-grow min-w-0">
-                <h4 className="font-semibold text-md text-[var(--text-primary)] truncate" title={item.data.productName}>{item.data.productName}</h4>
+            <div className="flex-1 min-w-0">
+                <h4 className="font-semibold text-md text-[var(--text-primary)] w-full break-words whitespace-normal leading-snug"> title={item.data.productName}>{item.data.productName}</h4>
                 <p className="text-sm text-[var(--text-muted)] mt-1">
     {(item.data.seoKeywords || []).length} SEO tag{(item.data.seoKeywords || []).length !== 1 ? 's' : ''} generated
 </p>
-                <div className="flex flex-wrap items-center gap-2 mt-2">
+                <div className="flex flex-wrap items-start gap-2 mt-2 w-full">
                     {(item.data.seoKeywords || []).map(kw => (
-                         <div key={kw} className={`inline-flex items-center gap-1.5 text-xs font-medium pl-2.5 pr-1 py-1 rounded-full border transition-colors max-w-full ${getSeoColorClasses(kw)}`}>
+                         <div key={kw} className={`inline-flex items-center gap-1.5 text-xs font-medium pl-2.5 pr-1 py-1 rounded-full border transition-colors max-w-full break-words ${getSeoColorClasses(kw)}`}>
                             <span className="truncate" title={kw}>{kw}</span>
                             <button onClick={() => onRemoveTagClick(item.id, kw)} className="p-0.5 rounded-full text-[var(--text-muted)] hover:bg-red-500/20 hover:text-red-300 transition-colors flex-shrink-0"><XIcon /></button>
                         </div>
@@ -92,7 +92,7 @@ const ProductSeoCard: React.FC<{
                         type="text" 
                         onKeyDown={handleAddTag}
                         placeholder="+ Add tag" 
-                        className="bg-transparent focus:outline-none text-xs text-[var(--text-muted)] placeholder:text-[var(--accent-primary)]/70 p-1 focus:ring-1 focus:ring-[var(--accent-primary)] rounded-sm w-20 flex-grow"
+                        className="bg-transparent focus:outline-none text-xs text-[var(--text-muted)] placeholder:text-[var(--accent-primary)]/70 p-1 focus:ring-1 focus:ring-[var(--accent-primary)] rounded-sm min-w-[80px] flex-grow"
                     />
                 </div>
             </div>
