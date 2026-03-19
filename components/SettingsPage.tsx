@@ -612,35 +612,34 @@ try {
 const fd = new FormData();
 fd.append('name', draftName.trim() || 'User');
 if (avatarFile) {
-  try {
-    fd.append('avatar', avatarFile);
+  fd.append('avatar', avatarFile);
 
-    const res = await fetch(`${BACKEND_URL}/api/update-profile`, {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${token}` },
-      body: fd,
-    });
+  const res = await fetch(`${BACKEND_URL}/api/update-profile`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}` },
+    body: fd,
+  });
 
-    const json = await res.json();
+  const json = await res.json();
 
-    if (!json?.ok) {
-      throw new Error(json?.error || 'Profile update failed');
-    }
-
-    const nextName = draftName.trim() || 'User';
+  if (!json?.ok) {
+    addToast(json?.error || 'Profile update failed', 'error');
+  } else {
     const newProfilePic = json?.profile?.profilePic || draftPicPreview;
 
     props.setProfile({
       ...props.profile,
-      name: nextName,
+      name: draftName.trim() || 'User',
       profilePic: newProfilePic,
     });
 
     await updateDoc(doc(db, 'users', user.uid), {
       profilePic: newProfilePic,
     });
+  }
 
-    setAvatarFile(null);
+  setAvatarFile(null);
+
 
   } catch (err) {
     console.error("Upload error:", err);
