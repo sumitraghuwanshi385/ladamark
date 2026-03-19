@@ -205,14 +205,26 @@ if (!localStorage.getItem("themeLoaded")) {
 
   // DAILY
 let dailyCount = data?.usage?.daily?.count || 0;
+
 if (data?.usage?.daily?.date !== todayStr) {
   dailyCount = 0;
+
+  updateDoc(userDocRef, {
+    'usage.daily.date': todayStr,
+    'usage.daily.count': 0,
+  });
 }
 
 // MONTHLY
 let monthlyCount = data?.usage?.monthly?.count || 0;
+
 if (data?.usage?.monthly?.month !== currentMonthStr) {
   monthlyCount = 0;
+
+  updateDoc(userDocRef, {
+    'usage.monthly.month': currentMonthStr,
+    'usage.monthly.count': 0,
+  });
 }
 
   const isPro = data?.plan === 'pro';
