@@ -565,7 +565,7 @@ currency={currency}
         quota={userQuota}
       />
 
-      <main className="container mx-auto px-6 pt-20 pb-12">
+      <main className="w-full max-w-7xl mx-auto px-4 pt-20 pb-12">
         {renderView()}
       </main>
     </div>
