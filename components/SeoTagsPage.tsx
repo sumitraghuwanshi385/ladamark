@@ -77,7 +77,7 @@ const ProductSeoCard: React.FC<{
         <div className="bg-[var(--background-secondary)] border border-[var(--border-primary)] rounded-2xl p-4 flex flex-col sm:flex-row items-start gap-4 w-full transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-[var(--accent-shadow)]">
             <img src={item.imageUrl} alt={item.fileName} className="w-16 h-16 object-cover rounded-lg flex-shrink-0 bg-[var(--background-tertiary)]"/>
             <div className="flex-1 min-w-0">
-                <h4 className="font-semibold text-md text-[var(--text-primary)] w-full break-words whitespace-normal leading-snug"> title={item.data.productName}>{item.data.productName}</h4>
+                <h4 className="font-semibold text-md text-[var(--text-primary)] w-full break-words whitespace-normal leading-snug" title={item.data.productName}>{item.data.productName}</h4>
                 <p className="text-sm text-[var(--text-muted)] mt-1">
     {(item.data.seoKeywords || []).length} SEO tag{(item.data.seoKeywords || []).length !== 1 ? 's' : ''} generated
 </p>
