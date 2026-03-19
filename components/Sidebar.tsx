@@ -1,5 +1,3 @@
-
-
 import React, { useState } from 'react';
 import { type View } from './MainApplication';
 import { type Plan } from './plans';
