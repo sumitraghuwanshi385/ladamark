@@ -168,6 +168,20 @@ const BulkActionBar: React.FC<{
 
 const CatalogPage: React.FC<CatalogPageProps> = ({ labeledItems, onDeleteItems, categoryFilter, setCategoryFilter, plan, currency }) => {
     const [searchQuery, setSearchQuery] = useState('');
+const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+const dropdownRef = useRef<HTMLDivElement>(null);
+
+useEffect(() => {
+  const handleClickOutside = (e: MouseEvent) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+      setIsDropdownOpen(false);
+    }
+  };
+
+  document.addEventListener('mousedown', handleClickOutside);
+  return () => document.removeEventListener('mousedown', handleClickOutside);
+}, []);
+
     const [collapsedCategories, setCollapsedCategories] = useState<Set<string>>(new Set());
     const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set());
     const [isExportModalOpen, setIsExportModalOpen] = useState(false);
@@ -280,14 +294,50 @@ const CatalogPage: React.FC<CatalogPageProps> = ({ labeledItems, onDeleteItems, 
                             <SearchIcon className="text-[var(--text-muted)] w-4 h-4" />
                         </div>
                     </div>
-                     <select 
-                        value={categoryFilter}
-                        onChange={(e) => setCategoryFilter(e.target.value)}
-                        className="bg-[var(--background-secondary)] border border-[var(--border-primary)] rounded-lg py-2.5 px-3 text-[var(--text-primary)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)] transition-colors"
-                     >
-                        <option value="all">All Categories</option>
-                        {allCategories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
-                    </select>
+                     <div ref={dropdownRef} className="relative w-48">
+  
+  <button
+    onClick={() => setIsDropdownOpen(prev => !prev)}
+    className="w-full flex items-center justify-between bg-[var(--background-secondary)] border border-[var(--border-primary)] rounded-lg py-2.5 px-3 text-sm text-[var(--text-primary)] hover:border-[var(--accent-primary)] transition"
+  >
+    <span className="truncate">
+      {categoryFilter === 'all' ? 'All Categories' : categoryFilter}
+    </span>
+    <ChevronDownIcon className={`w-4 h-4 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
+  </button>
+
+  {isDropdownOpen && (
+    <div className="absolute mt-2 w-full bg-[var(--background-secondary)] border border-[var(--border-primary)] rounded-xl shadow-xl z-50 overflow-hidden animate-fade-in-up">
+      
+      <div
+        onClick={() => {
+          setCategoryFilter('all');
+          setIsDropdownOpen(false);
+        }}
+        className={`px-3 py-2 text-sm cursor-pointer hover:bg-[var(--background-hover)] ${
+          categoryFilter === 'all' ? 'bg-[var(--accent-bg-muted)] text-[var(--accent-primary)]' : ''
+        }`}
+      >
+        All Categories
+      </div>
+
+      {allCategories.map(cat => (
+        <div
+          key={cat}
+          onClick={() => {
+            setCategoryFilter(cat);
+            setIsDropdownOpen(false);
+          }}
+          className={`px-3 py-2 text-sm cursor-pointer hover:bg-[var(--background-hover)] ${
+            categoryFilter === cat ? 'bg-[var(--accent-bg-muted)] text-[var(--accent-primary)]' : ''
+          }`}
+        >
+          {cat}
+        </div>
+      ))}
+    </div>
+  )}
+</div>
                 </div>
             </div>
 
