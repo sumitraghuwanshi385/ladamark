@@ -83,7 +83,16 @@ currency: string;
 
             <div className="p-4">
                 <p className="text-sm font-semibold text-[var(--accent-text-primary)]">{category.value}</p>
-                <h3 className="text-lg font-bold text-[var(--text-primary)] truncate mt-1" title={productName}>{productName}</h3>
+                <h3
+  className={`text-lg font-bold text-[var(--text-primary)] mt-1 ${
+    isExpanded
+      ? 'w-full break-words whitespace-normal leading-snug'
+      : 'truncate'
+  }`}
+  title={productName}
+>
+  {productName}
+</h3>
                 <p className="mt-1 text-sm text-[var(--text-secondary)] line-clamp-2 h-10">{description}</p>
             </div>
 
