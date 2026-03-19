@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { type LabeledItem, type AiResponseData } from './MainApplication';
 import ConfirmationModal from './ConfirmationModal';
 
