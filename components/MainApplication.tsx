@@ -346,11 +346,7 @@ const MainApplication: React.FC<MainApplicationProps> = ({
       throw new Error(json?.error || 'Save failed');
     }
 
-    handleRemovePendingFile(file);
-    addToast('Saved to cloud catalog.', 'success');
-  };
-
-// 🔥 UPDATE USAGE (VERY IMPORTANT)
+// 🔥 UPDATE USAGE (EXACT LOCATION)
 const userRef = doc(db, 'users', user.uid);
 
 const now = new Date();
@@ -358,16 +354,16 @@ const todayStr = now.toISOString().split("T")[0];
 const currentMonthStr = todayStr.substring(0, 7);
 
 await updateDoc(userRef, {
-  'usage.daily.count': usage.daily.count + 1,
+  'usage.daily.count': (usage.daily.count || 0) + 1,
   'usage.daily.date': todayStr,
-  'usage.monthly.count': usage.monthly.count + 1,
+  'usage.monthly.count': (usage.monthly.count || 0) + 1,
   'usage.monthly.month': currentMonthStr,
 });
 
-  const handleLogoutAndCloseSidebar = () => {
-    setIsSidebarOpen(false);
-    onLogout();
+    handleRemovePendingFile(file);
+    addToast('Saved to cloud catalog.', 'success');
   };
+
 
   // ✅ Delete from backend -> Firestore + Cloudinary both
   const handleDeleteItems = async (itemIdsToDelete: string[]) => {
