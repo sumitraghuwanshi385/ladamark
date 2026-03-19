@@ -109,9 +109,8 @@ const AppHeader: React.FC<AppHeaderProps> = ({ onMenuClick, onLogout, setView, t
                 <div className="flex-1" />
 
                 {/* Right Section */}
-                <div className="flex items-center justify-end gap-2">
-                    <ThemeToggle theme={theme} setTheme={setTheme} />
-                    <DailyQuotaIndicator used={quota.daily.used} limit={quota.daily.limit} />
+                <div className="flex items-center gap-3">
+    <DailyQuotaIndicator used={quota.daily.used} limit={quota.daily.limit} />
                     <div className="relative" ref={profileMenuRef}>
                         <button onClick={() => setIsProfileMenuOpen(p => !p)} className="w-9 h-9 rounded-full bg-[var(--background-tertiary)] hover:bg-[var(--background-hover)] border border-[var(--border-secondary)]/50 transition-colors flex items-center justify-center overflow-hidden">
                              <img src={profile.profilePic} alt={profile.name} className="w-full h-full object-cover" />
