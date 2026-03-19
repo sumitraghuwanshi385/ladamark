@@ -272,7 +272,7 @@ useEffect(() => {
     };
 
     return (
-        <section className="space-y-6 max-w-5xl mx-auto">
+        <section className="space-y-6 w-full px-2 sm:px-4 md:px-6">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <h2 className="text-xl font-bold text-[var(--text-primary)] flex items-center gap-3">
                     <CalculatorIcon className="w-6 h-6 text-[var(--accent-primary)]"/>
