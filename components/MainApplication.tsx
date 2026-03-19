@@ -544,15 +544,17 @@ currency={currency}
 
       {isSidebarOpen && (
         <Sidebar
-          view={view}
-          setView={(v: View) => setView(v)}
-          onClose={() => setIsSidebarOpen(false)}
-          labeledItemsCount={labeledItems.length}
-          pendingFilesCount={pendingFiles.length}
-          onLogout={handleLogoutAndCloseSidebar}
-          userName={profile.name}
-          plan={plan}
-        />
+  view={view}
+  setView={(v: View) => setView(v)}
+  onClose={() => setIsSidebarOpen(false)}
+  labeledItemsCount={labeledItems.length}
+  pendingFilesCount={pendingFiles.length}
+  onLogout={handleLogoutAndCloseSidebar}
+  userName={profile.name}
+  plan={plan}
+  theme={theme}
+  setTheme={setTheme}
+/>
       )}
 
       <AppHeader
