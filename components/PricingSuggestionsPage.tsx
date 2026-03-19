@@ -84,11 +84,13 @@ const ProductPriceCard: React.FC<{
         <div className="bg-[var(--background-secondary)] border border-[var(--border-primary)] rounded-2xl overflow-hidden transition-all duration-300">
             {/* Header / Summary View */}
             <div className="p-4">
-                <div className="flex items-center gap-4">
+                <div className="flex items-start gap-4 w-full">
                     <img src={item.imageUrl} alt={item.fileName} className="w-12 h-12 object-cover rounded-lg flex-shrink-0 bg-[var(--background-tertiary)]"/>
-                    <div className="flex-grow min-w-0">
-                        <h4 className="font-semibold text-md text-[var(--text-primary)] truncate">{item.data.productName}</h4>
-                        <p className="text-sm text-[var(--text-secondary)]">Estimated Price: {formatCurrency(convertedMin, currency)} - {formatCurrency(convertedMax, currency)}</p>
+                    <div className="flex-1 min-w-0">
+                        <h4 className="font-semibold text-md text-[var(--text-primary)] w-full break-words whitespace-normal leading-snug">
+  {item.data.productName}
+</h4>
+                        <p className="text-sm text-[var(--text-secondary)] break-words">Estimated Price: {formatCurrency(convertedMin, currency)} - {formatCurrency(convertedMax, currency)}</p>
                     </div>
                 </div>
                 <div className="mt-3 pt-3 border-t border-[var(--border-primary)] flex justify-end">
