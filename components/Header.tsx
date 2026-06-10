@@ -37,7 +37,8 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
     { label: 'About', href: '#about' },
     { label: 'Contact', href: '#contact' },
   ];
-
+ 
+return(
   <header
   className={`fixed z-50 transition-all duration-700 ease-out
   ${isScrolled
@@ -45,6 +46,7 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
     : 'top-0 left-0 right-0 w-full bg-transparent'
   }`}
 >
+}
       
       <div className="max-w-7xl mx-auto px-4 py-2.5 flex justify-between items-center">
         <Logo />
