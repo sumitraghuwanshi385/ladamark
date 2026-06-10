@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Plus } from 'lucide-react'; // Assuming lucide-react is installed
 
 const Logo = () => (
   <a href="/" className="flex items-center -ml-1">
@@ -12,10 +11,27 @@ const Logo = () => (
   </a>
 );
 
+const MenuIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+  </svg>
+);
+
+const CloseIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6h12v12" />
+  </svg>
+);
+
+const PlusIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3.5}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+  </svg>
+);
+
 interface HeaderProps {
     onLoginClick: (e: React.MouseEvent) => void;
     onSignUpClick: (e: React.MouseEvent) => void;
-    // onGetStartedClick can be same as onSignUpClick
 }
 
 const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
@@ -63,13 +79,13 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
         </nav>
 
         <div className="flex items-center gap-3">
-          {/* Get Started Icon Button - Red Accent */}
+          {/* Get Started Red Button */}
           <button
             onClick={onSignUpClick}
             className="hidden sm:flex items-center justify-center w-10 h-10 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white rounded-2xl transition-all duration-300 shadow-lg shadow-red-500/30 hover:scale-105 active:scale-95"
             aria-label="Get Started"
           >
-            <Plus className="w-5 h-5" strokeWidth={3} />
+            <PlusIcon />
           </button>
 
           {/* Hamburger Menu Button */}
@@ -78,7 +94,7 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
             className="md:hidden p-2.5 text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors"
             aria-label="Toggle menu"
           >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
           </button>
         </div>
       </div>
@@ -96,8 +112,11 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
           <div className="p-6 flex flex-col h-full">
             <div className="flex justify-between items-center mb-10">
               <Logo />
-              <button onClick={() => setIsMenuOpen(false)} className="text-[var(--text-secondary)]">
-                <X size={28} />
+              <button 
+                onClick={() => setIsMenuOpen(false)} 
+                className="text-[var(--text-secondary)] p-2"
+              >
+                <CloseIcon />
               </button>
             </div>
 
