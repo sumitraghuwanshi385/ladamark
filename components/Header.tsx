@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Plus } from 'lucide-react'; // lucide-react use kar rahe hain
+import { Menu, X } from 'lucide-react';
 
 const Logo = () => (
   <a href="/" className="flex items-center -ml-0.5">
@@ -41,11 +41,11 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
   return (
     <header className={`fixed z-50 w-full transition-all duration-700 ease-out
       ${isScrolled 
-        ? 'top-3 left-4 right-4 bg-white/75 dark:bg-zinc-950/75 backdrop-blur-3xl border border-white/40 dark:border-white/10 rounded-3xl shadow-2xl shadow-black/10 dark:shadow-white/5' 
+        ? 'top-2 left-3 right-3 bg-white/75 dark:bg-zinc-950/75 backdrop-blur-3xl border border-white/40 dark:border-white/10 rounded-3xl shadow-2xl shadow-black/10 dark:shadow-white/5' 
         : 'top-0 left-0 right-0 bg-transparent'
       }`}>
       
-      <div className="container mx-auto px-5 py-3 flex justify-between items-center"> {/* size compact kiya */}
+      <div className="container mx-auto px-4 py-2.5 flex justify-between items-center"> {/* size reduced more */}
         <Logo />
 
         {/* Desktop Navigation */}
@@ -62,10 +62,10 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
         </nav>
 
         <div className="flex items-center gap-3">
-          {/* Desktop Red "Let's Label" Button */}
+          {/* Desktop Red "Let's Label" Button - smaller */}
           <button
             onClick={onSignUpClick}
-            className="hidden md:flex items-center gap-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white text-sm font-semibold px-5 py-2.5 rounded-2xl transition-all duration-300 shadow-lg shadow-red-500/30 hover:scale-105 active:scale-95"
+            className="hidden md:flex items-center gap-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white text-sm font-semibold px-4 py-2 rounded-2xl transition-all duration-300 shadow-lg shadow-red-500/30 hover:scale-105 active:scale-95"
           >
             Let's Label
           </button>
@@ -81,7 +81,7 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
         </div>
       </div>
 
-      {/* Mobile Sliding Sidebar - Width reduced + compact */}
+      {/* Mobile Sliding Sidebar - Compact */}
       <div className={`fixed inset-0 z-50 md:hidden transition-all duration-500 ${isMenuOpen ? 'visible' : 'invisible'}`}>
         {/* Backdrop */}
         <div 
@@ -89,10 +89,10 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
           onClick={() => setIsMenuOpen(false)}
         />
         
-        {/* Sidebar - Width kam kiya (w-72) */}
+        {/* Sidebar */}
         <div className={`absolute top-0 right-0 h-full w-72 bg-white dark:bg-zinc-950 border-l border-white/20 dark:border-white/10 shadow-2xl transition-transform duration-500 ease-out ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-          <div className="p-5 flex flex-col h-full"> {/* padding reduce */}
-            <div className="flex justify-between items-center mb-8">
+          <div className="p-4 flex flex-col h-full">
+            <div className="flex justify-between items-center mb-6">
               <Logo />
               <button 
                 onClick={() => setIsMenuOpen(false)} 
@@ -102,7 +102,7 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
               </button>
             </div>
 
-            <div className="flex flex-col space-y-5 text-base font-medium"> {/* text size reduce */}
+            <div className="flex flex-col space-y-4 text-base font-medium">
               {menuItems.map((item) => (
                 <a
                   key={item.label}
@@ -115,23 +115,13 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
               ))}
             </div>
 
-            <div className="mt-auto pt-8 border-t border-white/10 space-y-4">
-              <button
-                onClick={(e) => {
-                  setIsMenuOpen(false);
-                  onLoginClick(e);
-                }}
-                className="w-full text-left text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors py-3 text-base" // size reduce
-              >
-                Sign In
-              </button>
-              
+            <div className="mt-auto pt-8 border-t border-white/10">
               <button
                 onClick={(e) => {
                   setIsMenuOpen(false);
                   onSignUpClick(e);
                 }}
-                className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3.5 rounded-2xl transition-all active:scale-[0.985] text-base"
+                className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-2xl transition-all active:scale-[0.985] text-base"
               >
                 Let's Label
               </button>
