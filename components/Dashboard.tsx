@@ -40,22 +40,26 @@ const StatCard: React.FC<{ icon: React.ReactNode; title: string; value: string; 
     <div className="bg-[var(--background-secondary)] border border-[var(--border-primary)] rounded-2xl p-4 flex items-center gap-4">
         {/* Icon container — liquid glass pill */}
         <div
-            className="relative flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center overflow-hidden"
-            style={{
-                background: 'linear-gradient(135deg, rgba(239,68,68,0.18) 0%, rgba(244,63,94,0.22) 100%)',
-                backdropFilter: 'blur(12px)',
-                WebkitBackdropFilter: 'blur(12px)',
-                border: '1px solid rgba(239,68,68,0.25)',
-                boxShadow: '0 2px 12px rgba(239,68,68,0.15), inset 0 1px 0 rgba(255,255,255,0.15)',
-            }}
-        >
+    className="relative flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center overflow-hidden"
+    style={{
+        background: 'rgba(255,255,255,0.08)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        border: '1px solid rgba(255,255,255,0.18)',
+        boxShadow: `
+          0 8px 32px rgba(0,0,0,0.12),
+          inset 0 1px 0 rgba(255,255,255,0.25),
+          inset 0 -1px 0 rgba(255,255,255,0.08)
+        `,
+    }}
+>
             {/* inner top highlight */}
             <div
                 className="pointer-events-none absolute inset-x-0 top-0 h-1/2"
                 style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 100%)' }}
             />
             {/* icon — red color, adapts in light/dark via currentColor override */}
-            <span className="relative [&>svg]:w-5 [&>svg]:h-5 [&>svg]:stroke-red-500 dark:[&>svg]:stroke-red-400">
+            <span className="relative text-red-500 dark:text-red-400 [&>svg]:w-5 [&>svg]:h-5">
                 {icon}
             </span>
         </div>
