@@ -35,57 +35,39 @@ const TopCategoryIcon = ({ className = "w-5 h-5" }) => <svg xmlns="http://www.w3
 const ControlsIcon = ({className="w-5 h-5"}) => <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M3 4.75h18M3 12h18M3 19.25h18M8.25 2.75v4M15.75 10v4M12 17.25v4" /></svg>;
 
 
-// ─── REDESIGNED STAT CARD ───────────────────────────────────────────────────
+// ─── STAT CARD ───────────────────────────────────────────────────────────────
 const StatCard: React.FC<{ icon: React.ReactNode; title: string; value: string; }> = ({ icon, title, value }) => (
-    <div
-        className="relative overflow-hidden rounded-3xl p-5 flex items-center gap-4 transition-all duration-300 hover:-translate-y-1"
-        style={{
-            background: 'linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 100%)',
-            backdropFilter: 'blur(24px)',
-            WebkitBackdropFilter: 'blur(24px)',
-            border: '1px solid rgba(255,255,255,0.10)',
-            boxShadow: '0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.10)',
-        }}
-    >
-        {/* Glass reflection highlight */}
+    <div className="bg-[var(--background-secondary)] border border-[var(--border-primary)] rounded-2xl p-4 flex items-center gap-4">
+        {/* Icon container — liquid glass pill */}
         <div
-            className="pointer-events-none absolute inset-x-0 top-0 h-[40%] rounded-t-3xl"
+            className="relative flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center overflow-hidden"
             style={{
-                background: 'linear-gradient(180deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0) 100%)',
-            }}
-        />
-
-        {/* Icon — liquid glass pill with red gradient core */}
-        <div
-            className="relative flex-shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center"
-            style={{
-                background: 'linear-gradient(135deg, #ef4444 0%, #f43f5e 100%)',
-                boxShadow: '0 4px 20px rgba(239,68,68,0.45), inset 0 1px 0 rgba(255,255,255,0.25)',
-                border: '1px solid rgba(255,255,255,0.20)',
+                background: 'linear-gradient(135deg, rgba(239,68,68,0.18) 0%, rgba(244,63,94,0.22) 100%)',
+                backdropFilter: 'blur(12px)',
+                WebkitBackdropFilter: 'blur(12px)',
+                border: '1px solid rgba(239,68,68,0.25)',
+                boxShadow: '0 2px 12px rgba(239,68,68,0.15), inset 0 1px 0 rgba(255,255,255,0.15)',
             }}
         >
-            {/* inner highlight on icon container */}
+            {/* inner top highlight */}
             <div
-                className="pointer-events-none absolute inset-x-1 top-1 h-1/2 rounded-xl"
-                style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.30) 0%, rgba(255,255,255,0) 100%)' }}
+                className="pointer-events-none absolute inset-x-0 top-0 h-1/2"
+                style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 100%)' }}
             />
-            <span className="relative text-white [&>svg]:w-6 [&>svg]:h-6 [&>svg]:stroke-white">
+            {/* icon — red color, adapts in light/dark via currentColor override */}
+            <span className="relative [&>svg]:w-5 [&>svg]:h-5 [&>svg]:stroke-red-500 dark:[&>svg]:stroke-red-400">
                 {icon}
             </span>
         </div>
 
         {/* Text */}
-        <div className="relative flex flex-col gap-0.5">
-            <p className="text-xs font-medium tracking-wide uppercase" style={{ color: 'rgba(255,255,255,0.45)' }}>
-                {title}
-            </p>
-            <p className="text-3xl font-black leading-none tracking-tight text-white">
-                {value}
-            </p>
+        <div>
+            <p className="text-sm font-medium text-[var(--text-secondary)]">{title}</p>
+            <p className="text-2xl font-bold text-[var(--text-primary)]">{value}</p>
         </div>
     </div>
 );
-// ────────────────────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
 
 
 const ActivityItem: React.FC<{ item: LabeledItem; onReview: () => void }> = ({ item, onReview }) => {
@@ -281,12 +263,11 @@ const Dashboard: React.FC<{
                 <p className="text-md text-[var(--text-secondary)]">Welcome back, here's your workspace overview.</p>
             </div>
             
-            {/* ── Stat Cards grid — colorClass prop removed, card is self-styled now ── */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <StatCard icon={<ImageIcon />}              title="Total Labelled"       value={stats.totalLabelled.toString()} />
+                <StatCard icon={<ImageIcon />}                        title="Total Labelled"       value={stats.totalLabelled.toString()} />
                 <StatCard icon={<ControlsIcon className="w-6 h-6"/>} title="Attributes Generated" value={stats.attributesGenerated.toString()} />
                 <StatCard icon={<SeoTagIcon className="w-6 h-6"/>}   title="SEO Tags Generated"   value={stats.seoTagsGenerated.toString()} />
-                <StatCard icon={<AvgConfidenceIcon />}      title="Avg. Confidence"      value={`${stats.confidence.toFixed(1)}%`} />
+                <StatCard icon={<AvgConfidenceIcon />}                title="Avg. Confidence"      value={`${stats.confidence.toFixed(1)}%`} />
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
