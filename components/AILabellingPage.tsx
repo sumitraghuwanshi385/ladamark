@@ -213,7 +213,8 @@ const AnalysisResultCard: React.FC<{
   showConfidenceScore: boolean;
   onOpenDeleteModal: (config: { title: string, message: string, onConfirm: () => void }) => void;
   currency: string;
-}> = ({ result, onResultChange, onConfirm, onReanalyze, showConfidenceScore, onOpenDeleteModal, currency }) => {
+isSaving: boolean;
+}> = ({ result, onResultChange, onConfirm, onReanalyze, showConfidenceScore, onOpenDeleteModal, currency, isSaving }) => {
 
   const convertedMin = useMemo(() => convertPrice(result.priceRange.min, 'USD', currency), [result.priceRange.min, currency]);
   const convertedMax = useMemo(() => convertPrice(result.priceRange.max, 'USD', currency), [result.priceRange.max, currency]);
@@ -387,9 +388,23 @@ const AnalysisResultCard: React.FC<{
         <button onClick={onReanalyze} className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-3 text-sm font-bold rounded-lg transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--background-hover)]">
           <ReanalyzeIcon className="w-5 h-5" /> Re-analyze
         </button>
-        <button onClick={onConfirm} className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 text-base font-bold rounded-lg transition-colors bg-[var(--accent-primary)] text-white hover:bg-[var(--accent-primary-hover)]">
-          <CheckCircleIcon /> Confirm & Save
-        </button>
+        <button
+  onClick={onConfirm}
+  disabled={isSaving}
+  className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 text-base font-bold rounded-lg transition-colors bg-[var(--accent-primary)] text-white hover:bg-[var(--accent-primary-hover)] disabled:opacity-70 disabled:cursor-not-allowed"
+>
+  {isSaving ? (
+    <>
+      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+      Saving...
+    </>
+  ) : (
+    <>
+      <CheckCircleIcon />
+      Confirm & Save
+    </>
+  )}
+</button>
       </div>
     </div>
   );
@@ -429,6 +444,9 @@ const FileCard: React.FC<{
   onOpenDeleteModal: (config: { title: string, message: string, onConfirm: () => void }) => void;
   currency: string;
 }> = React.memo(({ analysis, onRemove, onConfirmLabeling, onReanalyze, onUpdateResult, duplicateItem, showConfidenceScore, onOpenDeleteModal, currency }) => {
+
+const [isSaving, setIsSaving] = useState(false);
+
   const { file, status, result } = analysis;
   const imageUrl = useMemo(() => URL.createObjectURL(file), [file]);
   useEffect(() => () => URL.revokeObjectURL(imageUrl), [imageUrl]);
@@ -464,14 +482,22 @@ const FileCard: React.FC<{
         )}
         {status.status === 'success' && result && (
           <AnalysisResultCard
-            result={result}
-            onResultChange={onUpdateResult}
-            onConfirm={() => onConfirmLabeling(file, result)}
-            onReanalyze={onReanalyze}
-            showConfidenceScore={showConfidenceScore}
-            onOpenDeleteModal={onOpenDeleteModal}
-            currency={currency}
-          />
+  result={result}
+  onResultChange={onUpdateResult}
+  onConfirm={async () => {
+    try {
+      setIsSaving(true);
+      await onConfirmLabeling(file, result);
+    } finally {
+      setIsSaving(false);
+    }
+  }}
+  onReanalyze={onReanalyze}
+  showConfidenceScore={showConfidenceScore}
+  onOpenDeleteModal={onOpenDeleteModal}
+  currency={currency}
+  isSaving={isSaving}
+/>
         )}
       </div>
     </div>
