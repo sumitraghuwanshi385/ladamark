@@ -1,32 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { Menu, X, Plus } from 'lucide-react'; // lucide-react use kar rahe hain
 
 const Logo = () => (
-  <a href="/" className="flex items-center -ml-1">
+  <a href="/" className="flex items-center -ml-0.5">
     <img 
       src="https://i.postimg.cc/nrRJ43f4/Picsart-25-07-19-15-59-42-768.png" 
       alt="Ladamark Logo" 
-      style={{ width: '138px', height: 'auto' }}
+      style={{ width: '132px', height: 'auto' }}
       className="transition-all duration-300"
     />
   </a>
-);
-
-const MenuIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-  </svg>
-);
-
-const CloseIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6h12v12" />
-  </svg>
-);
-
-const PlusIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3.5}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-  </svg>
 );
 
 interface HeaderProps {
@@ -58,11 +41,11 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
   return (
     <header className={`fixed z-50 w-full transition-all duration-700 ease-out
       ${isScrolled 
-        ? 'top-3 left-4 right-4 bg-white/70 dark:bg-zinc-950/70 backdrop-blur-3xl border border-white/30 dark:border-white/10 rounded-3xl shadow-2xl shadow-black/10 dark:shadow-white/5' 
+        ? 'top-3 left-4 right-4 bg-white/75 dark:bg-zinc-950/75 backdrop-blur-3xl border border-white/40 dark:border-white/10 rounded-3xl shadow-2xl shadow-black/10 dark:shadow-white/5' 
         : 'top-0 left-0 right-0 bg-transparent'
       }`}>
       
-      <div className="container mx-auto px-6 py-3.5 flex justify-between items-center">
+      <div className="container mx-auto px-5 py-3 flex justify-between items-center"> {/* size compact kiya */}
         <Logo />
 
         {/* Desktop Navigation */}
@@ -79,27 +62,26 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
         </nav>
 
         <div className="flex items-center gap-3">
-          {/* Get Started Red Button */}
+          {/* Desktop Red "Let's Label" Button */}
           <button
             onClick={onSignUpClick}
-            className="hidden sm:flex items-center justify-center w-10 h-10 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white rounded-2xl transition-all duration-300 shadow-lg shadow-red-500/30 hover:scale-105 active:scale-95"
-            aria-label="Get Started"
+            className="hidden md:flex items-center gap-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white text-sm font-semibold px-5 py-2.5 rounded-2xl transition-all duration-300 shadow-lg shadow-red-500/30 hover:scale-105 active:scale-95"
           >
-            <PlusIcon />
+            Let's Label
           </button>
 
-          {/* Hamburger Menu Button */}
+          {/* Hamburger Menu Button (Mobile only) */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2.5 text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors"
+            className="md:hidden p-2 text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors"
             aria-label="Toggle menu"
           >
-            {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
 
-      {/* Sliding Sidebar Menu */}
+      {/* Mobile Sliding Sidebar - Width reduced + compact */}
       <div className={`fixed inset-0 z-50 md:hidden transition-all duration-500 ${isMenuOpen ? 'visible' : 'invisible'}`}>
         {/* Backdrop */}
         <div 
@@ -107,20 +89,20 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
           onClick={() => setIsMenuOpen(false)}
         />
         
-        {/* Sidebar */}
-        <div className={`absolute top-0 right-0 h-full w-80 bg-white dark:bg-zinc-950 border-l border-white/20 dark:border-white/10 shadow-2xl transition-transform duration-500 ease-out ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-          <div className="p-6 flex flex-col h-full">
-            <div className="flex justify-between items-center mb-10">
+        {/* Sidebar - Width kam kiya (w-72) */}
+        <div className={`absolute top-0 right-0 h-full w-72 bg-white dark:bg-zinc-950 border-l border-white/20 dark:border-white/10 shadow-2xl transition-transform duration-500 ease-out ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+          <div className="p-5 flex flex-col h-full"> {/* padding reduce */}
+            <div className="flex justify-between items-center mb-8">
               <Logo />
               <button 
                 onClick={() => setIsMenuOpen(false)} 
-                className="text-[var(--text-secondary)] p-2"
+                className="text-[var(--text-secondary)] p-1"
               >
-                <CloseIcon />
+                <X size={26} />
               </button>
             </div>
 
-            <div className="flex flex-col space-y-6 text-lg font-medium">
+            <div className="flex flex-col space-y-5 text-base font-medium"> {/* text size reduce */}
               {menuItems.map((item) => (
                 <a
                   key={item.label}
@@ -133,13 +115,13 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
               ))}
             </div>
 
-            <div className="mt-auto pt-8 border-t border-white/10">
+            <div className="mt-auto pt-8 border-t border-white/10 space-y-4">
               <button
                 onClick={(e) => {
                   setIsMenuOpen(false);
                   onLoginClick(e);
                 }}
-                className="w-full text-left text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors py-3 text-lg"
+                className="w-full text-left text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors py-3 text-base" // size reduce
               >
                 Sign In
               </button>
@@ -149,9 +131,9 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
                   setIsMenuOpen(false);
                   onSignUpClick(e);
                 }}
-                className="mt-4 w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-4 rounded-2xl transition-all active:scale-[0.985]"
+                className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3.5 rounded-2xl transition-all active:scale-[0.985] text-base"
               >
-                Get Started
+                Let's Label
               </button>
             </div>
           </div>
