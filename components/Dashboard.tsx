@@ -98,7 +98,9 @@ const StatCard: React.FC<{ icon: React.ReactNode; title: string; value: string; 
         </div>
 
     </div>
-); ─────────────────────────────────────────────────────────────────────────────
+);
+
+// ─────────────────────────────────────────────────────────────────────────────
 
 
 const ActivityItem: React.FC<{ item: LabeledItem; onReview: () => void }> = ({ item, onReview }) => {
