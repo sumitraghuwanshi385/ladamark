@@ -179,14 +179,15 @@ const CatalogSnapshotWidget: React.FC<{ stats: ReturnType<typeof useMemoStats>; 
 
     return (
         <div className="bg-[var(--background-secondary)] border border-[var(--border-primary)] rounded-2xl p-6 h-full flex flex-col">
-            <div className="flex items-center gap-3 mb-6">
-                <div className="flex-shrink-0 text-[var(--accent-primary)]">
-                    <CatalogSnapshotIcon />
-                </div>
-                <h3 className="text-xl font-bold text-[var(--text-primary)]">
-                    Catalog Snapshot
-                </h3>
-            </div>
+            <div className="flex items-center gap-2.5 mb-5">
+    <div className="flex-shrink-0 text-[var(--accent-primary)]">
+        <CatalogSnapshotIcon className="w-6 h-6" />
+    </div>
+
+    <h3 className="text-lg font-semibold text-[var(--text-primary)]">
+        Catalog Snapshot
+    </h3>
+</div>
             
             <div className="space-y-3">
                 <InfoStat 
