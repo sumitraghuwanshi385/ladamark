@@ -38,14 +38,15 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
     { label: 'Contact', href: '#contact' },
   ];
 
-  return (
-    <header className={`fixed z-50 w-full transition-all duration-700 ease-out
-      ${isScrolled 
-        ? 'top-2 left-3 right-3 bg-white/75 dark:bg-zinc-950/75 backdrop-blur-3xl border border-white/40 dark:border-white/10 rounded-3xl shadow-2xl shadow-black/10 dark:shadow-white/5' 
-        : 'top-0 left-0 right-0 bg-transparent'
-      }`}>
+  <header
+  className={`fixed z-50 transition-all duration-700 ease-out
+  ${isScrolled
+    ? 'top-2 inset-x-3 w-auto bg-white/75 dark:bg-zinc-950/75 backdrop-blur-3xl border border-white/40 dark:border-white/10 rounded-3xl shadow-2xl shadow-black/10 dark:shadow-white/5'
+    : 'top-0 left-0 right-0 w-full bg-transparent'
+  }`}
+>
       
-      <div className="container mx-auto px-4 py-2.5 flex justify-between items-center"> {/* size reduced more */}
+      <div className="max-w-7xl mx-auto px-4 py-2.5 flex justify-between items-center">
         <Logo />
 
         {/* Desktop Navigation */}
