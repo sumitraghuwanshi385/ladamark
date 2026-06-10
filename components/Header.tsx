@@ -1,103 +1,141 @@
 import React, { useState, useEffect } from 'react';
+import { Menu, X, Plus } from 'lucide-react'; // Assuming lucide-react is installed
 
 const Logo = () => (
   <a href="/" className="flex items-center -ml-1">
     <img 
       src="https://i.postimg.cc/nrRJ43f4/Picsart-25-07-19-15-59-42-768.png" 
       alt="Ladamark Logo" 
-      style={{ width: '140px', height: 'auto' }}
+      style={{ width: '138px', height: 'auto' }}
       className="transition-all duration-300"
     />
   </a>
 );
 
-const SunIcon = ({ className = 'w-5 h-5' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
-    </svg>
-);
-
-const MoonIcon = ({ className = 'w-5 h-5' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-    </svg>
-);
-
-const ThemeToggle: React.FC<{ theme: 'light' | 'dark'; setTheme: (theme: 'light' | 'dark') => void; }> = ({ theme, setTheme }) => {
-    const toggleTheme = () => {
-        setTheme(theme === 'light' ? 'dark' : 'light');
-    };
-
-    return (
-        <button 
-            onClick={toggleTheme} 
-            className="group relative p-2.5 rounded-2xl bg-[var(--background-secondary-translucent)] backdrop-blur-xl border border-[var(--border-primary)] hover:border-[var(--accent-primary)]/30 shadow-inner transition-all duration-500 hover:scale-105 active:scale-95 focus:outline-none overflow-hidden"
-            aria-label="Toggle theme"
-        >
-            {/* Glass shine effect */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            
-            <div className={`relative transition-transform duration-500 ${theme === 'dark' ? 'rotate-0' : 'rotate-180'}`}>
-                {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
-            </div>
-            
-            {/* Subtle glow ring */}
-            <div className="absolute inset-0 rounded-2xl ring-1 ring-[var(--accent-primary)]/0 group-hover:ring-[var(--accent-primary)]/20 transition-all duration-300" />
-        </button>
-    );
-};
-
 interface HeaderProps {
     onLoginClick: (e: React.MouseEvent) => void;
     onSignUpClick: (e: React.MouseEvent) => void;
-    theme: 'light' | 'dark';
-    setTheme: (theme: 'light' | 'dark') => void;
+    // onGetStartedClick can be same as onSignUpClick
 }
 
-const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick, theme, setTheme }) => {
+const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 8);
+      setIsScrolled(window.scrollY > 10);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const menuItems = [
+    { label: 'Product', href: '#product' },
+    { label: 'Features', href: '#features' },
+    { label: 'Pricing', href: '#pricing' },
+    { label: 'Company', href: '#company' },
+    { label: 'About', href: '#about' },
+    { label: 'Contact', href: '#contact' },
+  ];
+
   return (
-    <header className={`fixed z-50 transition-all duration-500 ease-out 
+    <header className={`fixed z-50 w-full transition-all duration-700 ease-out
       ${isScrolled 
-        ? 'top-3 left-4 right-4 py-2.5 bg-[var(--background-secondary-translucent)] backdrop-blur-2xl border border-[var(--border-primary)] rounded-3xl shadow-2xl shadow-[var(--shadow-primary)]' 
-        : 'top-0 left-0 right-0 bg-transparent py-4'
+        ? 'top-3 left-4 right-4 bg-white/70 dark:bg-zinc-950/70 backdrop-blur-3xl border border-white/30 dark:border-white/10 rounded-3xl shadow-2xl shadow-black/10 dark:shadow-white/5' 
+        : 'top-0 left-0 right-0 bg-transparent'
       }`}>
       
-      <div className="container mx-auto px-6 flex justify-between items-center">
+      <div className="container mx-auto px-6 py-3.5 flex justify-between items-center">
         <Logo />
 
-        <nav className="hidden md:flex items-center space-x-8">
-          <a href="#features" className="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors">Features</a>
-          <a href="#pricing" className="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors">Pricing</a>
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex items-center space-x-8 text-sm font-medium">
+          {menuItems.slice(0, 3).map((item) => (
+            <a 
+              key={item.label}
+              href={item.href} 
+              className="text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors"
+            >
+              {item.label}
+            </a>
+          ))}
         </nav>
 
-        <div className="flex items-center gap-3 sm:gap-4">
-            <ThemeToggle theme={theme} setTheme={setTheme} />
-            
-            <a 
-              href="#" 
-              onClick={onLoginClick} 
-              className="hidden sm:inline-block text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors"
-            >
-              Sign In
-            </a>
+        <div className="flex items-center gap-3">
+          {/* Get Started Icon Button - Red Accent */}
+          <button
+            onClick={onSignUpClick}
+            className="hidden sm:flex items-center justify-center w-10 h-10 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white rounded-2xl transition-all duration-300 shadow-lg shadow-red-500/30 hover:scale-105 active:scale-95"
+            aria-label="Get Started"
+          >
+            <Plus className="w-5 h-5" strokeWidth={3} />
+          </button>
 
-            <a 
-              href="#" 
-              onClick={onSignUpClick} 
-              className="text-sm font-semibold text-white bg-gradient-to-r from-[var(--accent-secondary)] to-[var(--accent-primary)] hover:brightness-110 active:brightness-95 px-5 py-2.5 rounded-2xl transition-all duration-300 shadow-lg shadow-[var(--accent-secondary)]/30"
-            >
-              Label Now
-            </a>
+          {/* Hamburger Menu Button */}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="md:hidden p-2.5 text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors"
+            aria-label="Toggle menu"
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+      </div>
+
+      {/* Sliding Sidebar Menu */}
+      <div className={`fixed inset-0 z-50 md:hidden transition-all duration-500 ${isMenuOpen ? 'visible' : 'invisible'}`}>
+        {/* Backdrop */}
+        <div 
+          className={`absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-500 ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`}
+          onClick={() => setIsMenuOpen(false)}
+        />
+        
+        {/* Sidebar */}
+        <div className={`absolute top-0 right-0 h-full w-80 bg-white dark:bg-zinc-950 border-l border-white/20 dark:border-white/10 shadow-2xl transition-transform duration-500 ease-out ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+          <div className="p-6 flex flex-col h-full">
+            <div className="flex justify-between items-center mb-10">
+              <Logo />
+              <button onClick={() => setIsMenuOpen(false)} className="text-[var(--text-secondary)]">
+                <X size={28} />
+              </button>
+            </div>
+
+            <div className="flex flex-col space-y-6 text-lg font-medium">
+              {menuItems.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors py-1"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
+
+            <div className="mt-auto pt-8 border-t border-white/10">
+              <button
+                onClick={(e) => {
+                  setIsMenuOpen(false);
+                  onLoginClick(e);
+                }}
+                className="w-full text-left text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors py-3 text-lg"
+              >
+                Sign In
+              </button>
+              
+              <button
+                onClick={(e) => {
+                  setIsMenuOpen(false);
+                  onSignUpClick(e);
+                }}
+                className="mt-4 w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-4 rounded-2xl transition-all active:scale-[0.985]"
+              >
+                Get Started
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </header>
