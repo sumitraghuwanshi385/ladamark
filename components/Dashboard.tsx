@@ -38,61 +38,67 @@ const ControlsIcon = ({className="w-5 h-5"}) => <svg xmlns="http://www.w3.org/20
 // ─── STAT CARD ───────────────────────────────────────────────────────────────
 const StatCard: React.FC<{ icon: React.ReactNode; title: string; value: string; }> = ({ icon, title, value }) => (
     <div className="bg-[var(--background-secondary)] border border-[var(--border-primary)] rounded-2xl p-4 flex items-center gap-4">
-        {/* Icon container — liquid glass pill */}
+
+        {/* Icon Container */}
         <div
-    className="relative flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center overflow-hidden"
-    style={{
-    background:
-      document.documentElement.classList.contains('dark')
-        ? 'linear-gradient(135deg, rgba(239,68,68,0.18) 0%, rgba(244,63,94,0.22) 100%)'
-        : 'linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.18) 100%)',
+            className="relative flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center overflow-hidden"
+            style={{
+                background: document.documentElement.classList.contains('dark')
+                    ? 'linear-gradient(135deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.04) 100%)'
+                    : 'linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.18) 100%)',
 
-    backdropFilter: 'blur(24px)',
-    WebkitBackdropFilter: 'blur(24px)',
+                backdropFilter: 'blur(24px)',
+                WebkitBackdropFilter: 'blur(24px)',
 
-    border:
-      document.documentElement.classList.contains('dark')
-        ? '1px solid rgba(239,68,68,0.25)'
-        : '1px solid rgba(255,255,255,0.35)',
+                border: document.documentElement.classList.contains('dark')
+                    ? '1px solid rgba(255,255,255,0.12)'
+                    : '1px solid rgba(255,255,255,0.35)',
 
-    boxShadow:
-      document.documentElement.classList.contains('dark')
-        ? `
-          0 2px 12px rgba(239,68,68,0.15),
-          inset 0 1px 0 rgba(255,255,255,0.15)
-        `
-        : `
-          0 8px 24px rgba(0,0,0,0.08),
-          inset 0 1px 0 rgba(255,255,255,0.8),
-          inset 0 -1px 0 rgba(255,255,255,0.2)
-        `,
-}}
->
-            {/* inner top highlight */}
+                boxShadow: document.documentElement.classList.contains('dark')
+                    ? `
+                        0 8px 24px rgba(0,0,0,0.25),
+                        inset 0 1px 0 rgba(255,255,255,0.12)
+                      `
+                    : `
+                        0 8px 24px rgba(0,0,0,0.08),
+                        inset 0 1px 0 rgba(255,255,255,0.8),
+                        inset 0 -1px 0 rgba(255,255,255,0.2)
+                      `,
+            }}
+        >
+            {/* Top Shine */}
             <div
                 className="pointer-events-none absolute inset-x-0 top-0 h-1/2"
-                style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 100%)' }}
+                style={{
+                    background:
+                        'linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 100%)'
+                }}
             />
-            {/* icon — red color, adapts in light/dark via currentColor override */}
+
+            {/* Icon */}
             <span
-    className="relative [&>svg]:w-5 [&>svg]:h-5"
-    style={{
-        color: 'var(--accent-primary)',
-        filter: 'drop-shadow(0 0 8px var(--accent-primary))'
-    }}
->
-    {icon}
-</span>
+                className="relative [&>svg]:w-5 [&>svg]:h-5"
+                style={{
+                    color: 'var(--accent-primary)',
+                    filter: 'drop-shadow(0 0 8px var(--accent-primary))'
+                }}
+            >
+                {icon}
+            </span>
         </div>
 
         {/* Text */}
         <div>
-            <p className="text-sm font-medium text-[var(--text-secondary)]">{title}</p>
-            <p className="text-2xl font-bold text-[var(--text-primary)]">{value}</p>
+            <p className="text-sm font-medium text-[var(--text-secondary)]">
+                {title}
+            </p>
+            <p className="text-2xl font-bold text-[var(--text-primary)]">
+                {value}
+            </p>
         </div>
+
     </div>
-);
-// ─────────────────────────────────────────────────────────────────────────────
+); ─────────────────────────────────────────────────────────────────────────────
 
 
 const ActivityItem: React.FC<{ item: LabeledItem; onReview: () => void }> = ({ item, onReview }) => {
