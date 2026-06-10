@@ -43,15 +43,29 @@ const StatCard: React.FC<{ icon: React.ReactNode; title: string; value: string; 
     className="relative flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center overflow-hidden"
     style={{
     background:
-      'linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.18) 100%)',
+      document.documentElement.classList.contains('dark')
+        ? 'linear-gradient(135deg, rgba(239,68,68,0.18) 0%, rgba(244,63,94,0.22) 100%)'
+        : 'linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.18) 100%)',
+
     backdropFilter: 'blur(24px)',
     WebkitBackdropFilter: 'blur(24px)',
-    border: '1px solid rgba(255,255,255,0.35)',
-    boxShadow: `
-      0 8px 24px rgba(0,0,0,0.08),
-      inset 0 1px 0 rgba(255,255,255,0.8),
-      inset 0 -1px 0 rgba(255,255,255,0.2)
-    `,
+
+    border:
+      document.documentElement.classList.contains('dark')
+        ? '1px solid rgba(239,68,68,0.25)'
+        : '1px solid rgba(255,255,255,0.35)',
+
+    boxShadow:
+      document.documentElement.classList.contains('dark')
+        ? `
+          0 2px 12px rgba(239,68,68,0.15),
+          inset 0 1px 0 rgba(255,255,255,0.15)
+        `
+        : `
+          0 8px 24px rgba(0,0,0,0.08),
+          inset 0 1px 0 rgba(255,255,255,0.8),
+          inset 0 -1px 0 rgba(255,255,255,0.2)
+        `,
 }}
 >
             {/* inner top highlight */}
