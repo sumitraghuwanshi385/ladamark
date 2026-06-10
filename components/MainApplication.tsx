@@ -456,6 +456,11 @@ const MainApplication: React.FC<MainApplicationProps> = ({
     setView('catalog');
   };
 
+const handleLogoutAndCloseSidebar = () => {
+  setIsSidebarOpen(false);
+  onLogout();
+};
+
   const renderView = () => {
     switch (view) {
       case 'dashboard':
