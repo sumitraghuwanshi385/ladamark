@@ -1,9 +1,3 @@
-
-
-
-
-
-
 import React, { useMemo } from 'react';
 import { type LabeledItem } from './MainApplication';
 
@@ -35,25 +29,64 @@ const SeoTagIcon = ({className = "w-5 h-5"}) => (
 );
 const DashboardIcon = ({ className = "w-6 h-6" }) => <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>;
 
-
-// Redesigned simple icons
 const AvgConfidenceIcon = ({ className = "w-6 h-6" }) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}><path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" /></svg>;
 const HighConfidenceIcon = ({className="w-5 h-5"}) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.745 3.745 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.745 3.745 0 011.043 3.296A3.745 3.745 0 0121 12z" /></svg>;
 const TopCategoryIcon = ({ className = "w-5 h-5" }) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" /></svg>;
 const ControlsIcon = ({className="w-5 h-5"}) => <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M3 4.75h18M3 12h18M3 19.25h18M8.25 2.75v4M15.75 10v4M12 17.25v4" /></svg>;
 
 
-const StatCard: React.FC<{ icon: React.ReactNode; title: string; value: string; colorClass: string; }> = ({ icon, title, value, colorClass }) => (
-    <div className="bg-[var(--background-secondary)] border border-[var(--border-primary)] rounded-2xl p-4 flex items-center gap-4 transition-all duration-300 hover:shadow-lg hover:shadow-[var(--shadow-primary)] hover:-translate-y-1">
-        <div className={`flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center ${colorClass}`}>
-            {icon}
+// ─── REDESIGNED STAT CARD ───────────────────────────────────────────────────
+const StatCard: React.FC<{ icon: React.ReactNode; title: string; value: string; }> = ({ icon, title, value }) => (
+    <div
+        className="relative overflow-hidden rounded-3xl p-5 flex items-center gap-4 transition-all duration-300 hover:-translate-y-1"
+        style={{
+            background: 'linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 100%)',
+            backdropFilter: 'blur(24px)',
+            WebkitBackdropFilter: 'blur(24px)',
+            border: '1px solid rgba(255,255,255,0.10)',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.10)',
+        }}
+    >
+        {/* Glass reflection highlight */}
+        <div
+            className="pointer-events-none absolute inset-x-0 top-0 h-[40%] rounded-t-3xl"
+            style={{
+                background: 'linear-gradient(180deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0) 100%)',
+            }}
+        />
+
+        {/* Icon — liquid glass pill with red gradient core */}
+        <div
+            className="relative flex-shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center"
+            style={{
+                background: 'linear-gradient(135deg, #ef4444 0%, #f43f5e 100%)',
+                boxShadow: '0 4px 20px rgba(239,68,68,0.45), inset 0 1px 0 rgba(255,255,255,0.25)',
+                border: '1px solid rgba(255,255,255,0.20)',
+            }}
+        >
+            {/* inner highlight on icon container */}
+            <div
+                className="pointer-events-none absolute inset-x-1 top-1 h-1/2 rounded-xl"
+                style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.30) 0%, rgba(255,255,255,0) 100%)' }}
+            />
+            <span className="relative text-white [&>svg]:w-6 [&>svg]:h-6 [&>svg]:stroke-white">
+                {icon}
+            </span>
         </div>
-        <div>
-            <p className="text-sm font-medium text-[var(--text-secondary)]">{title}</p>
-            <p className="text-2xl font-bold text-[var(--text-primary)]">{value}</p>
+
+        {/* Text */}
+        <div className="relative flex flex-col gap-0.5">
+            <p className="text-xs font-medium tracking-wide uppercase" style={{ color: 'rgba(255,255,255,0.45)' }}>
+                {title}
+            </p>
+            <p className="text-3xl font-black leading-none tracking-tight text-white">
+                {value}
+            </p>
         </div>
     </div>
 );
+// ────────────────────────────────────────────────────────────────────────────
+
 
 const ActivityItem: React.FC<{ item: LabeledItem; onReview: () => void }> = ({ item, onReview }) => {
     const avgConfidence = useMemo(() => {
@@ -131,7 +164,6 @@ const CatalogSnapshotWidget: React.FC<{ stats: ReturnType<typeof useMemoStats>; 
 
     return (
         <div className="bg-[var(--background-secondary)] border border-[var(--border-primary)] rounded-2xl p-6 h-full flex flex-col">
-            {/* Top Section */}
             <div className="flex items-center gap-3 mb-6">
                 <div className="flex-shrink-0 text-[var(--accent-primary)]">
                     <CatalogSnapshotIcon />
@@ -141,7 +173,6 @@ const CatalogSnapshotWidget: React.FC<{ stats: ReturnType<typeof useMemoStats>; 
                 </h3>
             </div>
             
-            {/* Middle Section: Stats */}
             <div className="space-y-3">
                 <InfoStat 
                     icon={<AlertTriangleIcon className="w-5 h-5 text-yellow-500" />} 
@@ -164,7 +195,6 @@ const CatalogSnapshotWidget: React.FC<{ stats: ReturnType<typeof useMemoStats>; 
             
             <div className="flex-grow" />
 
-            {/* Bottom Section: Tools */}
             <div className="pt-6 mt-6 border-t border-[var(--border-primary)] space-y-2">
                 <ToolButton 
                     icon={<ControlsIcon className="w-5 h-5"/>} 
@@ -251,11 +281,12 @@ const Dashboard: React.FC<{
                 <p className="text-md text-[var(--text-secondary)]">Welcome back, here's your workspace overview.</p>
             </div>
             
+            {/* ── Stat Cards grid — colorClass prop removed, card is self-styled now ── */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                 <StatCard icon={<ImageIcon />} title="Total Labelled" value={stats.totalLabelled.toString()} colorClass="bg-blue-500/20 text-blue-400" />
-                <StatCard icon={<ControlsIcon className="w-6 h-6"/>} title="Attributes Generated" value={stats.attributesGenerated.toString()} colorClass="bg-pink-500/20 text-pink-400" />
-                <StatCard icon={<SeoTagIcon className="w-6 h-6"/>} title="SEO Tags Generated" value={stats.seoTagsGenerated.toString()} colorClass="bg-yellow-500/20 text-yellow-400" />
-                <StatCard icon={<AvgConfidenceIcon />} title="Avg. Confidence" value={`${stats.confidence.toFixed(1)}%`} colorClass="bg-green-500/20 text-green-400" />
+                <StatCard icon={<ImageIcon />}              title="Total Labelled"       value={stats.totalLabelled.toString()} />
+                <StatCard icon={<ControlsIcon className="w-6 h-6"/>} title="Attributes Generated" value={stats.attributesGenerated.toString()} />
+                <StatCard icon={<SeoTagIcon className="w-6 h-6"/>}   title="SEO Tags Generated"   value={stats.seoTagsGenerated.toString()} />
+                <StatCard icon={<AvgConfidenceIcon />}      title="Avg. Confidence"      value={`${stats.confidence.toFixed(1)}%`} />
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
