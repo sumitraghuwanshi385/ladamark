@@ -8,7 +8,6 @@ import Pricing from './components/Pricing';
 import Testimonials from './components/Testimonials';
 import Footer from './components/Footer';
 import LoginPage from './components/LoginPage';
-import Audience from './components/Audience';
 import MainApplication from './components/MainApplication';
 import SignUpPage from './components/SignUpPage';
 import GenericModal from './components/GenericModal';
@@ -387,7 +386,6 @@ quota={quota}
         <DataNexus onSignUpClick={handleOpenSignUp} />
         <HowItWorks />
         <Features onSignUpClick={handleOpenSignUp} />
-        <Audience />
         <ResponsiveShowcase />
         <Pricing onSignUpClick={handleOpenSignUp} />
         <Testimonials />
