@@ -42,16 +42,17 @@ const StatCard: React.FC<{ icon: React.ReactNode; title: string; value: string; 
         <div
     className="relative flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center overflow-hidden"
     style={{
-        background: 'rgba(255,255,255,0.08)',
-        backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255,255,255,0.18)',
-        boxShadow: `
-          0 8px 32px rgba(0,0,0,0.12),
-          inset 0 1px 0 rgba(255,255,255,0.25),
-          inset 0 -1px 0 rgba(255,255,255,0.08)
-        `,
-    }}
+    background:
+      'linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.18) 100%)',
+    backdropFilter: 'blur(24px)',
+    WebkitBackdropFilter: 'blur(24px)',
+    border: '1px solid rgba(255,255,255,0.35)',
+    boxShadow: `
+      0 8px 24px rgba(0,0,0,0.08),
+      inset 0 1px 0 rgba(255,255,255,0.8),
+      inset 0 -1px 0 rgba(255,255,255,0.2)
+    `,
+}}
 >
             {/* inner top highlight */}
             <div
@@ -59,9 +60,15 @@ const StatCard: React.FC<{ icon: React.ReactNode; title: string; value: string; 
                 style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 100%)' }}
             />
             {/* icon — red color, adapts in light/dark via currentColor override */}
-            <span className="relative text-red-500 dark:text-red-400 [&>svg]:w-5 [&>svg]:h-5">
-                {icon}
-            </span>
+            <span
+    className="relative [&>svg]:w-5 [&>svg]:h-5"
+    style={{
+        color: 'var(--accent-primary)',
+        filter: 'drop-shadow(0 0 8px var(--accent-primary))'
+    }}
+>
+    {icon}
+</span>
         </div>
 
         {/* Text */}
