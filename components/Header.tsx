@@ -64,10 +64,10 @@ return(
         </nav>
 
         <div className="flex items-center gap-3">
-          {/* Desktop Red "Let's Label" Button - smaller */}
+          {/* Desktop Red "Let's Label" Button - compact with less roundness */}
           <button
             onClick={onSignUpClick}
-            className="hidden md:flex items-center gap-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-all duration-300 hover:scale-105 active:scale-95"
+            className="hidden md:flex items-center gap-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white text-sm font-semibold px-4 py-2 rounded-md transition-all duration-300 hover:scale-105 active:scale-95"
           >
             Let's Label
           </button>
@@ -118,12 +118,13 @@ return(
             </div>
 
             <div className="mt-auto pt-8 border-t border-white/10">
+              {/* Mobile "Let's Label" Button - reduced size and roundness */}
               <button
                 onClick={(e) => {
                   setIsMenuOpen(false);
                   onSignUpClick(e);
                 }}
-                className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-xl transition-all active:scale-[0.985] text-base"
+                className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-2 rounded-md transition-all active:scale-[0.985] text-sm"
               >
                 Let's Label
               </button>
