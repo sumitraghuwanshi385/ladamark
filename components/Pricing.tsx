@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Bot, Check, X, ChevronDown, Globe } from 'lucide-react';
+import { Check, X, ChevronDown, Globe } from 'lucide-react';
 import { PLAN_DETAILS, CURRENCIES, PRO_PRICES } from './plans';
 
 const CheckIcon = ({ className = "w-4 h-4" }) => <Check className={`${className} text-emerald-500`} strokeWidth={3} />;
@@ -67,25 +67,28 @@ const Pricing: React.FC<{ onSignUpClick: (e: React.MouseEvent) => void }> = ({ o
                 </div>
 
                 {/* Filters Row: Custom Currency & Billing Toggle */}
-                <div className={`flex flex-col sm:flex-row items-center justify-center gap-4 mb-10 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10 relative z-30">
                     
                     {/* 1. Custom Premium Currency Dropdown Selector */}
-                    <div className="relative" ref={dropdownRef}>
+                    <div className="relative z-40" ref={dropdownRef}>
                         <button
                             type="button"
                             onClick={() => setIsCurrencyDropdownOpen(!isCurrencyDropdownOpen)}
-                            className="flex items-center gap-2 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md px-3 py-1.5 text-xs font-semibold text-zinc-800 dark:text-zinc-200 shadow-sm hover:border-zinc-300 dark:hover:border-zinc-700 transition-colors"
+                            className="flex items-center justify-between gap-2 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md px-3 py-1.5 text-xs font-semibold text-zinc-800 dark:text-zinc-200 shadow-sm hover:border-zinc-300 dark:hover:border-zinc-700 transition-colors min-w-[105px]"
                         >
-                            <Globe size={14} className="text-zinc-400" />
-                            <span>{activeCurrency.symbol} {activeCurrency.code}</span>
-                            <ChevronDown size={14} className={`text-zinc-400 transition-transform duration-200 ${isCurrencyDropdownOpen ? 'rotate-180' : ''}`} />
+                            <span className="flex items-center gap-1.5">
+                                <Globe size={13} className="text-zinc-400" />
+                                <span>{activeCurrency.symbol} {activeCurrency.code}</span>
+                            </span>
+                            <ChevronDown size={13} className={`text-zinc-400 transition-transform duration-200 ${isCurrencyDropdownOpen ? 'rotate-180' : ''}`} />
                         </button>
 
                         {isCurrencyDropdownOpen && (
-                            <div className="absolute left-0 mt-1 w-36 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-md shadow-xl z-50 py-1 overflow-hidden">
+                            <div className="absolute left-0 mt-1 w-full min-w-[110px] bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-md shadow-xl z-[60] py-1 overflow-hidden animate-in fade-in slide-in-from-top-1 duration-200">
                                 {CURRENCIES.map(c => (
                                     <button
                                         key={c.code}
+                                        type="button"
                                         onClick={() => {
                                             setSelectedCurrency(c.code);
                                             setIsCurrencyDropdownOpen(false);
@@ -100,19 +103,21 @@ const Pricing: React.FC<{ onSignUpClick: (e: React.MouseEvent) => void }> = ({ o
                     </div>
 
                     {/* 2. Billing Cycle Slide Switch Toggle */}
-                    <div className="flex items-center gap-3 bg-zinc-100/80 dark:bg-zinc-900/50 p-1 rounded-md border border-zinc-200/40 dark:border-zinc-800/40">
+                    <div className="flex items-center gap-1.5 bg-zinc-100/80 dark:bg-zinc-900/50 p-1 rounded-md border border-zinc-200/40 dark:border-zinc-800/40 relative z-20">
                         <button
+                            type="button"
                             onClick={() => setBillingCycle('monthly')}
                             className={`px-3 py-1 text-xs font-semibold rounded-sm transition-all ${billingCycle === 'monthly' ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-800'}`}
                         >
                             Monthly
                         </button>
                         <button
+                            type="button"
                             onClick={() => setBillingCycle('yearly')}
                             className={`flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-sm transition-all ${billingCycle === 'yearly' ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-800'}`}
                         >
                             <span>Yearly</span>
-                            <span className="text-[10px] font-bold bg-green-500/10 text-green-600 dark:text-green-400 px-1.5 py-0.5 rounded-sm">
+                            <span className="text-[10px] font-bold bg-green-500/10 text-green-600 dark:text-green-400 px-1.5 py-0.5 rounded-smSkinny">
                                 Save 17%
                             </span>
                         </button>
@@ -120,7 +125,7 @@ const Pricing: React.FC<{ onSignUpClick: (e: React.MouseEvent) => void }> = ({ o
                 </div>
 
                 {/* Cards Layout Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch max-w-4xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch max-w-4xl mx-auto relative z-10">
                     {Object.values(plans).map((plan, index) => {
                         const isPro = plan.name === 'Pro';
                         return (
@@ -141,7 +146,7 @@ const Pricing: React.FC<{ onSignUpClick: (e: React.MouseEvent) => void }> = ({ o
                                         : '0 4px 20px -2px rgba(120, 120, 120, 0.02), inset 0 1px 0 0 rgba(255, 255, 255, 0.8)'
                                 }}
                             >
-                                {/* Fixed Most Popular Floating Badge (No overlapping clash) */}
+                                {/* Floating Badge */}
                                 {isPro && (
                                     <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20">
                                         <span className="bg-gradient-to-r from-rose-500 to-red-600 text-white text-[10px] font-black tracking-widest uppercase px-3 py-1 rounded-md shadow-md shadow-red-500/10">
@@ -189,6 +194,7 @@ const Pricing: React.FC<{ onSignUpClick: (e: React.MouseEvent) => void }> = ({ o
                                 {/* Compact Custom CTA Action Button */}
                                 <div className="mt-6">
                                     <button 
+                                        type="button"
                                         onClick={onSignUpClick} 
                                         className={`w-full text-center py-2 px-4 rounded-md text-xs font-bold tracking-wide transition-all duration-300 ${
                                             isPro 
