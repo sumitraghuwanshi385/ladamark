@@ -52,15 +52,15 @@ const Hero: React.FC<{ onLoginClick: (e: React.MouseEvent) => void; onSignUpClic
             Ladamark uses advanced AI to auto-generate rich, contextual tags across your entire product catalog — boosting discoverability, SEO, and conversions instantly.
           </p>
 
-          {/* CTA Buttons - Significantly reduced size on mobile */}
-          <div className="flex flex-col sm:flex-row items-center gap-3.5 w-full sm:w-auto animate-fade-in-up animation-delay-300">
+          {/* CTA Buttons - Reduced size and roundness with iOS 27 glass style */}
+          <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto animate-fade-in-up animation-delay-300">
             <a
               href="#"
               onClick={onSignUpClick}
-              className="group relative w-full sm:w-auto px-6 md:px-9 py-3 md:py-4.5 text-[15px] md:text-base font-semibold text-white bg-gradient-to-r from-rose-500 to-red-600 rounded-2xl overflow-hidden transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl hover:shadow-rose-500/40 flex items-center justify-center gap-2.5"
+              className="group relative w-full sm:w-auto px-5 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-rose-500 to-red-600 rounded-md overflow-hidden transition-all duration-300 hover:scale-[1.03] flex items-center justify-center gap-2"
             >
               <span className="relative z-10">Start Free</span>
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 md:w-5 md:h-5 relative z-10 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
               <div className="absolute inset-0 bg-white/20 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300" />
@@ -69,7 +69,7 @@ const Hero: React.FC<{ onLoginClick: (e: React.MouseEvent) => void; onSignUpClic
             <a
               href="#"
               onClick={onLoginClick}
-              className="w-full sm:w-auto px-6 md:px-9 py-3 md:py-4.5 text-[15px] md:text-base font-semibold text-white border border-white/30 hover:border-white/60 backdrop-blur-md rounded-2xl transition-all duration-300 hover:bg-white/5 flex items-center justify-center"
+              className="w-full sm:w-auto px-5 py-2.5 text-sm font-semibold text-white bg-white/10 dark:bg-zinc-900/40 backdrop-blur-xl border border-white/20 hover:border-white/40 rounded-md transition-all duration-300 hover:bg-white/20 flex items-center justify-center"
             >
               Watch 2-min Demo
             </a>
