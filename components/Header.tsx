@@ -43,7 +43,7 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
       <header
         className={`fixed z-50 transition-all duration-700 ease-out
         ${isScrolled
-          ? 'top-2 inset-x-3 w-auto bg-white/75 dark:bg-zinc-950/75 backdrop-blur-3xl border border-white/40 dark:border-white/10 rounded-xl'
+          ? 'top-2 inset-x-3 w-auto bg-white/[0.35] dark:bg-zinc-950/[0.45] backdrop-blur-[40px] backdrop-saturate-[190%] border border-white/40 dark:border-white/10 rounded-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.04)]'
           : 'top-0 left-0 right-0 w-full bg-transparent'
         }`}
       >
