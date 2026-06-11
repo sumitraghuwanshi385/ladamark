@@ -38,67 +38,68 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
     { label: 'Contact', href: '#contact' },
   ];
  
-return(
-  <header
-  className={`fixed z-50 transition-all duration-700 ease-out
-  ${isScrolled
-    ? 'top-2 inset-x-3 w-auto bg-white/75 dark:bg-zinc-950/75 backdrop-blur-3xl border border-white/40 dark:border-white/10 rounded-xl'
-    : 'top-0 left-0 right-0 w-full bg-transparent'
-  }`}
->
-      
-      <div className="max-w-7xl mx-auto px-4 py-2.5 flex justify-between items-center">
-        <Logo />
+  return (
+    <>
+      <header
+        className={`fixed z-50 transition-all duration-700 ease-out
+        ${isScrolled
+          ? 'top-2 inset-x-3 w-auto bg-white/75 dark:bg-zinc-950/75 backdrop-blur-3xl border border-white/40 dark:border-white/10 rounded-xl'
+          : 'top-0 left-0 right-0 w-full bg-transparent'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 py-2.5 flex justify-between items-center">
+          <Logo />
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8 text-sm font-medium">
-          {menuItems.slice(0, 3).map((item) => (
-            <a 
-              key={item.label}
-              href={item.href} 
-              className="text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors"
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-8 text-sm font-medium">
+            {menuItems.slice(0, 3).map((item) => (
+              <a 
+                key={item.label}
+                href={item.href} 
+                className="text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors"
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-3">
+            {/* Desktop Red "Let's Label" Button - compact with less roundness */}
+            <button
+              onClick={onSignUpClick}
+              className="hidden md:flex items-center gap-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white text-sm font-semibold px-4 py-2 rounded-md transition-all duration-300 hover:scale-105 active:scale-95"
             >
-              {item.label}
-            </a>
-          ))}
-        </nav>
+              Let's Label
+            </button>
 
-        <div className="flex items-center gap-3">
-          {/* Desktop Red "Let's Label" Button - compact with less roundness */}
-          <button
-            onClick={onSignUpClick}
-            className="hidden md:flex items-center gap-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white text-sm font-semibold px-4 py-2 rounded-md transition-all duration-300 hover:scale-105 active:scale-95"
-          >
-            Let's Label
-          </button>
-
-          {/* Hamburger Menu Button (Mobile only) */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors"
-            aria-label="Toggle menu"
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+            {/* Hamburger Menu Button (Mobile only) */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="md:hidden p-2 text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors"
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
-      </div>
+      </header>
 
-      {/* Mobile Sliding Sidebar - Compact */}
-      <div className={`fixed inset-0 z-50 md:hidden transition-all duration-500 ${isMenuOpen ? 'visible' : 'invisible'}`}>
+      {/* Mobile Sliding Sidebar - Placed outside header to avoid structural glitch */}
+      <div className={`fixed inset-0 z-[100] md:hidden transition-all duration-500 ${isMenuOpen ? 'visible' : 'invisible'}`}>
         {/* Backdrop */}
         <div 
           className={`absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-500 ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`}
           onClick={() => setIsMenuOpen(false)}
         />
         
-        {/* Sidebar */}
-        <div className={`absolute top-0 right-0 h-full w-72 bg-white dark:bg-zinc-950 border-l border-white/20 dark:border-white/10 transition-transform duration-500 ease-out ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+        {/* Sidebar Panel */}
+        <div className={`absolute top-0 right-0 h-full w-72 bg-white dark:bg-zinc-950 border-l border-zinc-200 dark:border-white/10 transition-transform duration-500 ease-out ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
           <div className="p-4 flex flex-col h-full">
             <div className="flex justify-between items-center mb-6">
               <Logo />
               <button 
                 onClick={() => setIsMenuOpen(false)} 
-                className="text-[var(--text-secondary)] p-1"
+                className="text-[var(--text-secondary)] p-1 hover:opacity-70 transition-opacity"
               >
                 <X size={26} />
               </button>
@@ -117,7 +118,7 @@ return(
               ))}
             </div>
 
-            <div className="mt-auto pt-8 border-t border-white/10">
+            <div className="mt-auto pt-8 border-t border-zinc-100 dark:border-white/10">
               {/* Mobile "Let's Label" Button - reduced size and roundness */}
               <button
                 onClick={(e) => {
@@ -132,7 +133,7 @@ return(
           </div>
         </div>
       </div>
-    </header>
+    </>
   );
 };
 
