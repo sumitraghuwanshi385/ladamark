@@ -18,9 +18,9 @@ const steps = [
     stepNumber: "02",
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 3V5M12 19V21M5 12H3M21 12H19" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-        <path d="M18.364 5.636L16.95 7.05M7.05 16.95L5.636 18.364M18.364 18.364L16.95 16.95M7.05 7.05L5.636 5.636" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-        <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="2"/>
+        <path d="M12 3L13.75 8.25L19 10L13.75 11.75L12 17L10.25 11.75L5 10L10.25 8.25L12 3Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M19 16L19.75 18.25L22 19L19.75 19.75L19 22L18.25 19.75L16 19L18.25 18.25L19 16Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M6 4L6.5 5.5L8 6L6.5 6.5L6 8L5.5 6.5L4 6L5.5 5.5L6 4Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>
     ),
     title: "Let AI Suggest Tags",
