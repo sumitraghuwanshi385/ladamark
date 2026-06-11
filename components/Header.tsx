@@ -42,7 +42,7 @@ return(
   <header
   className={`fixed z-50 transition-all duration-700 ease-out
   ${isScrolled
-    ? 'top-2 inset-x-3 w-auto bg-white/75 dark:bg-zinc-950/75 backdrop-blur-3xl border border-white/40 dark:border-white/10 rounded-3xl shadow-2xl shadow-black/10 dark:shadow-white/5'
+    ? 'top-2 inset-x-3 w-auto bg-white/75 dark:bg-zinc-950/75 backdrop-blur-3xl border border-white/40 dark:border-white/10 rounded-xl'
     : 'top-0 left-0 right-0 w-full bg-transparent'
   }`}
 >
@@ -67,7 +67,7 @@ return(
           {/* Desktop Red "Let's Label" Button - smaller */}
           <button
             onClick={onSignUpClick}
-            className="hidden md:flex items-center gap-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white text-sm font-semibold px-4 py-2 rounded-2xl transition-all duration-300 shadow-lg shadow-red-500/30 hover:scale-105 active:scale-95"
+            className="hidden md:flex items-center gap-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-all duration-300 hover:scale-105 active:scale-95"
           >
             Let's Label
           </button>
@@ -92,7 +92,7 @@ return(
         />
         
         {/* Sidebar */}
-        <div className={`absolute top-0 right-0 h-full w-72 bg-white dark:bg-zinc-950 border-l border-white/20 dark:border-white/10 shadow-2xl transition-transform duration-500 ease-out ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+        <div className={`absolute top-0 right-0 h-full w-72 bg-white dark:bg-zinc-950 border-l border-white/20 dark:border-white/10 transition-transform duration-500 ease-out ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
           <div className="p-4 flex flex-col h-full">
             <div className="flex justify-between items-center mb-6">
               <Logo />
@@ -123,7 +123,7 @@ return(
                   setIsMenuOpen(false);
                   onSignUpClick(e);
                 }}
-                className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-2xl transition-all active:scale-[0.985] text-base"
+                className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-xl transition-all active:scale-[0.985] text-base"
               >
                 Let's Label
               </button>
