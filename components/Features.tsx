@@ -1,59 +1,45 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 
-// --- ICONS ---
-const VisualRecognitionIcon = ({ className = "h-6 w-6" }: { className?: string }) => <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>;
-const DescriptionGenIcon = ({ className = "h-6 w-6" }: { className?: string }) => <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z" /><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 7.125l-8.932 8.931" /></svg>;
-const DollarIcon = ({className="h-6 w-6"}: {className?: string}) => (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 1v22"></path>
-        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-    </svg>
-);
-const AutoAttributesIcon = ({ className = "h-6 w-6" }: { className?: string }) => <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M3 4.75h18M3 12h18M3 19.25h18M8.25 2.75v4M15.75 10v4M12 17.25v4" /></svg>;
-const SeoTaggingIcon = ({ className = "h-6 w-6" }: { className?: string }) => <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z" /><path strokeLinecap="round" strokeLinejoin="round" d="M6 6h.008v.008H6V6z" /></svg>;
-const QuickApproveIcon = ({ className = "h-6 w-6" }: { className?: string }) => <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>;
-
-const FeatureCard: React.FC<{icon: React.ReactElement<{ className?: string }>; title: string; description: string;}> = ({ icon, title, description }) => (
-    <div className="feature-card-glow h-full">
-        <div className="relative z-10 bg-[var(--background-primary)] p-6 rounded-lg border border-[var(--border-primary)] transition-all duration-300 h-full flex flex-col text-left transform hover:-translate-y-1">
-            <div className="flex-shrink-0 w-12 h-12 mb-5 flex items-center justify-center rounded-xl bg-[var(--accent-bg-muted)] text-[var(--accent-text-primary)] border border-[var(--border-accent-translucent)]">
-                {React.cloneElement(icon, { className: "h-7 w-7" })}
-            </div>
-            <h3 className="text-lg font-bold text-[var(--text-primary)] mb-2">{title}</h3>
-            <p className="text-sm text-[var(--text-secondary)] flex-grow">{description}</p>
-        </div>
+const FeatureCard: React.FC<{ title: string; description: string }> = ({ title, description }) => (
+  <div className="h-full bg-white/60 dark:bg-zinc-900/40 backdrop-blur-md p-5 sm:p-6 rounded-md border border-zinc-200/60 dark:border-zinc-800/60 transition-all duration-500 hover:border-red-500/30 hover:bg-white dark:hover:bg-zinc-900 hover:scale-[1.01] flex flex-col text-left"
+       style={{ boxShadow: '0 4px 20px -2px rgba(120, 120, 120, 0.02), inset 0 1px 0 0 rgba(255, 255, 255, 0.8)' }}>
+    
+    {/* Rounded-Rectangular Image Placeholder Container */}
+    <div className="w-full h-32 sm:h-36 mb-4 bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200/40 dark:border-zinc-700/30 rounded-md overflow-hidden flex items-center justify-center relative group-hover:border-red-500/20 transition-colors">
+      <span className="text-[11px] font-medium tracking-wider uppercase text-zinc-400 dark:text-zinc-500">
+        Feature Asset Image
+      </span>
+      {/* Jab aap image lagao toh is span ko hata kar niche wali img line uncomment kr lena: */}
+      {/* <img src="YOUR_IMAGE_URL" alt={title} className="w-full h-full object-cover" /> */}
     </div>
+    
+    <h3 className="text-base font-bold text-zinc-900 dark:text-white mb-1.5 tracking-tight">{title}</h3>
+    <p className="text-[12.5px] text-zinc-500 dark:text-zinc-400 leading-relaxed font-medium flex-grow">{description}</p>
+  </div>
 );
 
 const features = [
   {
-    icon: <VisualRecognitionIcon />,
     name: "Visual Recognition",
     description: "Uploads are instantly scanned to understand product type, brand, category, and style.",
   },
   {
-    icon: <DescriptionGenIcon />,
     name: "Product Name & Description Generation",
     description: "Get compelling, detailed product titles and descriptions using AI — optimized for eCommerce.",
   },
   {
-    icon: <DollarIcon />,
     name: "Price Recommendation",
     description: "Ladamark suggests price ranges using real-time product intelligence.",
   },
-   {
-    icon: <AutoAttributesIcon />,
+  {
     name: "Auto Attributes",
     description: "AI detects and fills in critical attributes like color, material, type, gender, style, etc.",
   },
-   {
-    icon: <SeoTaggingIcon />,
+  {
     name: "Smart SEO Tagging",
     description: "AI suggests high-intent, keyword-rich SEO tags to improve search visibility.",
   },
-   {
-    icon: <QuickApproveIcon />,
+  {
     name: "Quick Edit & Approve",
     description: "Review, edit, or approve results with one click — and send to your catalog instantly."
   }
@@ -78,38 +64,57 @@ const Features: React.FC<{ onSignUpClick: (e: React.MouseEvent) => void }> = ({ 
       observer.observe(currentRef);
     }
     return () => {
-        if (currentRef) {
-            observer.unobserve(currentRef);
-        }
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
     };
   }, []);
 
   return (
-    <section id="features" ref={sectionRef} className="py-20 sm:py-28 bg-[var(--background-secondary)] scroll-mt-28">
-      <div className="container mx-auto px-6">
-        <div className={`text-center mb-16 max-w-3xl mx-auto ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-[var(--text-primary)]">What Ladamark AI does for you:</h2>
+    <section id="features" ref={sectionRef} className="relative py-12 sm:py-20 overflow-hidden bg-gradient-to-b from-white via-zinc-50/50 to-white dark:from-zinc-950 dark:via-zinc-900/30 dark:to-zinc-950 border-t border-b border-zinc-100 dark:border-zinc-900 scroll-mt-20">
+      {/* Subtle Premium Background Glow */}
+      <div className="absolute top-1/3 right-1/4 w-[400px] h-[400px] bg-red-500/5 rounded-full blur-[100px] pointer-events-none" />
+
+      <div className="max-w-6xl mx-auto px-5 lg:px-8 relative z-10">
+        
+        {/* Header Section */}
+        <div className={`text-center mb-10 sm:mb-14 max-w-xl mx-auto transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-medium tracking-wider uppercase text-red-500 bg-red-500/5 border border-red-500/10 mb-3.5">
+            Capabilities
+          </span>
+          <h2 className="text-2xl md:text-4xl font-black tracking-tight text-zinc-900 dark:text-white">
+            What Ladamark AI does for you:
+          </h2>
+          <p className="mt-2.5 text-xs md:text-sm text-zinc-500 dark:text-zinc-400 font-medium leading-relaxed max-w-lg mx-auto">
+            Supercharge your catalog management with automated visual tagging, high-converting copy, and real-time market insights.
+          </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        {/* Features Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
           {features.map((feature, index) => (
-            <div key={feature.name} className={`${isVisible ? 'animate-pop-in' : 'opacity-0'}`} style={{ animationDelay: `${index * 100}ms`}}>
-                <FeatureCard 
-                    icon={feature.icon}
-                    title={feature.name}
-                    description={feature.description}
-                />
+            <div key={feature.name} className={`transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`} style={{ transitionDelay: `${index * 75}ms`}}>
+              <FeatureCard 
+                title={feature.name}
+                description={feature.description}
+              />
             </div>
           ))}
         </div>
-        <div className={`text-center mt-16 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
-            <a 
-                href="#"
-                onClick={onSignUpClick}
-                className="group relative inline-flex items-center justify-center px-6 py-3 text-base font-bold text-white bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)] rounded-full transition-all duration-300 overflow-hidden transform hover:-translate-y-1 hover:shadow-lg hover:shadow-[var(--accent-shadow)]"
-            >
-                <span className="relative z-10">Start Smart Tagging for Free</span>
-                <svg className="relative z-10 w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-            </a>
+
+        {/* CTA Button Section */}
+        <div className={`text-center mt-10 sm:mt-14 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <a 
+            href="#"
+            onClick={onSignUpClick}
+            className="group relative inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-rose-500 to-red-600 rounded-md transition-all duration-300 overflow-hidden hover:scale-[1.02]"
+          >
+            <span className="relative z-10">Start Smart Tagging for Free</span>
+            <svg className="relative z-10 w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" strokeWidth="2.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+            </svg>
+            <div className="absolute inset-0 bg-white/20 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300" />
+          </a>
         </div>
       </div>
     </section>
