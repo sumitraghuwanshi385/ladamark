@@ -87,16 +87,12 @@ const Hero: React.FC<{ onLoginClick: (e: React.MouseEvent) => void; onSignUpClic
         : '1px solid rgba(255,255,255,0.35)',
 
     boxShadow:
-      document.documentElement.classList.contains('dark')
-        ? `
-          0 8px 24px rgba(0,0,0,0.25),
-          inset 0 1px 0 rgba(255,255,255,0.10)
-        `
-        : `
-          0 8px 24px rgba(0,0,0,0.08),
-          inset 0 1px 0 rgba(255,255,255,0.8),
-          inset 0 -1px 0 rgba(255,255,255,0.2)
-        `,
+  document.documentElement.classList.contains('dark')
+    ? 'inset 0 1px 0 rgba(255,255,255,0.10)'
+    : `
+      inset 0 1px 0 rgba(255,255,255,0.8),
+      inset 0 -1px 0 rgba(255,255,255,0.2)
+    `,
   }}
 >
   Watch 2-min Demo
