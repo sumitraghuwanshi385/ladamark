@@ -1,45 +1,61 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Sparkles } from 'lucide-react';
 
 const testimonials = [
   {
     quote: "Ladamark saved us 60+ hours/week of manual tagging. What used to be a bottleneck is now a competitive advantage. The ROI was immediate.",
-    name: "Sonal M.",
-    title: "Catalog Manager at Zenwear",
+    name: "Aarav Sharma",
+    title: "Catalog Director at Zenwear",
   },
   {
     quote: "The accuracy is what blew us away. We've enriched our product data tenfold, leading to better search, better filters, and a clear lift in conversion.",
-    name: "James K.",
+    name: "Sarah Jenkins",
     title: "Head of E-commerce, Urban Essentials",
   },
   {
     quote: "A must-have tool for any serious marketplace. The level of detail from the AI analysis gives us a significant edge over competitors.",
-    name: "Maria Garcia",
+    name: "Yuki Tanaka",
     title: "Head of Seller Experience, Marketplace Co",
   },
   {
     quote: "We reduced our data enrichment costs by 70% while improving quality. Ladamark is an essential part of our e-commerce stack.",
-    name: "David Lee",
+    name: "Michael Chang",
     title: "Founder, NextGen D2C",
   },
   {
     quote: "Their AI understands nuance in fashion that other services miss. Our conversion rate on recommended products is up 15%.",
-    name: "Chloe R.",
+    name: "Emily Rodriguez",
     title: "Merchandising Lead at VOGUE Style"
   },
   {
     quote: "The setup was unbelievably fast. We went from a messy spreadsheet to a fully-tagged, searchable catalog in under a day. Phenomenal product.",
-    name: "Ben Carter",
+    name: "David Vance",
     title: "COO of The Gadget Shop"
   },
   {
     quote: "The interface is so intuitive. Our team was up and running in hours, not days. The time savings are incredible.",
-    name: "Emily White",
+    name: "Priya Patel",
     title: "Operations Director, StyleStream"
   },
   {
     quote: "Ladamark fundamentally changed how we handle product data. It's faster, more accurate, and has freed up our team for more strategic work.",
-    name: "Michael Brown",
+    name: "Robert Gallagher",
     title: "E-commerce Analyst, The Retail Group"
+  },
+  {
+    quote: "Processing metadata for thousands of global fashion items used to take weeks. Ladamark tags everything instantly with absolute precision.",
+    name: "Ananya Iyer",
+    title: "VP of Supply Chain, Global Threads"
+  },
+  {
+    quote: "The deep category classification tool adapted seamlessly to our niche inventory setup. It works flawlessly right out of the box.",
+    name: "Marcus Brody",
+    title: "Technical Product Manager, TechArmor"
+  },
+  {
+    quote: "Scale used to scare our database ops team. With Ladamark, handling ingestion cycles for massive catalogs feels completely effortless.",
+    name: "Kenji Sato",
+    title: "Lead Developer, Tokyo Trade Hub"
   }
 ];
 
@@ -51,22 +67,18 @@ const Testimonials: React.FC = () => {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
+        ([entry]) => {
+            if (entry.isIntersecting) {
+                setIsVisible(true);
+                observer.disconnect();
+            }
+        },
+        { threshold: 0.1 }
     );
     const currentRef = sectionRef.current;
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
+    if (currentRef) observer.observe(currentRef);
     return () => {
-        if (currentRef) {
-            observer.unobserve(currentRef);
-        }
+        if (currentRef) observer.unobserve(currentRef);
     };
   }, []);
 
@@ -111,9 +123,9 @@ const Testimonials: React.FC = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative py-12 sm:py-20 overflow-hidden bg-gradient-to-b from-white via-zinc-50/30 to-white dark:from-zinc-950 dark:via-zinc-900/10 dark:to-zinc-950 border-t border-b border-zinc-100 dark:border-zinc-900">
-      {/* Background Soft Liquid Mesh Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] bg-red-500/[0.04] dark:bg-red-500/[0.03] rounded-full blur-[110px] pointer-events-none" />
+    <section ref={sectionRef} className="relative py-12 sm:py-20 overflow-hidden bg-gradient-to-b from-white via-zinc-50/30 to-white dark:from-zinc-950 dark:via-zinc-900/10 dark:to-zinc-950 border-t border-b border-zinc-100 dark:border-zinc-900 scroll-mt-20">
+      {/* Background Soft Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] bg-red-500/[0.03] rounded-full blur-[110px] pointer-events-none" />
 
       <div className="max-w-5xl mx-auto px-5 lg:px-8 relative z-10">
         
@@ -130,7 +142,7 @@ const Testimonials: React.FC = () => {
           </p>
         </div>
 
-        {/* Liquid Glass Stack Layout */}
+        {/* Dynamic Card Layout Stack */}
         <div 
           className={`relative max-w-2xl mx-auto h-[260px] sm:h-[230px] cursor-pointer transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
           style={{ perspective: '1200px' }}
@@ -141,7 +153,7 @@ const Testimonials: React.FC = () => {
           {testimonials.map((testimonial, index) => {
             let offset = index - activeIndex;
             
-            // Handle looping transitions nicely in layout
+            // Handle infinity looping offsets smoothly
             if (offset < -2) offset += testimonials.length;
             if (offset > 2) offset -= testimonials.length;
             
@@ -161,44 +173,36 @@ const Testimonials: React.FC = () => {
                   pointerEvents: index === activeIndex ? 'auto' : 'none',
                 }}
               >
-                {/* iOS 27 Liquid Glass Card Wrapper */}
-                <div className={`w-full h-full flex flex-col justify-between p-5 sm:p-6 rounded-xl border transition-all duration-500 relative overflow-hidden backdrop-blur-[40px] backdrop-saturate-[180%] ${
+                {/* Premium Adaptive Opaqueness Card UI */}
+                <div className={`w-full h-full flex flex-col justify-between p-5 sm:p-6 rounded-xl border transition-all duration-500 relative overflow-hidden ${
                   index === activeIndex 
-                    ? 'bg-white/[0.45] dark:bg-zinc-900/[0.55] border-red-500/30 dark:border-red-500/20 shadow-[0_12px_40px_-12px_rgba(239,68,68,0.12)]' 
-                    : 'bg-white/[0.25] dark:bg-zinc-900/[0.25] border-zinc-200/40 dark:border-zinc-800/40 shadow-[0_4px_24px_-4px_rgba(0,0,0,0.02)]'
+                    ? 'bg-white dark:bg-zinc-900 border-red-500/30 dark:border-red-500/20 shadow-[0_12px_40px_-12px_rgba(239,68,68,0.1)]' 
+                    : 'bg-white/90 dark:bg-zinc-900/80 border-zinc-200/60 dark:border-zinc-800/60 shadow-sm'
                 }`}
                 style={{
-                  boxShadow: index === activeIndex ? 'inset 0 1px 0 0 rgba(255,255,255,0.7), 0 12px 40px -12px rgba(239,68,68,0.08)' : 'inset 0 1px 0 0 rgba(255,255,255,0.4)'
+                  boxShadow: index === activeIndex ? 'inset 0 1px 0 0 rgba(255,255,255,0.9), 0 12px 40px -12px rgba(239,68,68,0.06)' : 'inset 0 1px 0 0 rgba(255,255,255,0.5)'
                 }}>
                   
-                  {/* Premium Subtle Decorative Quote Mark Block */}
-                  <span className="absolute -top-3 -left-1 text-7xl font-serif text-zinc-200/30 dark:text-zinc-800/20 select-none pointer-events-none">
-                    “
-                  </span>
+                  {/* Unique Sparkle Brand Tech Element */}
+                  <div className="absolute top-4 right-4 text-zinc-100 dark:text-zinc-800/40 pointer-events-none">
+                    <Sparkles size={20} className={index === activeIndex ? "text-red-500/10 dark:text-red-500/5" : "text-transparent"} />
+                  </div>
 
-                  <blockquote className="relative z-10 flex-grow pt-2">
+                  <blockquote className="relative z-10 flex-grow pt-1">
                     <p className="text-[13px] sm:text-[14px] font-medium text-zinc-800 dark:text-zinc-200 leading-relaxed tracking-tight">
                       "{testimonial.quote}"
                     </p>
                   </blockquote>
 
-                  <figcaption className="relative z-10 mt-4 border-t border-zinc-200/50 dark:border-zinc-800/50 pt-3 flex items-center justify-between">
+                  <figcaption className="relative z-10 mt-4 border-t border-zinc-100 dark:border-zinc-800/40 pt-3 flex items-center justify-between">
                     <div>
                       <p className="font-bold text-xs sm:text-sm text-zinc-900 dark:text-white tracking-tight">
                         {testimonial.name}
                       </p>
-                      <p className="text-[11px] text-zinc-400 dark:text-zinc-500 font-medium">
+                      <p className="text-[11px] text-zinc-400 dark:text-zinc-500 font-medium mt-0.5">
                         {testimonial.title}
                       </p>
                     </div>
-                    {/* Tiny Page Indicator dot block just for UI aesthetic richness */}
-                    {index === activeIndex && (
-                      <div className="flex gap-1">
-                        <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
-                        <span className="w-1.5 h-1.5 rounded-full bg-zinc-300 dark:bg-zinc-700" />
-                        <span className="w-1.5 h-1.5 rounded-full bg-zinc-300 dark:bg-zinc-700" />
-                      </div>
-                    )}
                   </figcaption>
                 </div>
               </div>
