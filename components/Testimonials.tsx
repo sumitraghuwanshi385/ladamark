@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Sparkles } from 'lucide-react';
 
 const testimonials = [
   {
@@ -53,7 +52,7 @@ const testimonials = [
     title: "Technical Product Manager, TechArmor"
   },
   {
-    quote: "Scale used to scare our database ops team. With Ladamark, handling ingestion cycles for massive catalogs feels completely effortless.",
+    quote: "Scale used to scare our database ops team. With Ladamark, handling ingestion cycles for massive catalogs feels completely effortlessly.",
     name: "Kenji Sato",
     title: "Lead Developer, Tokyo Trade Hub"
   }
@@ -183,9 +182,15 @@ const Testimonials: React.FC = () => {
                   boxShadow: index === activeIndex ? 'inset 0 1px 0 0 rgba(255,255,255,0.9), 0 12px 40px -12px rgba(239,68,68,0.06)' : 'inset 0 1px 0 0 rgba(255,255,255,0.5)'
                 }}>
                   
-                  {/* Unique Sparkle Brand Tech Element */}
-                  <div className="absolute top-4 right-4 text-zinc-100 dark:text-zinc-800/40 pointer-events-none">
-                    <Sparkles size={20} className={index === activeIndex ? "text-red-500/10 dark:text-red-500/5" : "text-transparent"} />
+                  {/* Subtle Branded Logo Overlaid Watermark Asset */}
+                  <div className="absolute right-4 bottom-12 select-none pointer-events-none transition-opacity duration-300">
+                    <span className={`text-4xl sm:text-5xl font-black tracking-tighter uppercase font-sans ${
+                      index === activeIndex 
+                        ? 'text-zinc-100/70 dark:text-zinc-800/15' 
+                        : 'text-transparent'
+                    }`}>
+                      Ladamark
+                    </span>
                   </div>
 
                   <blockquote className="relative z-10 flex-grow pt-1">
