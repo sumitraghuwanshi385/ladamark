@@ -182,18 +182,18 @@ const Testimonials: React.FC = () => {
                   boxShadow: index === activeIndex ? 'inset 0 1px 0 0 rgba(255,255,255,0.9), 0 12px 40px -12px rgba(239,68,68,0.06)' : 'inset 0 1px 0 0 rgba(255,255,255,0.5)'
                 }}>
                   
-                  {/* Subtle Branded Logo Overlaid Watermark Asset */}
-                  <div className="absolute right-4 bottom-12 select-none pointer-events-none transition-opacity duration-300">
-                    <span className={`text-4xl sm:text-5xl font-black tracking-tighter uppercase font-sans ${
+                  {/* Fixed Overlaid Brand Watermark - Repositioned to Top-Right corner to prevent collapse */}
+                  <div className="absolute right-4 top-3 select-none pointer-events-none transition-opacity duration-300">
+                    <span className={`text-base sm:text-lg font-black tracking-[0.2em] uppercase font-sans ${
                       index === activeIndex 
-                        ? 'text-zinc-100/70 dark:text-zinc-800/15' 
+                        ? 'text-zinc-200/50 dark:text-zinc-800/30' 
                         : 'text-transparent'
                     }`}>
                       Ladamark
                     </span>
                   </div>
 
-                  <blockquote className="relative z-10 flex-grow pt-1">
+                  <blockquote className="relative z-10 flex-grow pt-3 pr-12">
                     <p className="text-[13px] sm:text-[14px] font-medium text-zinc-800 dark:text-zinc-200 leading-relaxed tracking-tight">
                       "{testimonial.quote}"
                     </p>
