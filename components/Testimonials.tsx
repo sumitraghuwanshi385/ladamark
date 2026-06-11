@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 
 const testimonials = [
@@ -83,7 +82,7 @@ const Testimonials: React.FC = () => {
       if (autoplayRef.current) clearInterval(autoplayRef.current);
       autoplayRef.current = window.setInterval(() => {
           nextSlide();
-      }, 2500);
+      }, 3000);
   };
   
   const stopAutoplay = () => {
@@ -112,56 +111,101 @@ const Testimonials: React.FC = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-20 sm:py-28 bg-[var(--background-secondary)] overflow-hidden">
-      <div className="container mx-auto px-6">
-        <div className={`text-center mb-16 max-w-2xl mx-auto ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-[var(--text-primary)]">Loved by Teams That Demand Quality</h2>
-          <p className="mt-4 text-lg text-[var(--text-secondary)]">See how leading e-commerce teams are saving time and improving data with Ladamark.</p>
+    <section ref={sectionRef} className="relative py-12 sm:py-20 overflow-hidden bg-gradient-to-b from-white via-zinc-50/30 to-white dark:from-zinc-950 dark:via-zinc-900/10 dark:to-zinc-950 border-t border-b border-zinc-100 dark:border-zinc-900">
+      {/* Background Soft Liquid Mesh Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] bg-red-500/[0.04] dark:bg-red-500/[0.03] rounded-full blur-[110px] pointer-events-none" />
+
+      <div className="max-w-5xl mx-auto px-5 lg:px-8 relative z-10">
+        
+        {/* Header Section */}
+        <div className={`text-center mb-10 max-w-xl mx-auto transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-medium tracking-wider uppercase text-red-500 bg-red-500/5 border border-red-500/10 mb-3">
+            Reviews
+          </span>
+          <h2 className="text-2xl md:text-3xl font-black tracking-tight text-zinc-900 dark:text-white">
+            Loved by Teams Globally
+          </h2>
+          <p className="mt-1.5 text-xs md:text-sm text-zinc-500 dark:text-zinc-400 font-medium max-w-sm mx-auto">
+            See how leading e-commerce teams are saving hours with Ladamark.
+          </p>
         </div>
 
+        {/* Liquid Glass Stack Layout */}
         <div 
-          className={`relative max-w-4xl mx-auto h-[350px] cursor-pointer ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
-          style={{ perspective: '1000px', animationDelay: '300ms' }}
+          className={`relative max-w-2xl mx-auto h-[260px] sm:h-[230px] cursor-pointer transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+          style={{ perspective: '1200px' }}
           onMouseEnter={stopAutoplay}
           onMouseLeave={startAutoplay}
           onClick={handleNavigationClick}
         >
           {testimonials.map((testimonial, index) => {
-            const offset = index - activeIndex;
-            const isVisible = Math.abs(offset) <= 2; // Only render active and a couple on each side
-            const transform = `rotateY(${offset * 25}deg) translateX(${offset * 30}%) scale(${1 - Math.abs(offset) * 0.2})`;
-            const opacity = isVisible ? 1 - Math.abs(offset) * 0.4 : 0;
-            const zIndex = testimonials.length - Math.abs(offset);
+            let offset = index - activeIndex;
+            
+            // Handle looping transitions nicely in layout
+            if (offset < -2) offset += testimonials.length;
+            if (offset > 2) offset -= testimonials.length;
+            
+            const isCardRendered = Math.abs(offset) <= 2;
+            const transformStr = `rotateY(${offset * 18}deg) translateX(${offset * 22}%) scale(${1 - Math.abs(offset) * 0.12})`;
+            const opacityVal = isCardRendered ? (index === activeIndex ? 1 : 0.45 - Math.abs(offset) * 0.15) : 0;
+            const zIndexVal = testimonials.length - Math.abs(offset);
 
             return (
               <div
                 key={index}
-                className="absolute top-0 left-0 w-full h-full transition-all duration-300 ease-out"
+                className="absolute top-0 left-0 w-full h-full transition-all duration-500 ease-out"
                 style={{
-                  transform: transform,
-                  opacity: opacity,
-                  zIndex: zIndex,
-                  pointerEvents: 'none',
+                  transform: transformStr,
+                  opacity: opacityVal,
+                  zIndex: zIndexVal,
+                  pointerEvents: index === activeIndex ? 'auto' : 'none',
                 }}
               >
-                <div className={`w-full h-full flex flex-col justify-between p-8 md:p-10 rounded-2xl bg-[var(--background-primary)] border border-[var(--border-primary)] shadow-2xl shadow-[var(--shadow-primary)] transition-all duration-300 ${activeIndex === index ? 'border-[var(--border-accent-translucent)] shadow-[var(--accent-shadow)]' : 'opacity-70'}`}>
-                    <svg className="absolute top-6 left-6 w-16 h-16 text-[var(--background-tertiary)] opacity-80" fill="currentColor" viewBox="0 0 32 32">
-                        <path d="M9.984 20.016q0 2.016-1.248 3.864t-3.6 1.848q-2.4 0-3.816-1.848t-1.416-3.864q0-2.016 1.152-4.416t3.648-6.144q2.496-3.744 4.080-8.208h4.416q-2.592 6.336-4.224 9.696t-1.632 5.088zM22.032 20.016q0 2.016-1.248 3.864t-3.6 1.848q-2.4 0-3.816-1.848t-1.416-3.864q0-2.016 1.152-4.416t3.648-6.144q2.496-3.744 4.080-8.208h4.416q-2.592 6.336-4.224 9.696t-1.632 5.088z"></path>
-                    </svg>
-                    <blockquote className="relative z-10 flex-grow">
-                        <p className="text-lg md:text-xl font-medium text-[var(--text-primary)] leading-relaxed" style={{ textWrap: 'balance' }}>
-                          {testimonial.quote}
-                        </p>
-                    </blockquote>
-                    <figcaption className="relative z-10 mt-6 border-t border-[var(--border-secondary)] pt-4">
-                        <p className="font-bold text-base text-[var(--text-primary)]">{testimonial.name}</p>
-                        <p className="text-sm text-[var(--text-muted)]">{testimonial.title}</p>
-                    </figcaption>
+                {/* iOS 27 Liquid Glass Card Wrapper */}
+                <div className={`w-full h-full flex flex-col justify-between p-5 sm:p-6 rounded-xl border transition-all duration-500 relative overflow-hidden backdrop-blur-[40px] backdrop-saturate-[180%] ${
+                  index === activeIndex 
+                    ? 'bg-white/[0.45] dark:bg-zinc-900/[0.55] border-red-500/30 dark:border-red-500/20 shadow-[0_12px_40px_-12px_rgba(239,68,68,0.12)]' 
+                    : 'bg-white/[0.25] dark:bg-zinc-900/[0.25] border-zinc-200/40 dark:border-zinc-800/40 shadow-[0_4px_24px_-4px_rgba(0,0,0,0.02)]'
+                }`}
+                style={{
+                  boxShadow: index === activeIndex ? 'inset 0 1px 0 0 rgba(255,255,255,0.7), 0 12px 40px -12px rgba(239,68,68,0.08)' : 'inset 0 1px 0 0 rgba(255,255,255,0.4)'
+                }}>
+                  
+                  {/* Premium Subtle Decorative Quote Mark Block */}
+                  <span className="absolute -top-3 -left-1 text-7xl font-serif text-zinc-200/30 dark:text-zinc-800/20 select-none pointer-events-none">
+                    “
+                  </span>
+
+                  <blockquote className="relative z-10 flex-grow pt-2">
+                    <p className="text-[13px] sm:text-[14px] font-medium text-zinc-800 dark:text-zinc-200 leading-relaxed tracking-tight">
+                      "{testimonial.quote}"
+                    </p>
+                  </blockquote>
+
+                  <figcaption className="relative z-10 mt-4 border-t border-zinc-200/50 dark:border-zinc-800/50 pt-3 flex items-center justify-between">
+                    <div>
+                      <p className="font-bold text-xs sm:text-sm text-zinc-900 dark:text-white tracking-tight">
+                        {testimonial.name}
+                      </p>
+                      <p className="text-[11px] text-zinc-400 dark:text-zinc-500 font-medium">
+                        {testimonial.title}
+                      </p>
+                    </div>
+                    {/* Tiny Page Indicator dot block just for UI aesthetic richness */}
+                    {index === activeIndex && (
+                      <div className="flex gap-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-zinc-300 dark:bg-zinc-700" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-zinc-300 dark:bg-zinc-700" />
+                      </div>
+                    )}
+                  </figcaption>
                 </div>
               </div>
             );
           })}
         </div>
+
       </div>
     </section>
   );
