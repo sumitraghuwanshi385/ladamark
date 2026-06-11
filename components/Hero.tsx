@@ -49,7 +49,7 @@ const Hero: React.FC<{ onLoginClick: (e: React.MouseEvent) => void; onSignUpClic
 
           {/* Subheadline - Reduced size especially on mobile */}
           <p className="text-[15px] md:text-lg lg:text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mb-8 leading-relaxed animate-fade-in-up animation-delay-200 px-2" style={{ textWrap: 'balance' }}>
-            Ladamark uses advanced AI to auto-generate rich, contextual tags across your entire product catalog — boosting discoverability, SEO, and conversions instantly.
+            Ladamark uses AI Labelling to auto-generate rich, contextual tags across your entire product catalog — boosting discoverability, SEO, and conversions instantly.
           </p>
 
           {/* CTA Buttons - Reduced size and roundness with iOS 27 glass style */}
@@ -67,12 +67,40 @@ const Hero: React.FC<{ onLoginClick: (e: React.MouseEvent) => void; onSignUpClic
             </a>
 
             <a
-              href="#"
-              onClick={onLoginClick}
-              className="w-full sm:w-auto px-5 py-2.5 text-sm font-semibold text-white bg-white/10 dark:bg-zinc-900/40 backdrop-blur-xl border border-white/20 hover:border-white/40 rounded-md transition-all duration-300 hover:bg-white/20 flex items-center justify-center"
-            >
-              Watch 2-min Demo
-            </a>
+  href="#"
+  onClick={onLoginClick}
+  className="w-full sm:w-auto px-5 py-2.5 text-sm font-semibold rounded-md transition-all duration-300 flex items-center justify-center hover:scale-[1.02]"
+  style={{
+    background:
+      document.documentElement.classList.contains('dark')
+        ? 'rgba(255,255,255,0.08)'
+        : 'linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.18) 100%)',
+
+    color: 'var(--text-primary)',
+
+    backdropFilter: 'blur(24px)',
+    WebkitBackdropFilter: 'blur(24px)',
+
+    border:
+      document.documentElement.classList.contains('dark')
+        ? '1px solid rgba(255,255,255,0.15)'
+        : '1px solid rgba(255,255,255,0.35)',
+
+    boxShadow:
+      document.documentElement.classList.contains('dark')
+        ? `
+          0 8px 24px rgba(0,0,0,0.25),
+          inset 0 1px 0 rgba(255,255,255,0.10)
+        `
+        : `
+          0 8px 24px rgba(0,0,0,0.08),
+          inset 0 1px 0 rgba(255,255,255,0.8),
+          inset 0 -1px 0 rgba(255,255,255,0.2)
+        `,
+  }}
+>
+  Watch 2-min Demo
+</a>
           </div>
 
           {/* Bottom trust text - Smaller */}
