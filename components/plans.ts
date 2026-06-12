@@ -1,4 +1,3 @@
-
 export type Plan = 'free' | 'pro';
 
 export const PLAN_LIMITS: { [key in Plan]: { daily: number, monthly: number } } = {
@@ -30,19 +29,19 @@ export const CURRENCIES = [
     { code: 'BRL', name: 'Brazilian Real', symbol: 'R$' },
 ];
 
+// Updated dynamically matching the premium 199 INR scaling
 export const PRO_PRICES: { [key: string]: { monthly: string; yearly: string } } = {
-    INR: { monthly: '₹99', yearly: '₹990' },
-    USD: { monthly: '$1.19', yearly: '$11.90' },
-    EUR: { monthly: '€1.10', yearly: '€11.00' },
-    JPY: { monthly: '¥160', yearly: '¥1600' },
-    GBP: { monthly: '£0.95', yearly: '£9.50' },
-    AUD: { monthly: 'A$1.85', yearly: 'A$18.50' },
-    CAD: { monthly: 'CA$1.60', yearly: 'CA$16.00' },
-    CHF: { monthly: 'CHF 1.10', yearly: 'CHF 11.00' },
-    CNY: { monthly: '¥8.80', yearly: '¥88.00' },
-    BRL: { monthly: 'R$6.90', yearly: 'R$69.00' },
+    INR: { monthly: '₹199', yearly: '₹1,990' },
+    USD: { monthly: '$2.39', yearly: '$23.90' },
+    EUR: { monthly: '€2.20', yearly: '€22.00' },
+    JPY: { monthly: '¥320', yearly: '¥3,200' },
+    GBP: { monthly: '£1.90', yearly: '£19.00' },
+    AUD: { monthly: 'A$3.70', yearly: 'A$37.00' },
+    CAD: { monthly: 'CA$3.20', yearly: 'CA$32.00' },
+    CHF: { monthly: 'CHF 2.20', yearly: 'CHF 22.00' },
+    CNY: { monthly: '¥17.60', yearly: '¥176.00' },
+    BRL: { monthly: 'R$13.80', yearly: 'R$138.00' },
 };
-
 
 export const PLAN_DETAILS = {
     free: {
