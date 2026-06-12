@@ -188,19 +188,8 @@ const Testimonials: React.FC = () => {
                     </p>
                   </blockquote>
 
-                  {/* Fixed Shadow Mark Stacked Safely Above Divider Line */}
-                  <div className="w-full flex justify-end pr-2 -mb-0.5 select-none pointer-events-none transition-opacity duration-300">
-                    <span className={`text-[10px] sm:text-[11px] font-black tracking-[0.3em] uppercase font-mono ${
-                      index === activeIndex 
-                        ? 'text-zinc-200/60 dark:text-zinc-800/35' 
-                        : 'text-transparent'
-                    }`}>
-                      Ladamark
-                    </span>
-                  </div>
-
                   {/* Divider and Metadata Footer Element */}
-                  <figcaption className="relative z-10 border-t border-zinc-100 dark:border-zinc-800/60 pt-2.5 flex items-center justify-between">
+                  <figcaption className="relative z-10 border-t border-zinc-100 dark:border-zinc-800/60 pt-3.5 flex items-center justify-between">
                     <div>
                       <p className="font-bold text-[12px] sm:text-sm text-zinc-900 dark:text-white tracking-tight">
                         {testimonial.name}
