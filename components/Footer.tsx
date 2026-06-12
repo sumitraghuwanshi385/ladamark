@@ -1,4 +1,5 @@
 import React from 'react';
+import { Twitter, Github, Linkedin, Mail } from 'lucide-react';
 
 const Logo = () => (
     <a href="/" className="flex items-center -ml-1 mb-2.5">
@@ -11,7 +12,12 @@ const Logo = () => (
   );
 
 const SocialIcon: React.FC<{ href: string; children: React.ReactNode }> = ({ href, children }) => (
-    <a href={href} className="text-[var(--text-muted)] hover:text-[var(--accent-primary)] transition-all duration-300 transform hover:-translate-y-0.5">
+    <a 
+      href={href} 
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-zinc-400 dark:text-zinc-500 hover:text-red-500 dark:hover:text-red-400 transition-all duration-300 transform hover:-translate-y-0.5"
+    >
         {children}
     </a>
 );
@@ -81,7 +87,7 @@ const Footer: React.FC<FooterProps> = ({ onOpenInfoModal }) => {
               <p className="mt-3 text-[12px] text-[var(--text-secondary)] font-medium leading-relaxed mb-3">
                 Get the latest tags and updates from Ladamark.
               </p>
-              <form className="flex flex-col gap-1.5 w-full max-w-[220px]">
+              <form className="flex flex-col gap-1.5 w-full max-w-[220px]" onSubmit={(e) => e.preventDefault()}>
                 <input 
                     type="email" 
                     placeholder="Your email" 
@@ -100,21 +106,18 @@ const Footer: React.FC<FooterProps> = ({ onOpenInfoModal }) => {
         <div className="mt-10 md:mt-12 border-t border-[var(--border-primary)] pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
             <p className="text-[12px] font-medium text-[var(--text-muted)] order-2 sm:order-1">&copy; {new Date().getFullYear()} Ladamark, Inc. All rights reserved.</p>
             
-            <div className="flex space-x-5 order-1 sm:order-2">
-                <SocialIcon href="#">
-                    <svg className="h-4.5 w-4.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" />
-                    </svg>
+            <div className="flex space-x-5 order-1 sm:order-2 items-center">
+                <SocialIcon href="https://twitter.com/ladamark">
+                    <Twitter size={16} strokeWidth={2.5} />
                 </SocialIcon>
-                <SocialIcon href="#">
-                     <svg className="h-4.5 w-4.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                    </svg>
+                <SocialIcon href="https://github.com/ladamark">
+                    <Github size={16} strokeWidth={2.5} />
                 </SocialIcon>
-                 <SocialIcon href="#">
-                    <svg className="h-4.5 w-4.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                    </svg>
+                <SocialIcon href="https://linkedin.com/company/ladamark">
+                    <Linkedin size={16} strokeWidth={2.5} />
+                </SocialIcon>
+                <SocialIcon href="mailto:support@ladamark.com">
+                    <Mail size={16} strokeWidth={2.5} />
                 </SocialIcon>
             </div>
         </div>
