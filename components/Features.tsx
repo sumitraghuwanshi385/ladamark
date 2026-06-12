@@ -4,13 +4,13 @@ const FeatureCard: React.FC<{ title: string; description: string }> = ({ title, 
   <div className="h-full bg-white/60 dark:bg-zinc-900/40 backdrop-blur-md p-5 sm:p-6 rounded-md border border-zinc-200/60 dark:border-zinc-800/60 transition-all duration-500 hover:border-red-500/30 hover:bg-white dark:hover:bg-zinc-900 hover:scale-[1.01] flex flex-col text-left"
        style={{ boxShadow: '0 4px 20px -2px rgba(120, 120, 120, 0.02), inset 0 1px 0 0 rgba(255, 255, 255, 0.8)' }}>
     
-    {/* Rounded-Rectangular Image Placeholder Container */}
-    <div className="w-full h-32 sm:h-36 mb-4 bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200/40 dark:border-zinc-700/30 rounded-md overflow-hidden flex items-center justify-center relative group-hover:border-red-500/20 transition-colors">
+    {/* Increased Height Container for Perfect Asset View */}
+    <div className="w-full h-44 sm:h-52 mb-4 bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200/40 dark:border-zinc-700/30 rounded-md overflow-hidden flex items-center justify-center relative group-hover:border-red-500/20 transition-colors">
       <span className="text-[11px] font-medium tracking-wider uppercase text-zinc-400 dark:text-zinc-500">
         Feature Asset Image
       </span>
-      {/* Jab aap image lagao toh is span ko hata kar niche wali img line uncomment kr lena: */}
-      {/* <img src="YOUR_IMAGE_URL" alt={title} className="w-full h-full object-cover" /> */}
+      {/* Real Image Integration Layer (object-top added to prevent content cut) */}
+      {/* <img src="YOUR_IMAGE_URL" alt={title} className="w-full h-full object-cover object-top" /> */}
     </div>
     
     <h3 className="text-base font-bold text-zinc-900 dark:text-white mb-1.5 tracking-tight">{title}</h3>
