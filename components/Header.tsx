@@ -153,7 +153,7 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
             {/* Clean Native iOS Style Theme Switcher + CTA at the bottom */}
             <div className="mt-auto pt-4">
               
-              {/* Native Clean iOS Style Inline Switcher */}
+              {/* iOS Style Switcher Container */}
               <div className="flex items-center justify-between py-2 px-1 mb-4">
                 <span className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">Dark Mode</span>
                 <button
@@ -162,9 +162,10 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
                     isDarkMode ? 'bg-red-500' : 'bg-zinc-200 dark:bg-zinc-800'
                   }`}
                 >
+                  {/* Fixed standard metrics for smooth animation */}
                   <span
-                    className={`inline-block h-5 w-5 transform rounded-full bg-white shadow-md transition-transform duration-300 ease-in-out ${
-                      isDarkMode ? 'translate-x-5.5' : 'translate-x-0.5'
+                    className={`inline-block h-5 w-5 rounded-full bg-white shadow-md transition-transform duration-300 ease-in-out ${
+                      isDarkMode ? 'translate-x-5' : 'translate-x-0.5'
                     }`}
                   />
                 </button>
