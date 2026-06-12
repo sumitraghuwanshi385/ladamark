@@ -54,7 +54,6 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
     }
   };
 
-  // Clean links: removed "Product" and "Company" root titles
   const menuItems = [
     { label: 'Features', href: '#features' },
     { label: 'Pricing', href: '#pricing' },
@@ -74,7 +73,7 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
         <div className="max-w-7xl mx-auto px-4 py-2 flex justify-between items-center">
           <Logo />
 
-          {/* Desktop Navigation - Compact style */}
+          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6 text-[13px] font-medium">
             {menuItems.map((item) => (
               <a 
@@ -88,7 +87,7 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
           </nav>
 
           <div className="flex items-center gap-4">
-            {/* Desktop Mode - Micro Compact Theme Switcher Toggle */}
+            {/* Desktop Compact Theme Switcher */}
             <button
               onClick={toggleTheme}
               className="hidden md:flex items-center justify-center p-1.5 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/50 text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-all duration-200"
@@ -97,7 +96,7 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
               {isDarkMode ? <Sun size={15} /> : <Moon size={15} />}
             </button>
 
-            {/* Desktop Red "Let's Label" Button - Compact with minimal padding */}
+            {/* Desktop "Let's Label" Button */}
             <button
               onClick={onSignUpClick}
               className="hidden md:flex items-center gap-1.5 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white text-xs font-bold px-3.5 py-1.5 rounded-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
@@ -105,7 +104,7 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
               Let's Label
             </button>
 
-            {/* Hamburger Menu Button (Mobile only) */}
+            {/* Hamburger Menu Button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="md:hidden p-1.5 text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors"
@@ -151,20 +150,20 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
               ))}
             </div>
 
-            {/* iOS Style Theme Switcher + CTA Container at the bottom */}
-            <div className="mt-auto pt-4 border-t border-zinc-100 dark:border-zinc-900">
+            {/* Clean Native iOS Style Theme Switcher + CTA at the bottom */}
+            <div className="mt-auto pt-4">
               
-              {/* Premium iOS style Switcher */}
-              <div className="flex items-center justify-between bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-100 dark:border-zinc-800/80 rounded-lg p-2.5 mb-4">
-                <span className="text-xs font-bold text-zinc-500 dark:text-zinc-400">Dark Mode</span>
+              {/* Native Clean iOS Style Inline Switcher */}
+              <div className="flex items-center justify-between py-2 px-1 mb-4">
+                <span className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">Dark Mode</span>
                 <button
                   onClick={toggleTheme}
-                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 focus:outline-none ${
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 ease-in-out focus:outline-none ${
                     isDarkMode ? 'bg-red-500' : 'bg-zinc-200 dark:bg-zinc-800'
                   }`}
                 >
                   <span
-                    className={`inline-block h-4.5 w-4.5 transform rounded-full bg-white shadow-sm transition-transform duration-300 ${
+                    className={`inline-block h-5 w-5 transform rounded-full bg-white shadow-md transition-transform duration-300 ease-in-out ${
                       isDarkMode ? 'translate-x-5.5' : 'translate-x-0.5'
                     }`}
                   />
@@ -177,7 +176,7 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
                   setIsMenuOpen(false);
                   onSignUpClick(e);
                 }}
-                className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 rounded-md transition-all active:scale-[0.98] text-xs uppercase tracking-wider"
+                className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 rounded-md transition-all active:scale-[0.98] text-xs uppercase tracking-wider"
               >
                 Let's Label
               </button>
