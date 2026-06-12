@@ -1,11 +1,10 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 
-// SVG icons for data points, consistent with the application UI
-const ContentSVG = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>;
-const AttributesSVG = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M21 4H14" /><path strokeLinecap="round" strokeLinejoin="round" d="M10 4H3" /><path strokeLinecap="round" strokeLinejoin="round" d="M21 12H12" /><path strokeLinecap="round" strokeLinejoin="round" d="M8 12H3" /><path strokeLinecap="round" strokeLinejoin="round" d="M21 20H16" /><path strokeLinecap="round" strokeLinejoin="round" d="M12 20H3" /><path strokeLinecap="round" strokeLinejoin="round" d="M14 2v4" /><path strokeLinecap="round" strokeLinejoin="round" d="M8 10v4" /><path strokeLinecap="round" strokeLinejoin="round" d="M16 18v4" /></svg>;
-const PricingSVG = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>;
-const SeoTagIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z" /><path strokeLinecap="round" strokeLinejoin="round" d="M6 6h.008v.008H6V6z" /></svg>;
+// Sleek unified stroke icons
+const ContentSVG = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>;
+const AttributesSVG = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M21 4H14" /><path strokeLinecap="round" strokeLinejoin="round" d="M10 4H3" /><path strokeLinecap="round" strokeLinejoin="round" d="M21 12H12" /><path strokeLinecap="round" strokeLinejoin="round" d="M8 12H3" /><path strokeLinecap="round" strokeLinejoin="round" d="M21 20H16" /><path strokeLinecap="round" strokeLinejoin="round" d="M12 20H3" /><path strokeLinecap="round" strokeLinejoin="round" d="M14 2v4" /><path strokeLinecap="round" strokeLinejoin="round" d="M8 10v4" /><path strokeLinecap="round" strokeLinejoin="round" d="M16 18v4" /></svg>;
+const PricingSVG = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>;
+const SeoTagIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z" /><path strokeLinecap="round" strokeLinejoin="round" d="M6 6h.008v.008H6V6z" /></svg>;
 
 const icons: { [key: string]: React.ReactNode } = {
     "AI-Generated Content": <ContentSVG />,
@@ -14,36 +13,35 @@ const icons: { [key: string]: React.ReactNode } = {
     "SEO Keywords": <SeoTagIcon />
 };
 
-// Data for the component to cycle through
 const products = [
     {
         imageSrc: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?q=80&w=1024&auto=format&fit=crop",
         alt: "A stylish chronograph watch",
         dataPoints: [
-            { title: "AI-Generated Content", data: ["Product Name: Chronograph Dial Leather Watch", "Description: A sophisticated timepiece with a multi-function dial..."] },
-            { title: "Smart Attributes", data: ["Category: Watches (100%)", "Dial Color: Black (98%)", "Strap: Leather (95%)", "Style: Formal (90%)"] },
-            { title: "Pricing Suggestions", data: ["Currency: USD", "Suggested Min: $100", "Suggested Max: $180"] },
-            { title: "SEO Keywords", data: ["chronograph watch", "men's leather watch", "formal timepiece", "multi-function watch"] }
+            { title: "AI-Generated Content", data: ["Name: Chronograph Leather Watch", "Desc: Sophisticated multi-function dial..."] },
+            { title: "Smart Attributes", data: ["Category: Watches (100%)", "Strap: Genuine Leather (95%)"] },
+            { title: "Pricing Suggestions", data: ["Currency: USD Market", "Suggested Range: $100 - $180"] },
+            { title: "SEO Keywords", data: ["chronograph watch", "men's luxury timepiece"] }
         ]
     },
     {
         imageSrc: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=1024&auto=format&fit=crop",
         alt: "A woman in a vibrant floral summer dress",
         dataPoints: [
-            { title: "AI-Generated Content", data: ["Product Name: Floral Print Midi Summer Dress", "Description: Embrace the sunshine with this breezy floral midi dress..."] },
-            { title: "Smart Attributes", data: ["Category: Dresses (100%)", "Pattern: Floral (99%)", "Sleeve Style: Sleeveless (96%)", "Length: Midi (94%)"] },
-            { title: "Pricing Suggestions", data: ["Currency: USD", "Suggested Min: $60", "Suggested Max: $95"] },
-            { title: "SEO Keywords", data: ["floral dress", "summer midi dress", "sleeveless dress", "women's casual dress"] }
+            { title: "AI-Generated Content", data: ["Name: Floral Midi Summer Dress", "Desc: Breezy layout with light textures..."] },
+            { title: "Smart Attributes", data: ["Category: Dresses (100%)", "Pattern: Floral Accent (99%)"] },
+            { title: "Pricing Suggestions", data: ["Currency: USD Market", "Suggested Range: $60 - $95"] },
+            { title: "SEO Keywords", data: ["floral dress", "summer midi apparel"] }
         ]
     },
     {
         imageSrc: "https://images.unsplash.com/photo-1526947425960-945c6e72858f?q=80&w=1024&auto=format&fit=crop",
         alt: "A bottle of cosmetic oil",
         dataPoints: [
-            { title: "AI-Generated Content", data: ["Product Name: Organic Glow Facial Oil", "Description: Revitalize your skin with this nourishing blend of natural oils..."] },
-            { title: "Smart Attributes", data: ["Category: Skincare (99%)", "Type: Facial Oil (97%)", "Container: Glass Dropper (95%)", "Feature: Vegan (92%)"] },
-            { title: "Pricing Suggestions", data: ["Currency: USD", "Suggested Min: $45", "Suggested Max: $65"] },
-            { title: "SEO Keywords", data: ["organic facial oil", "hydrating serum", "natural skincare", "glow drops"] }
+            { title: "AI-Generated Content", data: ["Name: Organic Glow Facial Oil", "Desc: Nourishing blend of natural extracts..."] },
+            { title: "Smart Attributes", data: ["Category: Skincare (99%)", "Feature: Certified Vegan (92%)"] },
+            { title: "Pricing Suggestions", data: ["Currency: USD Market", "Suggested Range: $45 - $65"] },
+            { title: "SEO Keywords", data: ["organic facial oil", "hydrating skin serum"] }
         ]
     }
 ];
@@ -65,143 +63,144 @@ const DataNexus: React.FC<{ onSignUpClick: (e: React.MouseEvent) => void }> = ({
             { threshold: 0.1 }
         );
         const currentRef = sectionRef.current;
-        if (currentRef) {
-            observer.observe(currentRef);
-        }
+        if (currentRef) observer.observe(currentRef);
         return () => {
-            if(currentRef) {
-                observer.unobserve(currentRef);
-            }
+            if (currentRef) observer.unobserve(currentRef);
         };
     }, []);
-
-    const currentProduct = products[currentIndex];
 
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentIndex(prevIndex => (prevIndex + 1) % products.length);
-            setAnimationKey(prevKey => prevKey + 1); // Reset animation state by changing key
-        }, 8000); // Cycle every 8 seconds
-
+            setAnimationKey(prevKey => prevKey + 1);
+        }, 6000);
         return () => clearInterval(interval);
     }, []);
-    
-    // Positions for the data point cards on a circle
+
+    const currentProduct = products[currentIndex];
+
     const dataPointPositions = [
-        "top-0 left-0", // Top-left
-        "top-0 right-0", // Top-right
-        "bottom-0 left-0", // Bottom-left
-        "bottom-0 right-0" // Bottom-right
+        "top-4 left-4 lg:left-8",
+        "top-4 right-4 lg:right-8",
+        "bottom-4 left-4 lg:left-8",
+        "bottom-4 right-4 lg:right-8"
     ];
-    
-    // SVG Path `d` attributes from center to corners
+
     const pathDefinitions = [
-        "M 50 50 L 5 5",
-        "M 50 50 L 95 5",
-        "M 50 50 L 5 95",
-        "M 50 50 L 95 95"
+        "M 50 50 L 12 12",
+        "M 50 50 L 88 12",
+        "M 50 50 L 12 88",
+        "M 50 50 L 88 88"
     ];
 
     return (
-        <section ref={sectionRef} className="relative data-nexus-bg py-20 sm:py-32 bg-[var(--background-primary)] overflow-hidden">
-            <div className="container mx-auto px-6 relative z-10">
-                <div className={`text-center mb-16 max-w-3xl mx-auto ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
-                    <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-[var(--text-primary)]">From Pixels to Profit Engine</h2>
-                    <p className="mt-4 text-lg text-[var(--text-secondary)]">Ladamark transforms static images into a dynamic nexus of actionable data, fueling everything from search to personalization.</p>
+        <section ref={sectionRef} className="relative py-12 sm:py-20 overflow-hidden bg-gradient-to-b from-white via-zinc-50/40 to-white dark:from-zinc-950 dark:via-zinc-900/20 dark:to-zinc-950 border-t border-b border-zinc-100 dark:border-zinc-900 scroll-mt-20">
+            {/* Ambient Background Blur Layer */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-red-500/[0.02] rounded-full blur-[100px] pointer-events-none" />
+
+            <div className="max-w-5xl mx-auto px-5 lg:px-8 relative z-10">
+                
+                {/* Header Block */}
+                <div className={`text-center mb-10 max-w-xl mx-auto transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-medium tracking-wider uppercase text-red-500 bg-red-500/5 border border-red-500/10 mb-3">
+                        Data Pipeline
+                    </span>
+                    <h2 className="text-2xl md:text-3xl font-black tracking-tight text-zinc-900 dark:text-white">
+                        From Pixels to Profit Engine
+                    </h2>
+                    <p className="mt-2 text-xs md:text-sm text-zinc-500 dark:text-zinc-400 font-medium max-w-sm mx-auto leading-relaxed">
+                        Ladamark transforms static assets into rich contextual tags, accelerating your discovery metrics instantly.
+                    </p>
                 </div>
 
-                <div key={animationKey} className={`relative max-w-4xl mx-auto h-[40rem] hidden md:block ${isVisible ? 'animate-pop-in' : 'opacity-0'}`} style={{animationDelay: '200ms'}}>
-                    {/* Central Image */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="relative w-72 h-72">
-                             <img src={currentProduct.imageSrc} alt={currentProduct.alt} className="w-full h-full object-cover rounded-full shadow-2xl shadow-[var(--accent-shadow)]" />
-                             <div className="absolute inset-0 rounded-full border-2 border-[var(--accent-primary)]/50 pulse-glow"></div>
-                             <div className="absolute inset-[-20px] rounded-full border border-[var(--border-secondary)] opacity-50 animate-spin-slow"></div>
-                             <div className="absolute inset-[-40px] rounded-full border border-[var(--border-secondary)] opacity-30 animate-spin-slow-reverse"></div>
+                {/* Centralized Core Dynamic Canvas */}
+                <div key={animationKey} className={`relative max-w-3xl mx-auto h-[28rem] hidden md:block transition-all duration-700 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-98'}`}>
+                    
+                    {/* Background Subtle Tech Graphic Identity Badge */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-[0.04] dark:opacity-[0.02] pointer-events-none select-none z-0">
+                        <span className="text-7xl font-black tracking-[0.3em] uppercase">AI Nexus</span>
+                    </div>
+
+                    {/* Central Radar Image Target */}
+                    <div className="absolute inset-0 flex items-center justify-center z-20">
+                        <div className="relative w-44 h-44">
+                            <img src={currentProduct.imageSrc} alt={currentProduct.alt} className="w-full h-full object-cover rounded-full border border-zinc-200/50 dark:border-zinc-800 shadow-xl" />
+                            <div className="absolute inset-0 rounded-full border border-red-500/30 animate-ping [animation-duration:3s]" />
+                            <div className="absolute inset-[-12px] rounded-full border border-dashed border-zinc-300 dark:border-zinc-700 opacity-60 animate-spin-[20s]" />
                         </div>
                     </div>
-                    
-                    {/* SVG Lines */}
-                    <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
+
+                    {/* Interactive Linking Vector Rays */}
+                    <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full pointer-events-none z-10" preserveAspectRatio="none">
                         {pathDefinitions.map((d, index) => (
-                           <React.Fragment key={index}>
+                            <React.Fragment key={index}>
                                 <path
                                     d={d}
-                                    stroke="url(#line-gradient)"
-                                    strokeWidth="0.5"
+                                    stroke="currentColor"
+                                    strokeWidth="0.25"
                                     fill="none"
-                                    className="data-stream-path"
-                                    style={{ animationDelay: `${index * 0.2 + 0.5}s`, vectorEffect: 'non-scaling-stroke' }}
+                                    className="text-zinc-200 dark:text-zinc-800"
+                                    style={{ vectorEffect: 'non-scaling-stroke' }}
                                 />
-                                <circle r="1" fill="var(--accent-primary)" className="opacity-75">
-                                    <animateMotion
-                                        dur="3s"
-                                        repeatCount="indefinite"
-                                        path={d}
-                                        begin={`${index * 0.4 + 1.2}s`}
-                                    />
+                                <circle r="0.7" className="fill-red-500">
+                                    <animateMotion dur="2.5s" repeatCount="indefinite" path={d} begin={`${index * 0.2}s`} />
                                 </circle>
-                           </React.Fragment>
+                            </React.Fragment>
                         ))}
-                        <defs>
-                            <linearGradient id="line-gradient" gradientTransform="rotate(45)">
-                                <stop offset="0%" stopColor="var(--accent-secondary)" />
-                                <stop offset="100%" stopColor="var(--accent-primary)" />
-                            </linearGradient>
-                        </defs>
                     </svg>
 
-                    {/* Data Points */}
+                    {/* High-fidelity Floating Nodes */}
                     {currentProduct.dataPoints.map((point, index) => (
-                        <div key={point.title} className={`absolute w-64 ${dataPointPositions[index].replace('left-0', 'lg:left-0 -left-8').replace('right-0', 'lg:right-0 -right-8')}`} style={{ animationDelay: `${index * 0.2 + 1}s`}}>
-                            <div
-                                className="data-nexus-card rounded-2xl p-4"
-                            >
-                                <div className="flex items-center gap-3 mb-2">
-                                    <span className="text-[var(--accent-primary)]">{icons[point.title]}</span>
-                                    <h4 className="font-semibold text-[var(--text-primary)]">{point.title}</h4>
-                                </div>
-                                <ul className="space-y-1">
-                                    {point.data.map(item => (
-                                        <li key={item} className="text-sm text-[var(--text-secondary)] truncate">{item}</li>
-                                    ))}
-                                </ul>
+                        <div key={point.title} className={`absolute w-56 bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800/80 shadow-md rounded-lg p-3.5 z-30 transition-transform duration-500 hover:-translate-y-0.5 ${dataPointPositions[index]}`}>
+                            <div className="flex items-center gap-2 mb-1.5">
+                                <span className="text-red-500 dark:text-red-400">{icons[point.title]}</span>
+                                <h4 className="text-xs font-bold text-zinc-900 dark:text-white tracking-tight">{point.title}</h4>
                             </div>
-                        </div>
-                    ))}
-                </div>
-                
-                {/* Mobile Fallback View */}
-                <div className={`md:hidden space-y-8 ${isVisible ? 'animate-pop-in' : 'opacity-0'}`} style={{animationDelay: '200ms'}}>
-                    <div className="flex justify-center">
-                        <img src={currentProduct.imageSrc} alt={currentProduct.alt} className="w-64 h-64 object-cover rounded-2xl shadow-2xl shadow-[var(--accent-shadow)]" />
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                       {currentProduct.dataPoints.map((point) => (
-                        <div key={point.title} className="data-nexus-card rounded-2xl p-4">
-                            <div className="flex items-center gap-3 mb-2">
-                                <span className="text-[var(--accent-primary)]">{icons[point.title]}</span>
-                                <h4 className="font-semibold text-[var(--text-primary)]">{point.title}</h4>
-                            </div>
-                            <ul className="space-y-1">
+                            <ul className="space-y-1 border-t border-zinc-50 dark:border-zinc-800/40 pt-1.5">
                                 {point.data.map(item => (
-                                    <li key={item} className="text-sm text-[var(--text-secondary)] truncate">{item}</li>
+                                    <li key={item} className="text-[11px] text-zinc-500 dark:text-zinc-400 font-medium truncate list-none">{item}</li>
                                 ))}
                             </ul>
                         </div>
-                       ))}
+                    ))}
+                </div>
+
+                {/* Mobile Fallback Grid Flow */}
+                <div className={`md:hidden space-y-6 transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+                    <div className="flex justify-center">
+                        <div className="relative w-40 h-40">
+                            <img src={currentProduct.imageSrc} alt={currentProduct.alt} className="w-full h-full object-cover rounded-full border border-zinc-200 dark:border-zinc-800 shadow-lg" />
+                            <div className="absolute inset-0 rounded-full border border-red-500/20 animate-pulse" />
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                        {currentProduct.dataPoints.map((point) => (
+                            <div key={point.title} className="bg-white dark:bg-zinc-900 border border-zinc-150 dark:border-zinc-800/80 rounded-lg p-4 shadow-sm">
+                                <div className="flex items-center gap-2 mb-2">
+                                    <span className="text-red-500">{icons[point.title]}</span>
+                                    <h4 className="text-xs font-bold text-zinc-900 dark:text-white tracking-tight">{point.title}</h4>
+                                </div>
+                                <ul className="space-y-1 border-t border-zinc-50 dark:border-zinc-800/50 pt-2">
+                                    {point.data.map(item => (
+                                        <li key={item} className="text-[11px] text-zinc-500 dark:text-zinc-400 font-medium truncate list-none">{item}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ))}
                     </div>
                 </div>
 
-                <div className={`text-center mt-16 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`} style={{animationDelay: '500ms'}}>
-                    <a 
-                        href="#" 
-                        onClick={onSignUpClick} 
-                        className="inline-block text-lg font-semibold text-white bg-[var(--accent-secondary)] hover:bg-[var(--accent-secondary-hover)] px-8 py-4 rounded-full transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg hover:shadow-[var(--accent-shadow)]"
+                {/* Compact Action Trigger Footer */}
+                <div className={`text-center mt-10 transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+                    <a
+                        href="#"
+                        onClick={onSignUpClick}
+                        className="inline-flex items-center justify-center text-xs font-bold text-white bg-red-500 hover:bg-red-600 px-5 py-2.5 rounded-md shadow-sm shadow-red-500/10 transition-all duration-300 transform hover:-translate-y-0.5"
                     >
                         Unlock Your Data
                     </a>
                 </div>
+
             </div>
         </section>
     );
