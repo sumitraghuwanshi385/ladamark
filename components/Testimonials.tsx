@@ -141,9 +141,9 @@ const Testimonials: React.FC = () => {
           </p>
         </div>
 
-        {/* Dynamic Card Layout Stack */}
+        {/* Dynamic Card Layout Stack - Mobile optimized height */}
         <div 
-          className={`relative max-w-2xl mx-auto h-[260px] sm:h-[230px] cursor-pointer transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+          className={`relative max-w-2xl mx-auto h-[210px] sm:h-[230px] cursor-pointer transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
           style={{ perspective: '1200px' }}
           onMouseEnter={stopAutoplay}
           onMouseLeave={startAutoplay}
@@ -152,13 +152,12 @@ const Testimonials: React.FC = () => {
           {testimonials.map((testimonial, index) => {
             let offset = index - activeIndex;
             
-            // Handle infinity looping offsets smoothly
             if (offset < -2) offset += testimonials.length;
             if (offset > 2) offset -= testimonials.length;
             
             const isCardRendered = Math.abs(offset) <= 2;
-            const transformStr = `rotateY(${offset * 18}deg) translateX(${offset * 22}%) scale(${1 - Math.abs(offset) * 0.12})`;
-            const opacityVal = isCardRendered ? (index === activeIndex ? 1 : 0.45 - Math.abs(offset) * 0.15) : 0;
+            const transformStr = `rotateY(${offset * 14}deg) translateX(${offset * 18}%) scale(${1 - Math.abs(offset) * 0.1})`;
+            const opacityVal = isCardRendered ? (index === activeIndex ? 1 : 0.4 - Math.abs(offset) * 0.15) : 0;
             const zIndexVal = testimonials.length - Math.abs(offset);
 
             return (
@@ -173,38 +172,38 @@ const Testimonials: React.FC = () => {
                 }}
               >
                 {/* Premium Adaptive Opaqueness Card UI */}
-                <div className={`w-full h-full flex flex-col justify-between p-5 sm:p-6 rounded-xl border transition-all duration-500 relative overflow-hidden ${
+                <div className={`w-full h-full flex flex-col justify-between p-4 sm:p-6 rounded-xl border transition-all duration-500 relative overflow-hidden ${
                   index === activeIndex 
-                    ? 'bg-white dark:bg-zinc-900 border-red-500/30 dark:border-red-500/20 shadow-[0_12px_40px_-12px_rgba(239,68,68,0.1)]' 
-                    : 'bg-white/90 dark:bg-zinc-900/80 border-zinc-200/60 dark:border-zinc-800/60 shadow-sm'
+                    ? 'bg-white dark:bg-zinc-900 border-red-500/25 dark:border-red-500/15 shadow-[0_8px_30px_-10px_rgba(239,68,68,0.08)]' 
+                    : 'bg-white/95 dark:bg-zinc-900/80 border-zinc-200/50 dark:border-zinc-800/50 shadow-sm'
                 }`}
                 style={{
-                  boxShadow: index === activeIndex ? 'inset 0 1px 0 0 rgba(255,255,255,0.9), 0 12px 40px -12px rgba(239,68,68,0.06)' : 'inset 0 1px 0 0 rgba(255,255,255,0.5)'
+                  boxShadow: index === activeIndex ? 'inset 0 1px 0 0 rgba(255,255,255,0.8), 0 8px 30px -10px rgba(239,68,68,0.05)' : 'inset 0 1px 0 0 rgba(255,255,255,0.4)'
                 }}>
                   
-                  {/* Fixed Overlaid Brand Watermark - Repositioned to Top-Right corner to prevent collapse */}
-                  <div className="absolute right-4 top-3 select-none pointer-events-none transition-opacity duration-300">
-                    <span className={`text-base sm:text-lg font-black tracking-[0.2em] uppercase font-sans ${
+                  {/* Fixed Overlaid Brand Watermark */}
+                  <div className="absolute right-4 top-2.5 sm:top-3 select-none pointer-events-none transition-opacity duration-300">
+                    <span className={`text-[10px] sm:text-xs font-black tracking-[0.25em] uppercase font-sans ${
                       index === activeIndex 
-                        ? 'text-zinc-200/50 dark:text-zinc-800/30' 
+                        ? 'text-zinc-200/60 dark:text-zinc-800/35' 
                         : 'text-transparent'
                     }`}>
                       Ladamark
                     </span>
                   </div>
 
-                  <blockquote className="relative z-10 flex-grow pt-3 pr-12">
-                    <p className="text-[13px] sm:text-[14px] font-medium text-zinc-800 dark:text-zinc-200 leading-relaxed tracking-tight">
+                  <blockquote className="relative z-10 flex-grow pt-1 sm:pt-2 pr-12">
+                    <p className="text-xs sm:text-[14px] font-medium text-zinc-800 dark:text-zinc-200 leading-relaxed tracking-tight line-clamp-4 sm:line-clamp-none">
                       "{testimonial.quote}"
                     </p>
                   </blockquote>
 
-                  <figcaption className="relative z-10 mt-4 border-t border-zinc-100 dark:border-zinc-800/40 pt-3 flex items-center justify-between">
+                  <figcaption className="relative z-10 mt-2 sm:mt-4 border-t border-zinc-100 dark:border-zinc-800/40 pt-2 sm:pt-3 flex items-center justify-between">
                     <div>
-                      <p className="font-bold text-xs sm:text-sm text-zinc-900 dark:text-white tracking-tight">
+                      <p className="font-bold text-[11px] sm:text-sm text-zinc-900 dark:text-white tracking-tight">
                         {testimonial.name}
                       </p>
-                      <p className="text-[11px] text-zinc-400 dark:text-zinc-500 font-medium mt-0.5">
+                      <p className="text-[10px] sm:text-[11px] text-zinc-400 dark:text-zinc-500 font-medium mt-0.5">
                         {testimonial.title}
                       </p>
                     </div>
