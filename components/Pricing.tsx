@@ -117,7 +117,7 @@ const Pricing: React.FC<{ onSignUpClick: (e: React.MouseEvent) => void }> = ({ o
                             className={`flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-sm transition-all ${billingCycle === 'yearly' ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-800'}`}
                         >
                             <span>Yearly</span>
-                            <span className="text-[10px] font-bold bg-green-500/10 text-green-600 dark:text-green-400 px-1.5 py-0.5 rounded-smSkinny">
+                            <span className="text-[10px] font-bold bg-green-500/10 text-green-600 dark:text-green-400 px-1.5 py-0.5 rounded-sm">
                                 Save 17%
                             </span>
                         </button>
@@ -132,18 +132,18 @@ const Pricing: React.FC<{ onSignUpClick: (e: React.MouseEvent) => void }> = ({ o
                             <div 
                                 key={plan.name} 
                                 ref={isPro ? proCardRef : null} 
-                                className={`relative group h-full bg-white/60 dark:bg-zinc-900/40 backdrop-blur-md p-6 sm:p-7 rounded-md border transition-all duration-500 flex flex-col ${
+                                className={`relative group h-full p-6 sm:p-7 rounded-md border transition-all duration-500 flex flex-col ${
                                     isPro 
-                                        ? 'border-red-500/60 dark:border-red-500/50 bg-gradient-to-b from-white to-red-500/[0.01]' 
-                                        : 'border-zinc-200/60 dark:border-zinc-800/60 hover:border-zinc-300 dark:hover:border-zinc-700 hover:scale-[1.005]'
+                                        ? 'border-red-500/50 dark:border-red-500/40 bg-gradient-to-b from-white to-red-500/[0.01] dark:from-zinc-900 dark:to-red-500/[0.02]' 
+                                        : 'bg-white/60 dark:bg-zinc-900/40 backdrop-blur-md border-zinc-200/60 dark:border-zinc-800/60 hover:border-zinc-300 dark:hover:border-zinc-700 hover:scale-[1.005]'
                                 }`}
                                 style={{ 
                                     opacity: isVisible ? 1 : 0,
                                     transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
                                     transitionDelay: `${index * 100}ms`,
                                     boxShadow: isPro 
-                                        ? '0 10px 30px -15px rgba(239, 68, 68, 0.08), inset 0 1px 0 0 rgba(255, 255, 255, 0.8)'
-                                        : '0 4px 20px -2px rgba(120, 120, 120, 0.02), inset 0 1px 0 0 rgba(255, 255, 255, 0.8)'
+                                        ? '0 10px 30px -15px rgba(239, 68, 68, 0.08), inset 0 1px 0 0 rgba(255, 255, 255, 0.1)'
+                                        : '0 4px 20px -2px rgba(120, 120, 120, 0.02), inset 0 1px 0 0 rgba(255, 255, 255, 0.1)'
                                 }}
                             >
                                 {/* Floating Badge */}
