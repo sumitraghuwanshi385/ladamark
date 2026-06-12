@@ -45,77 +45,50 @@ const ResponsiveShowcase: React.FC = () => {
                     </p>
                 </div>
 
-                {/* Interactive Layout Mockups Container (Height Reduced) */}
-                <div className={`relative h-[22rem] sm:h-[24rem] flex items-center justify-center transition-all duration-1000 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+                {/* Interactive Layout Mockups Container */}
+                <div className={`relative h-[24rem] sm:h-[28rem] flex items-center justify-center transition-all duration-1000 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
                     
-                    {/* Desktop Premium Glass Dashboard Mockup */}
-                    <div className="w-full max-w-3xl h-64 sm:h-72 bg-white/60 dark:bg-zinc-900/40 backdrop-blur-xl rounded-md shadow-xl shadow-zinc-200/40 dark:shadow-none border border-zinc-200/70 dark:border-zinc-800/70 p-3 flex flex-col transform hover:-translate-y-1 transition-transform duration-500">
-                        {/* Browser Dots Control Bar */}
-                        <div className="flex items-center gap-1.5 mb-2.5 flex-shrink-0">
-                            <div className="w-2 h-2 rounded-full bg-zinc-300 dark:bg-zinc-700"></div>
-                            <div className="w-2 h-2 rounded-full bg-zinc-300 dark:bg-zinc-700"></div>
-                            <div className="w-2 h-2 rounded-full bg-zinc-300 dark:bg-zinc-700"></div>
+                    {/* Desktop Premium Laptop Glass Dashboard Mockup */}
+                    <div className="w-full max-w-3xl h-[20rem] sm:h-[24rem] bg-white/60 dark:bg-zinc-900/40 backdrop-blur-xl rounded-xl shadow-2xl shadow-zinc-200/50 dark:shadow-none border border-zinc-200/70 dark:border-zinc-800/70 p-2 flex flex-col transform hover:-translate-y-1 transition-transform duration-500 overflow-hidden">
+                        
+                        {/* Browser Control Accent Top Bar */}
+                        <div className="flex items-center gap-1.5 px-2 pb-2 pt-1 flex-shrink-0 border-b border-zinc-100 dark:border-zinc-800/60">
+                            <div className="w-2.5 h-2.5 rounded-full bg-zinc-200 dark:bg-zinc-800"></div>
+                            <div className="w-2.5 h-2.5 rounded-full bg-zinc-200 dark:bg-zinc-800"></div>
+                            <div className="w-2.5 h-2.5 rounded-full bg-zinc-200 dark:bg-zinc-800"></div>
                         </div>
                         
-                        {/* Mock Dashboard Layout Interior */}
-                        <div className="flex-grow bg-zinc-50 dark:bg-zinc-950/60 rounded border border-zinc-100 dark:border-zinc-900 p-3 flex gap-3 overflow-hidden">
-                            {/* Sidebar Area */}
-                            <div className="w-1/5 h-full bg-white dark:bg-zinc-900/50 border border-zinc-200/40 dark:border-zinc-800/40 rounded p-1.5 flex flex-col gap-1.5">
-                                <div className="h-2 w-10 bg-red-500/10 dark:bg-red-500/5 rounded border border-red-500/20" />
-                                <div className="h-1.5 w-full bg-zinc-200/60 dark:bg-zinc-800 rounded" />
-                                <div className="h-1.5 w-3/4 bg-zinc-200/60 dark:bg-zinc-800 rounded" />
-                                <div className="h-1.5 w-4/5 bg-zinc-200/60 dark:bg-zinc-800 rounded" />
-                            </div>
-                            {/* Main Grid Feed Area */}
-                            <div className="w-4/5 h-full rounded flex flex-col gap-2">
-                                <div className="h-8 w-full bg-white dark:bg-zinc-900/50 border border-zinc-200/40 dark:border-zinc-800/40 rounded flex items-center px-2">
-                                    <div className="h-2 w-16 bg-zinc-200 dark:bg-zinc-800 rounded-sm" />
-                                </div>
-                                <div className="flex-grow w-full grid grid-cols-3 gap-2">
-                                    <div className="bg-white dark:bg-zinc-900/30 border border-zinc-200/40 dark:border-zinc-800/40 rounded p-1.5 flex flex-col justify-between">
-                                        <div className="h-12 w-full bg-zinc-100 dark:bg-zinc-800/60 rounded" />
-                                        <div className="h-1.5 w-2/3 bg-zinc-200 dark:bg-zinc-700 rounded-sm" />
-                                    </div>
-                                    <div className="bg-white dark:bg-zinc-900/30 border border-zinc-200/40 dark:border-zinc-800/40 rounded p-1.5 flex flex-col justify-between">
-                                        <div className="h-12 w-full bg-zinc-100 dark:bg-zinc-800/60 rounded" />
-                                        <div className="h-1.5 w-1/2 bg-zinc-200 dark:bg-zinc-700 rounded-sm" />
-                                    </div>
-                                    <div className="bg-white dark:bg-zinc-900/30 border border-zinc-200/40 dark:border-zinc-800/40 rounded p-1.5 flex flex-col justify-between">
-                                        <div className="h-12 w-full bg-zinc-100 dark:bg-zinc-800/60 rounded" />
-                                        <div className="h-1.5 w-3/4 bg-zinc-200 dark:bg-zinc-700 rounded-sm" />
-                                    </div>
-                                </div>
-                            </div>
+                        {/* Perfect-fit Desktop Image Canvas Panel */}
+                        <div className="flex-grow w-full h-full rounded-lg bg-zinc-50 dark:bg-zinc-950/60 overflow-hidden relative">
+                            <img 
+                                src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop" 
+                                alt="Ladamark Desktop Dashboard View" 
+                                className="w-full h-full object-cover object-top"
+                            />
                         </div>
                     </div>
 
                     {/* Mobile Premium Bezel Smartphone Mockup */}
                     <div 
-                        className={`absolute -bottom-6 right-8 sm:right-16 md:right-24 w-36 h-64 bg-zinc-950 rounded-[20px] shadow-2xl shadow-zinc-950/20 p-1.5 border border-zinc-800 transition-all duration-1000 ease-out`}
+                        className={`absolute -bottom-4 right-4 sm:right-12 md:right-16 w-[7.5rem] sm:w-[9.5rem] h-[14rem] sm:h-[18rem] bg-zinc-950 rounded-[22px] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5)] p-1.5 border border-zinc-800/80 transition-all duration-1000 ease-out z-20`}
                         style={{ 
-                            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.4), inset 0 1px 1px 0 rgba(255, 255, 255, 0.2)',
+                            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.4), inset 0 1px 1px 0 rgba(255, 255, 255, 0.15)',
                             transform: isVisible ? 'translateY(0)' : 'translateY(40px)',
                             opacity: isVisible ? 1 : 0,
                             transitionDelay: '450ms'
                         }}
                     >
-                        {/* Phone Screen Canvas Panel */}
-                        <div className="bg-zinc-50 dark:bg-zinc-900 w-full h-full rounded-[15px] p-2 flex flex-col gap-2 relative overflow-hidden border border-zinc-200/20 dark:border-zinc-800/50">
-                            {/* Dynamic Island Ear-speaker Micro Bezels */}
-                            <div className="absolute top-1 left-1/2 -translate-x-1/2 w-10 h-2.5 bg-zinc-950 rounded-full flex items-center justify-center z-30" />
+                        {/* Phone Screen Image Canvas Panel */}
+                        <div className="bg-zinc-900 w-full h-full rounded-[17px] relative overflow-hidden border border-zinc-800/40">
+                            {/* Dynamic Island Camera Notch */}
+                            <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-8 h-2.5 bg-zinc-950 rounded-full z-30" />
                             
-                            {/* Mock Screen Component Blocks */}
-                            <div className="h-6 w-full bg-white dark:bg-zinc-950 rounded-sm mt-2 border border-zinc-200/40 dark:border-zinc-800/40" />
-                            <div className="h-16 w-full bg-white dark:bg-zinc-950 border border-zinc-200/40 dark:border-zinc-800/40 rounded p-1 flex flex-col justify-between">
-                                <div className="h-8 w-full bg-zinc-100 dark:bg-zinc-800/60 rounded" />
-                                <div className="h-1 w-8 bg-zinc-200 dark:bg-zinc-700 rounded-sm" />
-                            </div>
-                            <div className="flex-grow w-full bg-white dark:bg-zinc-950 border border-zinc-200/40 dark:border-zinc-800/40 rounded p-1.5 flex flex-col gap-1.5">
-                                <div className="h-1 w-full bg-zinc-200 dark:bg-zinc-800 rounded" />
-                                <div className="h-1 w-5/6 bg-zinc-200 dark:bg-zinc-800 rounded" />
-                                <div className="h-1 w-2/3 bg-zinc-200 dark:bg-zinc-800 rounded" />
-                                <div className="h-12 w-full bg-red-500/5 border border-red-500/10 rounded-sm mt-auto" />
-                            </div>
+                            {/* Perfect-fit Mobile Image Wrapper */}
+                            <img 
+                                src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=600&auto=format&fit=crop" 
+                                alt="Ladamark Mobile Version View" 
+                                className="w-full h-full object-cover object-center"
+                            />
                         </div>
                     </div>
 
