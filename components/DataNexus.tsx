@@ -116,9 +116,9 @@ const DataNexus: React.FC<{ onSignUpClick: (e: React.MouseEvent) => void }> = ({
                 {/* Centralized Core Dynamic Canvas */}
                 <div key={animationKey} className={`relative max-w-3xl mx-auto h-[28rem] hidden md:block transition-all duration-700 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-98'}`}>
                     
-                    {/* Background Subtle Tech Graphic Identity Badge */}
+                    {/* Background Subtle Tech Graphic Identity Badge - Switched to Branded Watermark */}
                     <div className="absolute inset-0 flex items-center justify-center opacity-[0.04] dark:opacity-[0.02] pointer-events-none select-none z-0">
-                        <span className="text-7xl font-black tracking-[0.3em] uppercase">AI Nexus</span>
+                        <span className="text-6xl font-black tracking-[0.25em] uppercase font-sans">Ladamark</span>
                     </div>
 
                     {/* Central Radar Image Target */}
