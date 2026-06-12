@@ -2,57 +2,57 @@ import React, { useState, useEffect, useRef } from 'react';
 
 const testimonials = [
   {
-    quote: "Ladamark saved us 60+ hours/week of manual tagging. What used to be a bottleneck is now a competitive advantage. The ROI was immediate.",
+    quote: "Ladamark saved us 60+ hours/week of manual tagging. What used to be a bottleneck is now a competitive advantage. The ROI was immediate, allowing our ingestion pipeline to automatically synchronize with multi-channel distributors flawlessly.",
     name: "Aarav Sharma",
     title: "Catalog Director at Zenwear",
   },
   {
-    quote: "The accuracy is what blew us away. We've enriched our product data tenfold, leading to better search, better filters, and a clear lift in conversion.",
+    quote: "The accuracy is what blew us away. We've enriched our product data tenfold, leading to better search, better filters, and a clear lift in conversion. It processed our deep taxonomies without a single broken metadata string.",
     name: "Sarah Jenkins",
     title: "Head of E-commerce, Urban Essentials",
   },
   {
-    quote: "A must-have tool for any serious marketplace. The level of detail from the AI analysis gives us a significant edge over competitors.",
+    quote: "A must-have tool for any serious marketplace. The level of detail from the AI analysis gives us a significant edge over competitors. Our scaling operations are finally feeling zero infrastructure friction during peak product drops.",
     name: "Yuki Tanaka",
     title: "Head of Seller Experience, Marketplace Co",
   },
   {
-    quote: "We reduced our data enrichment costs by 70% while improving quality. Ladamark is an essential part of our e-commerce stack.",
+    quote: "We reduced our data enrichment costs by 70% while improving quality. Ladamark is an essential part of our e-commerce stack. The automated workflow triggers have completely overhauled our engineering delivery schedules.",
     name: "Michael Chang",
     title: "Founder, NextGen D2C",
   },
   {
-    quote: "Their AI understands nuance in fashion that other services miss. Our conversion rate on recommended products is up 15%.",
+    quote: "Their AI understands nuance in fashion that other services miss. Our conversion rate on recommended products is up 15%. This granular level of localized attribution mapping is something we've been trying to solve for years.",
     name: "Emily Rodriguez",
     title: "Merchandising Lead at VOGUE Style"
   },
   {
-    quote: "The setup was unbelievably fast. We went from a messy spreadsheet to a fully-tagged, searchable catalog in under a day. Phenomenal product.",
+    quote: "The setup was unbelievably fast. We went from a messy spreadsheet to a fully-tagged, searchable catalog in under a day. Phenomenal product with high-throughput API limits that handled our batch uploads seamlessly.",
     name: "David Vance",
     title: "COO of The Gadget Shop"
   },
   {
-    quote: "The interface is so intuitive. Our team was up and running in hours, not days. The time savings are incredible.",
+    quote: "The interface is so intuitive. Our team was up and running in hours, not days. The time savings are incredible, letting our visual designers focus entirely on dynamic content instead of sorting continuous backlogs.",
     name: "Priya Patel",
     title: "Operations Director, StyleStream"
   },
   {
-    quote: "Ladamark fundamentally changed how we handle product data. It's faster, more accurate, and has freed up our team for more strategic work.",
+    quote: "Ladamark fundamentally changed how we handle product data. It's faster, more accurate, and has freed up our team for more strategic work. Our cross-border localization translation pipeline feels highly integrated now.",
     name: "Robert Gallagher",
     title: "E-commerce Analyst, The Retail Group"
   },
   {
-    quote: "Processing metadata for thousands of global fashion items used to take weeks. Ladamark tags everything instantly with absolute precision.",
+    quote: "Processing metadata for thousands of global fashion items used to take weeks. Ladamark tags everything instantly with absolute precision, mitigating critical cross-platform synchronization errors uniformly across storefronts.",
     name: "Ananya Iyer",
     title: "VP of Supply Chain, Global Threads"
   },
   {
-    quote: "The deep category classification tool adapted seamlessly to our niche inventory setup. It works flawlessly right out of the box.",
+    quote: "The deep category classification tool adapted seamlessly to our niche inventory setup. It works flawlessly right out of the box, auto-extracting secondary colors and hidden fabric textures directly from RAW image data.",
     name: "Marcus Brody",
     title: "Technical Product Manager, TechArmor"
   },
   {
-    quote: "Scale used to scare our database ops team. With Ladamark, handling ingestion cycles for massive catalogs feels completely effortlessly.",
+    quote: "Scale used to scare our database ops team. With Ladamark, handling ingestion cycles for massive catalogs feels completely effortlessly, shifting our core architecture to a modern real-time automated streaming model.",
     name: "Kenji Sato",
     title: "Lead Developer, Tokyo Trade Hub"
   }
@@ -141,9 +141,9 @@ const Testimonials: React.FC = () => {
           </p>
         </div>
 
-        {/* Dynamic Card Layout Stack - Mobile optimized height */}
+        {/* Dynamic Card Layout Stack - Optimized responsive height metrics */}
         <div 
-          className={`relative max-w-2xl mx-auto h-[210px] sm:h-[230px] cursor-pointer transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+          className={`relative max-w-2xl mx-auto h-[250px] sm:h-[235px] cursor-pointer transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
           style={{ perspective: '1200px' }}
           onMouseEnter={stopAutoplay}
           onMouseLeave={startAutoplay}
@@ -172,18 +172,25 @@ const Testimonials: React.FC = () => {
                 }}
               >
                 {/* Premium Adaptive Opaqueness Card UI */}
-                <div className={`w-full h-full flex flex-col justify-between p-4 sm:p-6 rounded-xl border transition-all duration-500 relative overflow-hidden ${
+                <div className={`w-full h-full flex flex-col justify-between p-5 rounded-xl border transition-all duration-500 relative overflow-hidden ${
                   index === activeIndex 
                     ? 'bg-white dark:bg-zinc-900 border-red-500/25 dark:border-red-500/15 shadow-[0_8px_30px_-10px_rgba(239,68,68,0.08)]' 
                     : 'bg-white/95 dark:bg-zinc-900/80 border-zinc-200/50 dark:border-zinc-800/50 shadow-sm'
                 }`}
                 style={{
-                  boxShadow: index === activeIndex ? 'inset 0 1px 0 0 rgba(255,255,255,0.8), 0 8px 30px -10px rgba(239,68,68,0.05)' : 'inset 0 1px 0 0 rgba(255,255,255,0.4)'
+                  boxShadow: index === activeIndex ? 'inset 0 1px 0 0 rgba(255,255,255,0.8), 0 8px 30px_-10px rgba(239,68,68,0.05)' : 'inset 0 1px 0 0 rgba(255,255,255,0.4)'
                 }}>
                   
-                  {/* Fixed Overlaid Brand Watermark */}
-                  <div className="absolute right-4 top-2.5 sm:top-3 select-none pointer-events-none transition-opacity duration-300">
-                    <span className={`text-[10px] sm:text-xs font-black tracking-[0.25em] uppercase font-sans ${
+                  {/* Blockquote Segment */}
+                  <blockquote className="relative z-10 flex-grow pr-4">
+                    <p className="text-[12.5px] sm:text-[14px] font-medium text-zinc-800 dark:text-zinc-200 leading-relaxed tracking-tight line-clamp-6 sm:line-clamp-none">
+                      "{testimonial.quote}"
+                    </p>
+                  </blockquote>
+
+                  {/* Fixed Shadow Mark Stacked Safely Above Divider Line */}
+                  <div className="w-full flex justify-end pr-2 -mb-0.5 select-none pointer-events-none transition-opacity duration-300">
+                    <span className={`text-[10px] sm:text-[11px] font-black tracking-[0.3em] uppercase font-mono ${
                       index === activeIndex 
                         ? 'text-zinc-200/60 dark:text-zinc-800/35' 
                         : 'text-transparent'
@@ -192,18 +199,13 @@ const Testimonials: React.FC = () => {
                     </span>
                   </div>
 
-                  <blockquote className="relative z-10 flex-grow pt-1 sm:pt-2 pr-12">
-                    <p className="text-xs sm:text-[14px] font-medium text-zinc-800 dark:text-zinc-200 leading-relaxed tracking-tight line-clamp-4 sm:line-clamp-none">
-                      "{testimonial.quote}"
-                    </p>
-                  </blockquote>
-
-                  <figcaption className="relative z-10 mt-2 sm:mt-4 border-t border-zinc-100 dark:border-zinc-800/40 pt-2 sm:pt-3 flex items-center justify-between">
+                  {/* Divider and Metadata Footer Element */}
+                  <figcaption className="relative z-10 border-t border-zinc-100 dark:border-zinc-800/60 pt-2.5 flex items-center justify-between">
                     <div>
-                      <p className="font-bold text-[11px] sm:text-sm text-zinc-900 dark:text-white tracking-tight">
+                      <p className="font-bold text-[12px] sm:text-sm text-zinc-900 dark:text-white tracking-tight">
                         {testimonial.name}
                       </p>
-                      <p className="text-[10px] sm:text-[11px] text-zinc-400 dark:text-zinc-500 font-medium mt-0.5">
+                      <p className="text-[10.5px] sm:text-[11px] text-zinc-400 dark:text-zinc-500 font-medium mt-0.5">
                         {testimonial.title}
                       </p>
                     </div>
