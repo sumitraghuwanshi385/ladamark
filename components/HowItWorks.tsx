@@ -13,23 +13,19 @@ const steps = [
       </svg>
     ),
     title: "Upload Your Images",
-    description: "Effortlessly upload your entire product catalog. Our secure, high-speed system processes thousands of images in minutes.",
-    // Replace this placeholder link with your asset source if needed
-    placeholderImg: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?q=80&w=600&auto=format&fit=crop"
+    description: "Effortlessly upload your entire product catalog. Our secure, high-speed system processes thousands of images in minutes, getting you ready for analysis.",
   },
   {
     stepNumber: "02",
     icon: <Bot size={20} strokeWidth={2} />,
     title: "Let AI Suggest Tags",
-    description: "Our vision AI analyzes each image for context, color, material, and style, suggesting a rich set of tags with industry-leading accuracy.",
-    placeholderImg: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=600&auto=format&fit=crop"
+    description: "Our vision AI analyzes each image for context, color, material, and style, suggesting a rich set of tags with industry-leading accuracy to build your taxonomy.",
   },
   {
     stepNumber: "03",
     icon: <Download size={20} strokeWidth={2} />,
     title: "Approve & Export Data",
-    description: "Quickly review and approve the AI's suggestions in our intuitive editor. Once perfected, export your complete, structured data.",
-    placeholderImg: "https://images.unsplash.com/photo-1526947425960-945c6e72858f?q=80&w=600&auto=format&fit=crop"
+    description: "Quickly review and approve the AI's suggestions in our intuitive editor. Once perfected, export your complete, structured data as a clean CSV or JSON file.",
   },
 ];
 
@@ -86,7 +82,7 @@ const HowItWorks: React.FC = () => {
           {steps.map((step, index) => (
             <div 
               key={index}
-              className={`group relative bg-white/60 dark:bg-zinc-900/40 backdrop-blur-md p-5 md:p-6 rounded-md border border-zinc-200/60 dark:border-zinc-800/60 transition-all duration-500 hover:border-red-500/30 hover:bg-white dark:hover:bg-zinc-900 hover:scale-[1.01] flex flex-col ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+              className={`group relative bg-white/60 dark:bg-zinc-900/40 backdrop-blur-md p-5 md:p-8 rounded-md border border-zinc-200/60 dark:border-zinc-800/60 transition-all duration-500 hover:border-red-500/30 hover:bg-white dark:hover:bg-zinc-900 hover:scale-[1.01] ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
               style={{ 
                 transitionDelay: `${index * 100}ms`,
                 boxShadow: '0 4px 20px -2px rgba(120, 120, 120, 0.03), inset 0 1px 0 0 rgba(255, 255, 255, 0.8)'
@@ -108,26 +104,12 @@ const HowItWorks: React.FC = () => {
               </div>
 
               {/* Text Content */}
-              <div className="mb-4 flex-grow">
-                <h3 className="text-base md:text-lg font-bold text-zinc-900 dark:text-white mb-2 tracking-tight group-hover:text-red-500 transition-colors duration-300">
-                  {step.title}
-                </h3>
-                <p className="text-[12.5px] md:text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed font-medium">
-                  {step.description}
-                </p>
-              </div>
-
-              {/* Premium Increased Height Image Container Layer */}
-              <div className="relative w-full h-48 sm:h-56 mt-auto overflow-hidden rounded-md bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200/40 dark:border-zinc-800/40">
-                <img 
-                  src={step.placeholderImg} 
-                  alt={step.title}
-                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" 
-                />
-                {/* Subtle Inner Glass Vignette Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/20 via-transparent to-transparent pointer-events-none" />
-              </div>
-
+              <h3 className="text-base md:text-lg font-bold text-zinc-900 dark:text-white mb-2 tracking-tight group-hover:text-red-500 transition-colors duration-300">
+                {step.title}
+              </h3>
+              <p className="text-[12.5px] md:text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed font-medium">
+                {step.description}
+              </p>
             </div>
           ))}
         </div>
