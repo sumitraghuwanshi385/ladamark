@@ -1,130 +1,66 @@
 import React from 'react';
 
-const HeroVisual: React.FC = () => (
-  <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden="true">
-    {/* Large moving red blobs - Pure Red theme with black/white core compatibility */}
-    <div
-      className="hero-blob absolute top-[-25%] -left-[15%] w-[65%] h-[65%] bg-gradient-to-br from-red-500 via-red-600 to-red-700 rounded-[60%] opacity-25 blur-3xl"
-      style={{ animation: 'move-blob-1 35s infinite alternate ease-in-out' }}
-    />
-    <div
-      className="hero-blob absolute bottom-[-18%] -right-[12%] w-[62%] h-[62%] bg-gradient-to-br from-red-700 via-red-600 to-red-500 rounded-[60%] opacity-25 blur-3xl"
-      style={{ animation: 'move-blob-2 42s infinite alternate ease-in-out -8s' }}
-    />
-    
-    {/* Extra red accent orb */}
-    <div
-      className="absolute top-[30%] left-[55%] w-96 h-96 bg-red-600/15 rounded-full blur-[120px] animate-pulse"
-      style={{ animationDuration: '18s' }}
-    />
-  </div>
-);
-
-const FloatingTag: React.FC<{ text: string; delay: string; position: string }> = ({ text, delay, position }) => (
-  <div
-    className={`absolute hidden lg:block px-5 py-2.5 bg-white/10 dark:bg-zinc-900/80 backdrop-blur-xl border border-white/20 rounded-2xl text-sm font-medium text-white ${position}`}
-    style={{
-      animation: `floatTag 6s ease-in-out infinite ${delay}`,
-      // Shadow strictly aligned with black/white contrast and minimal clean red glow lines
-      boxShadow: '0 10px 30px -10px rgba(0, 0, 0, 0.3), 0 1px 15px -3px rgba(239, 68, 68, 0.2)'
-    }}
-  >
-    {text}
-  </div>
-);
-
-const Hero: React.FC<{ onLoginClick: (e: React.MouseEvent) => void; onSignUpClick: (e: React.MouseEvent) => void; }> = ({ onLoginClick, onSignUpClick }) => {
+const PremiumHeroBackground: React.FC = () => {
   return (
-    <section className="relative min-h-[100dvh] pt-20 pb-16 md:pt-28 flex items-center overflow-hidden bg-[var(--background-secondary)]">
-      <HeroVisual />
+    <div className="absolute inset-0 z-0 overflow-hidden bg-[#0a0a0a] pointer-events-none" aria-hidden="true">
+      {/* 1. Central Smooth White Ambient Lighting (Apple + Vercel Style) */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.06)_0%,transparent_65%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(255,255,255,0.03)_0%,transparent_50%)]" />
 
-      <div className="relative z-20 max-w-6xl mx-auto px-5 lg:px-8 w-full">
-        <div className="flex flex-col items-center text-center">
-          {/* Headline - Much smaller on mobile */}
-          <h1 className="text-[2.1rem] leading-[1.05] md:text-5xl lg:text-[5.2rem] font-black tracking-[-2px] mb-6 max-w-5xl animate-fade-in-up" style={{ textWrap: 'balance' }}>
-            Turn Your Catalog Into a{' '}
-            <span className="animated-reddish-text bg-clip-text text-transparent bg-gradient-to-r from-red-400 via-red-500 to-red-600 font-black tracking-[-2px] text-[2.25rem] md:text-[5.1rem] lg:text-[5.4rem]">
-              Sales Machine
-            </span>
-          </h1>
-
-          {/* Subheadline - Reduced size especially on mobile */}
-          <p className="text-[15px] md:text-lg lg:text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mb-8 leading-relaxed animate-fade-in-up animation-delay-200 px-2" style={{ textWrap: 'balance' }}>
-            Ladamark uses AI Labelling to auto-generate rich, contextual tags across your entire product catalog — boosting discoverability, SEO, and conversions instantly.
-          </p>
-
-          {/* CTA Buttons - Reduced size and roundness with iOS 27 glass style */}
-          <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto animate-fade-in-up animation-delay-300">
-            <a
-              href="#"
-              onClick={onSignUpClick}
-              className="group relative w-full sm:w-auto px-5 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-red-500 to-red-600 rounded-md overflow-hidden transition-all duration-300 hover:scale-[1.03] flex items-center justify-center gap-2"
-            >
-              <span className="relative z-10">Start Free</span>
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-              <div className="absolute inset-0 bg-white/20 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300" />
-            </a>
-
-            <a
-              href="#"
-              onClick={onLoginClick}
-              className="w-full sm:w-auto px-5 py-2.5 text-sm font-semibold rounded-md transition-all duration-300 flex items-center justify-center hover:scale-[1.02]"
-              style={{
-                background:
-                  document.documentElement.classList.contains('dark')
-                    ? 'rgba(255,255,255,0.08)'
-                    : 'linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.18) 100%)',
-
-                color: 'var(--text-primary)',
-
-                backdropFilter: 'blur(24px)',
-                WebkitBackdropFilter: 'blur(24px)',
-
-                border:
-                  document.documentElement.classList.contains('dark')
-                    ? '1px solid rgba(255,255,255,0.15)'
-                    : '1px solid rgba(255,255,255,0.35)',
-
-                boxShadow:
-                  document.documentElement.classList.contains('dark')
-                    ? 'inset 0 1px 0 rgba(255,255,255,0.10)'
-                    : `
-                      inset 0 1px 0 rgba(255,255,255,0.8),
-                      inset 0 -1px 0 rgba(255,255,255,0.2)
-                    `,
-              }}
-            >
-              Watch 2-min Demo
-            </a>
-          </div>
-
-          {/* Bottom trust text - Smaller */}
-          <p className="mt-6 text-xs md:text-sm text-[var(--text-muted)] flex items-center gap-2 animate-fade-in-up animation-delay-500">
-            No credit card • Cancel anytime • Used by 100+ brands
-          </p>
-        </div>
-      </div>
-
-      {/* Floating elements */}
-      <FloatingTag 
-        text="#SummerVibes" 
-        delay="0s" 
-        position="top-[28%] left-[8%]" 
+      {/* 2. Top-Left: Ultra Bright Luxury Red Glowing Blob (No shadow, No dullness, Fully Animated) */}
+      <div 
+        className="absolute top-[-20%] left-[-15%] w-[60%] h-[60%] bg-gradient-to-br from-[#ff0033] via-[#ff1a4a] to-[#ff4d73] rounded-full opacity-40 blur-[130px]"
+        style={{
+          animation: 'bright-glow-left 25s infinite alternate ease-in-out',
+          mixBlendMode: 'screen'
+        }}
       />
-      <FloatingTag 
-        text="Premium Leather" 
-        delay="1.2s" 
-        position="top-[42%] right-[9%]" 
+
+      {/* 3. Bottom-Right: Ultra Bright Luxury Red Glowing Blob (No shadow, Fully Animated) */}
+      <div 
+        className="absolute bottom-[-20%] right-[-15%] w-[60%] h-[60%] bg-gradient-to-tl from-[#ff0033] via-[#ff1a4a] to-[#ff3366] rounded-full opacity-35 blur-[140px]"
+        style={{
+          animation: 'bright-glow-right 28s infinite alternate ease-in-out',
+          mixBlendMode: 'screen'
+        }}
       />
-      <FloatingTag 
-        text="Trending • AI" 
-        delay="2.4s" 
-        position="bottom-[32%] left-[12%]" 
-      />
-    </section>
+
+      {/* 4. Extra Subtle Edge White Soft Glow */}
+      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+
+      {/* CSS Keyframes for smooth bright animation (Add this to your global CSS or style tag) */}
+      <style>{`
+        @keyframes bright-glow-left {
+          0% {
+            transform: translate(0px, 0px) scale(1);
+            opacity: 0.4;
+          }
+          50% {
+            transform: translate(40px, 30px) scale(1.1);
+            opacity: 0.5;
+          }
+          100% {
+            transform: translate(-20px, 50px) scale(0.95);
+            opacity: 0.4;
+          }
+        }
+        @keyframes bright-glow-right {
+          0% {
+            transform: translate(0px, 0px) scale(1);
+            opacity: 0.35;
+          }
+          50% {
+            transform: translate(-50px, -20px) scale(1.05);
+            opacity: 0.45;
+          }
+          100% {
+            transform: translate(20px, -40px) scale(0.9);
+            opacity: 0.35;
+          }
+        }
+      `}</style>
+    </div>
   );
 };
 
-export default Hero;
+export default PremiumHeroBackground;
