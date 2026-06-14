@@ -95,8 +95,8 @@ const DataNexus: React.FC<{ onSignUpClick: (e: React.MouseEvent) => void }> = ({
 
     return (
         <section ref={sectionRef} className="relative py-12 sm:py-20 overflow-hidden bg-gradient-to-b from-white via-zinc-50/40 to-white dark:from-zinc-950 dark:via-zinc-900/20 dark:to-zinc-950 border-t border-b border-zinc-100 dark:border-zinc-900 scroll-mt-20">
-            {/* Ambient Background Blur Layer */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-red-500/[0.02] rounded-full blur-[100px] pointer-events-none" />
+            {/* Ambient Background Blur Layer - Pure vibrant red matching the branding */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-red-500/[0.03] rounded-full blur-[100px] pointer-events-none" />
 
             <div className="max-w-5xl mx-auto px-5 lg:px-8 relative z-10">
                 
@@ -116,7 +116,7 @@ const DataNexus: React.FC<{ onSignUpClick: (e: React.MouseEvent) => void }> = ({
                 {/* Centralized Core Dynamic Canvas */}
                 <div key={animationKey} className={`relative max-w-3xl mx-auto h-[28rem] hidden md:block transition-all duration-700 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-98'}`}>
                     
-                    {/* Background Subtle Tech Graphic Identity Badge - Switched to Branded Watermark */}
+                    {/* Background Subtle Tech Graphic Identity Badge */}
                     <div className="absolute inset-0 flex items-center justify-center opacity-[0.04] dark:opacity-[0.02] pointer-events-none select-none z-0">
                         <span className="text-6xl font-black tracking-[0.25em] uppercase font-sans">Ladamark</span>
                     </div>
