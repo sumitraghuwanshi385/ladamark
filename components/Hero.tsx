@@ -2,21 +2,31 @@ import React from 'react';
 
 const HeroVisual: React.FC = () => (
   <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden="true">
-    {/* Removed all gradients/blobs/effects and set the requested image as the clean background */}
-    <img 
-      src="https://res.cloudinary.com/dtu6sxxyc/image/upload/v1781431176/file_00000000c2cc7207bb7ac9d858e3c3ed_rqyzqv.png" 
-      alt="Hero Background" 
-      className="w-full h-full object-cover"
+    {/* Large moving red blobs - Pure Red theme with black/white core compatibility */}
+    <div
+      className="hero-blob absolute top-[-25%] -left-[15%] w-[65%] h-[65%] bg-gradient-to-br from-red-500 via-red-600 to-red-700 rounded-[60%] opacity-25 blur-3xl"
+      style={{ animation: 'move-blob-1 35s infinite alternate ease-in-out' }}
+    />
+    <div
+      className="hero-blob absolute bottom-[-18%] -right-[12%] w-[62%] h-[62%] bg-gradient-to-br from-red-700 via-red-600 to-red-500 rounded-[60%] opacity-25 blur-3xl"
+      style={{ animation: 'move-blob-2 42s infinite alternate ease-in-out -8s' }}
+    />
+    
+    {/* Extra red accent orb */}
+    <div
+      className="absolute top-[30%] left-[55%] w-96 h-96 bg-red-600/15 rounded-full blur-[120px] animate-pulse"
+      style={{ animationDuration: '18s' }}
     />
   </div>
 );
 
 const FloatingTag: React.FC<{ text: string; delay: string; position: string }> = ({ text, delay, position }) => (
   <div
-    className={`absolute hidden lg:block px-5 py-2.5 bg-white/10 dark:bg-zinc-900/80 backdrop-blur-xl border border-white/20 rounded-2xl text-sm font-medium text-white shadow-xl ${position}`}
+    className={`absolute hidden lg:block px-5 py-2.5 bg-white/10 dark:bg-zinc-900/80 backdrop-blur-xl border border-white/20 rounded-2xl text-sm font-medium text-white ${position}`}
     style={{
       animation: `floatTag 6s ease-in-out infinite ${delay}`,
-      boxShadow: '0 10px 30px -10px rgba(239, 68, 68, 0.25)'
+      // Shadow strictly aligned with black/white contrast and minimal clean red glow lines
+      boxShadow: '0 10px 30px -10px rgba(0, 0, 0, 0.3), 0 1px 15px -3px rgba(239, 68, 68, 0.2)'
     }}
   >
     {text}
@@ -33,7 +43,7 @@ const Hero: React.FC<{ onLoginClick: (e: React.MouseEvent) => void; onSignUpClic
           {/* Headline - Much smaller on mobile */}
           <h1 className="text-[2.1rem] leading-[1.05] md:text-5xl lg:text-[5.2rem] font-black tracking-[-2px] mb-6 max-w-5xl animate-fade-in-up" style={{ textWrap: 'balance' }}>
             Turn Your Catalog Into a{' '}
-            <span className="animated-reddish-text bg-clip-text text-transparent bg-gradient-to-r from-rose-400 via-red-500 to-rose-600 font-black tracking-[-2px] text-[2.25rem] md:text-[5.1rem] lg:text-[5.4rem]">
+            <span className="animated-reddish-text bg-clip-text text-transparent bg-gradient-to-r from-red-400 via-red-500 to-red-600 font-black tracking-[-2px] text-[2.25rem] md:text-[5.1rem] lg:text-[5.4rem]">
               Sales Machine
             </span>
           </h1>
@@ -48,7 +58,7 @@ const Hero: React.FC<{ onLoginClick: (e: React.MouseEvent) => void; onSignUpClic
             <a
               href="#"
               onClick={onSignUpClick}
-              className="group relative w-full sm:w-auto px-5 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-rose-500 to-red-600 rounded-md overflow-hidden transition-all duration-300 hover:scale-[1.03] flex items-center justify-center gap-2"
+              className="group relative w-full sm:w-auto px-5 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-red-500 to-red-600 rounded-md overflow-hidden transition-all duration-300 hover:scale-[1.03] flex items-center justify-center gap-2"
             >
               <span className="relative z-10">Start Free</span>
               <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
