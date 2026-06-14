@@ -2,20 +2,11 @@ import React from 'react';
 
 const HeroVisual: React.FC = () => (
   <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden="true">
-    {/* Large moving red blobs - Only red glows */}
-    <div
-      className="hero-blob absolute top-[-25%] -left-[15%] w-[65%] h-[65%] bg-gradient-to-br from-rose-500 via-red-500 to-rose-600 rounded-[60%] opacity-30 blur-3xl"
-      style={{ animation: 'move-blob-1 35s infinite alternate ease-in-out' }}
-    />
-    <div
-      className="hero-blob absolute bottom-[-18%] -right-[12%] w-[62%] h-[62%] bg-gradient-to-br from-red-600 via-rose-600 to-red-500 rounded-[60%] opacity-30 blur-3xl"
-      style={{ animation: 'move-blob-2 42s infinite alternate ease-in-out -8s' }}
-    />
-    
-    {/* Extra red accent orb */}
-    <div
-      className="absolute top-[30%] left-[55%] w-96 h-96 bg-red-500/20 rounded-full blur-[120px] animate-pulse"
-      style={{ animationDuration: '18s' }}
+    {/* Removed all gradients/blobs/effects and set the requested image as the clean background */}
+    <img 
+      src="https://res.cloudinary.com/dtu6sxxyc/image/upload/v1781431176/file_00000000c2cc7207bb7ac9d858e3c3ed_rqyzqv.png" 
+      alt="Hero Background" 
+      className="w-full h-full object-cover"
     />
   </div>
 );
@@ -25,7 +16,6 @@ const FloatingTag: React.FC<{ text: string; delay: string; position: string }> =
     className={`absolute hidden lg:block px-5 py-2.5 bg-white/10 dark:bg-zinc-900/80 backdrop-blur-xl border border-white/20 rounded-2xl text-sm font-medium text-white shadow-xl ${position}`}
     style={{
       animation: `floatTag 6s ease-in-out infinite ${delay}`,
-      // Changed blue/rose mismatch shadow to uniform red accent glow matching the branding
       boxShadow: '0 10px 30px -10px rgba(239, 68, 68, 0.25)'
     }}
   >
