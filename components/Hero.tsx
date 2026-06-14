@@ -25,7 +25,8 @@ const FloatingTag: React.FC<{ text: string; delay: string; position: string }> =
     className={`absolute hidden lg:block px-5 py-2.5 bg-white/10 dark:bg-zinc-900/80 backdrop-blur-xl border border-white/20 rounded-2xl text-sm font-medium text-white shadow-xl ${position}`}
     style={{
       animation: `floatTag 6s ease-in-out infinite ${delay}`,
-      boxShadow: '0 10px 30px -10px rgb(244 63 94 / 0.4)'
+      // Changed blue/rose mismatch shadow to uniform red accent glow matching the branding
+      boxShadow: '0 10px 30px -10px rgba(239, 68, 68, 0.25)'
     }}
   >
     {text}
@@ -67,36 +68,36 @@ const Hero: React.FC<{ onLoginClick: (e: React.MouseEvent) => void; onSignUpClic
             </a>
 
             <a
-  href="#"
-  onClick={onLoginClick}
-  className="w-full sm:w-auto px-5 py-2.5 text-sm font-semibold rounded-md transition-all duration-300 flex items-center justify-center hover:scale-[1.02]"
-  style={{
-    background:
-      document.documentElement.classList.contains('dark')
-        ? 'rgba(255,255,255,0.08)'
-        : 'linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.18) 100%)',
+              href="#"
+              onClick={onLoginClick}
+              className="w-full sm:w-auto px-5 py-2.5 text-sm font-semibold rounded-md transition-all duration-300 flex items-center justify-center hover:scale-[1.02]"
+              style={{
+                background:
+                  document.documentElement.classList.contains('dark')
+                    ? 'rgba(255,255,255,0.08)'
+                    : 'linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.18) 100%)',
 
-    color: 'var(--text-primary)',
+                color: 'var(--text-primary)',
 
-    backdropFilter: 'blur(24px)',
-    WebkitBackdropFilter: 'blur(24px)',
+                backdropFilter: 'blur(24px)',
+                WebkitBackdropFilter: 'blur(24px)',
 
-    border:
-      document.documentElement.classList.contains('dark')
-        ? '1px solid rgba(255,255,255,0.15)'
-        : '1px solid rgba(255,255,255,0.35)',
+                border:
+                  document.documentElement.classList.contains('dark')
+                    ? '1px solid rgba(255,255,255,0.15)'
+                    : '1px solid rgba(255,255,255,0.35)',
 
-    boxShadow:
-  document.documentElement.classList.contains('dark')
-    ? 'inset 0 1px 0 rgba(255,255,255,0.10)'
-    : `
-      inset 0 1px 0 rgba(255,255,255,0.8),
-      inset 0 -1px 0 rgba(255,255,255,0.2)
-    `,
-  }}
->
-  Watch 2-min Demo
-</a>
+                boxShadow:
+                  document.documentElement.classList.contains('dark')
+                    ? 'inset 0 1px 0 rgba(255,255,255,0.10)'
+                    : `
+                      inset 0 1px 0 rgba(255,255,255,0.8),
+                      inset 0 -1px 0 rgba(255,255,255,0.2)
+                    `,
+              }}
+            >
+              Watch 2-min Demo
+            </a>
           </div>
 
           {/* Bottom trust text - Smaller */}
