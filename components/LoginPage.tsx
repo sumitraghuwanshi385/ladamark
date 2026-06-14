@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { auth, googleProvider } from '../firebase';
 import { signInWithPopup } from 'firebase/auth';
 
@@ -24,6 +24,14 @@ const GoogleIcon = () => (
 const LoginPage: React.FC<{ onClose: () => void; onLoginSuccess: () => void; }> = ({ onClose, onLoginSuccess }) => {
   const [loading, setLoading] = useState(false);
 
+  // Freeze background scrolling when login modal is active
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
   const handleGoogleLogin = async () => {
     try {
       setLoading(true);
@@ -42,29 +50,41 @@ const LoginPage: React.FC<{ onClose: () => void; onLoginSuccess: () => void; }> 
       onClick={onClose}
     >
       <div 
-        className="relative w-full max-w-[380px] bg-white/70 dark:bg-zinc-900/60 border border-white/20 dark:border-white/10 backdrop-blur-[20px] rounded-[32px] p-8 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden"
+        className="relative w-full max-w-[380px] bg-white/70 dark:bg-zinc-900/60 border border-white/20 dark:border-white/10 backdrop-blur-[20px] rounded-2xl p-8 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden"
         onClick={e => e.stopPropagation()}
       >
+        {/* Top Left iOS Style Back Button */}
+        <button 
+          onClick={onClose}
+          className="absolute top-5 left-5 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors duration-200 z-20 flex items-center gap-1 text-[14px] font-medium"
+          aria-label="Go back"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+          </svg>
+          Back
+        </button>
+
         {/* Subtle Glow Effect */}
-        <div className="absolute -top-[20%] -right-[20%] w-[250px] h-[250px] bg-red-500/20 rounded-full blur-[60px]" />
+        <div className="absolute -top-[20%] -right-[20%] w-[250px] h-[250px] bg-red-500/20 rounded-full blur-[60px] pointer-events-none" />
         
-        <div className="relative z-10 text-center">
+        <div className="relative z-10 text-center mt-6">
            <Logo />
-           <h2 className="text-[28px] font-semibold text-zinc-900 dark:text-white tracking-tight">Welcome</h2>
-           <p className="text-[14px] text-zinc-600 dark:text-zinc-400 mt-1 mb-8">Sign in to start labeling images.</p>
+           <h2 className="text-[26px] font-bold text-zinc-900 dark:text-white tracking-tight">Welcome</h2>
+           <p className="text-[13.5px] text-zinc-600 dark:text-zinc-400 mt-1 mb-8">Sign in to start labeling images.</p>
         </div>
 
         <div className="relative z-10">
             <button
                 onClick={handleGoogleLogin}
                 disabled={loading}
-                className="w-full flex justify-center items-center gap-3 py-3.5 px-6 rounded-full text-[15px] font-semibold bg-white dark:bg-black/20 border border-zinc-200 dark:border-white/10 text-zinc-900 dark:text-white hover:bg-zinc-50 dark:hover:bg-white/5 transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.05)] active:scale-[0.98]"
+                className="w-full flex justify-center items-center gap-3 py-3 px-5 rounded-xl text-[14.5px] font-semibold bg-white dark:bg-black/20 border border-zinc-200 dark:border-white/10 text-zinc-900 dark:text-white hover:bg-zinc-50 dark:hover:bg-white/5 transition-all duration-300 shadow-[0_2px_8px_rgba(0,0,0,0.04)] active:scale-[0.98]"
             >
                 <GoogleIcon />
                 {loading ? 'Authenticating...' : 'Continue with Google'}
             </button>
             
-            <p className="text-[12px] text-zinc-500 dark:text-zinc-500 mt-6 text-center">
+            <p className="text-[11.5px] text-zinc-500 dark:text-zinc-500 mt-6 text-center leading-relaxed">
                 By signing in, you agree to our Terms of Service and Privacy Policy.
             </p>
         </div>
