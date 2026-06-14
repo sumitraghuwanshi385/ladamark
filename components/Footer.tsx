@@ -39,7 +39,16 @@ const Footer: React.FC<FooterProps> = ({ onOpenInfoModal }) => {
   };
     
   return (
-    <footer id="contact" className="border-t border-[var(--border-primary)] bg-[var(--background-primary)] relative overflow-hidden">
+    <footer 
+      id="contact" 
+      className="border-t border-[var(--border-primary)] relative overflow-hidden bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: "url('https://res.cloudinary.com/dtu6sxxyc/image/upload/v1781421246/b4825fb14f5f6b870ecbbffcde85eee4_xeyc5w.jpg')" }}
+    >
+      {/* Smooth Content Visibility Overlay Layer 
+        Yeh layer layout parameters ke text content ko clear background contrast deti h light/dark toggles me
+      */}
+      <div className="absolute inset-0 bg-white/90 dark:bg-zinc-950/92 backdrop-blur-[2px] pointer-events-none" />
+
       {/* Background Micro Glow Layer */}
       <div className="absolute bottom-0 right-0 w-[300px] h-[300px] bg-red-500/[0.015] rounded-full blur-[80px] pointer-events-none" />
 
