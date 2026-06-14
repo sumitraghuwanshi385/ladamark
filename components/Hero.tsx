@@ -2,19 +2,19 @@ import React from 'react';
 
 const HeroVisual: React.FC = () => (
   <div className="absolute inset-0 z-0 overflow-hidden bg-white dark:bg-[#0a0a0a] pointer-events-none" aria-hidden="true">
-    {/* 1. Center Soft Ambient Lighting - Dark me subtle white glow, Light me subtle dark depth */}
-    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.03)_0%,transparent_65%)] dark:bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.06)_0%,transparent_65%)]" />
+    {/* 1. Center Soft Ambient Lighting */}
+    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.02)_0%,transparent_65%)] dark:bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.06)_0%,transparent_65%)]" />
 
-    {/* 2. Top-Left: Bright Red Glow (No shadow/dullness, fully animated) */}
+    {/* 2. Top-Left: Bright Red Glow (Visible in both White & Dark Modes) */}
     <div
-      className="absolute top-[-20%] left-[-15%] w-[60%] h-[60%] bg-[#ff0033] rounded-full opacity-35 dark:opacity-40 blur-[130px]"
-      style={{ animation: 'bright-glow-left 25s infinite alternate ease-in-out', mixBlendMode: 'screen' }}
+      className="absolute top-[-20%] left-[-15%] w-[60%] h-[60%] bg-[#ff0033] rounded-full opacity-20 dark:opacity-40 blur-[130px] mix-blend-multiply dark:mix-blend-screen"
+      style={{ animation: 'bright-glow-left 25s infinite alternate ease-in-out' }}
     />
 
-    {/* 3. Bottom-Right: Bright Red Glow (No shadow/dullness, fully animated) */}
+    {/* 3. Bottom-Right: Bright Red Glow (Visible in both White & Dark Modes) */}
     <div
-      className="absolute bottom-[-20%] right-[-15%] w-[60%] h-[60%] bg-[#ff0033] rounded-full opacity-35 dark:opacity-40 blur-[130px]"
-      style={{ animation: 'bright-glow-right 28s infinite alternate ease-in-out', mixBlendMode: 'screen' }}
+      className="absolute bottom-[-20%] right-[-15%] w-[60%] h-[60%] bg-[#ff0033] rounded-full opacity-20 dark:opacity-40 blur-[130px] mix-blend-multiply dark:mix-blend-screen"
+      style={{ animation: 'bright-glow-right 28s infinite alternate ease-in-out' }}
     />
 
     <style>{`
@@ -34,10 +34,10 @@ const HeroVisual: React.FC = () => (
 
 const FloatingTag: React.FC<{ text: string; delay: string; position: string }> = ({ text, delay, position }) => (
   <div
-    className={`absolute hidden lg:block px-5 py-2.5 bg-zinc-900/10 dark:bg-white/5 backdrop-blur-xl border border-zinc-900/10 dark:border-white/10 rounded-2xl text-sm font-medium text-zinc-900 dark:text-white ${position}`}
+    className={`absolute hidden lg:block px-5 py-2.5 bg-zinc-900/5 dark:bg-white/5 backdrop-blur-xl border border-zinc-900/10 dark:border-white/10 rounded-2xl text-sm font-medium text-zinc-900 dark:text-white ${position}`}
     style={{
       animation: `floatTag 6s ease-in-out infinite ${delay}`,
-      boxShadow: '0 10px 30px -10px rgba(0, 0, 0, 0.15)'
+      boxShadow: '0 10px 30px -10px rgba(0, 0, 0, 0.12)'
     }}
   >
     {text}
@@ -64,7 +64,7 @@ const Hero: React.FC<{ onLoginClick: (e: React.MouseEvent) => void; onSignUpClic
             Ladamark uses AI Labelling to auto-generate rich, contextual tags across your entire product catalog — boosting discoverability, SEO, and conversions instantly.
           </p>
 
-          {/* CTA Buttons - Original sizes, responsive structure and UI styles completely restored */}
+          {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
             <a
               href="#"
@@ -81,13 +81,8 @@ const Hero: React.FC<{ onLoginClick: (e: React.MouseEvent) => void; onSignUpClic
             <a
               href="#"
               onClick={onLoginClick}
-              className="w-full sm:w-auto px-5 py-2.5 text-sm font-semibold rounded-md transition-all duration-300 flex items-center justify-center hover:scale-[1.02]"
+              className="w-full sm:w-auto px-5 py-2.5 text-sm font-semibold rounded-md transition-all duration-300 flex items-center justify-center hover:scale-[1.02] text-zinc-900 dark:text-white border border-zinc-900/10 dark:border-white/20 bg-zinc-900/5 dark:bg-white/5 backdrop-blur-xl"
               style={{
-                background: 'rgba(255, 255, 255, 0.08)',
-                color: 'inherit', // Automatically matches dark/light mode text color theme
-                backdropFilter: 'blur(24px)',
-                WebkitBackdropFilter: 'blur(24px)',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
                 boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.1)'
               }}
             >
@@ -96,7 +91,7 @@ const Hero: React.FC<{ onLoginClick: (e: React.MouseEvent) => void; onSignUpClic
           </div>
 
           {/* Bottom trust text */}
-          <p className="mt-6 text-xs md:text-sm text-zinc-500 dark:text-zinc-500 flex items-center gap-2">
+          <p className="mt-6 text-xs md:text-sm text-zinc-500 dark:text-zinc-400 flex items-center gap-2">
             No credit card • Cancel anytime • Used by 100+ brands
           </p>
         </div>
