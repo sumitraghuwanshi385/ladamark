@@ -107,7 +107,7 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onClose, onSwitchToLogin }) => 
                 className="w-full flex justify-center items-center gap-3 py-3 px-5 md:py-3.5 rounded-xl text-[14.5px] font-semibold bg-white dark:bg-black/20 border border-zinc-200 dark:border-white/10 text-zinc-900 dark:text-white hover:bg-zinc-50 dark:hover:bg-white/5 transition-all duration-300 shadow-[0_2px_8px_rgba(0,0,0,0.04)] active:scale-[0.98]"
             >
                 <GoogleIcon />
-                {loading ? 'Processing...' : 'Continue with Google'}
+                {loading ? 'Processing...' : 'Sign up with Google'}
             </button>
 
             {error && <p className="text-red-500 text-xs text-center mt-4 font-medium">{error}</p>}
