@@ -3,11 +3,11 @@ import { auth, googleProvider } from '../firebase';
 import { signInWithPopup } from 'firebase/auth';
 
 const Logo = () => (
-    <div className="flex justify-center mb-4">
+    <div className="flex justify-center mb-5">
       <img 
         src="https://i.postimg.cc/nrRJ43f4/Picsart-25-07-19-15-59-42-768.png" 
         alt="Ladamark Logo" 
-        style={{ width: '120px', height: 'auto' }}
+        style={{ width: '150px', height: 'auto' }}
       />
     </div>
 );
@@ -21,7 +21,13 @@ const GoogleIcon = () => (
     </svg>
 );
 
-const LoginPage: React.FC<{ onClose: () => void; onLoginSuccess: () => void; }> = ({ onClose, onLoginSuccess }) => {
+interface LoginPageProps {
+    onClose: () => void; 
+    onLoginSuccess: () => void;
+    onSwitchToSignUp: () => void; // Prop safely integration
+}
+
+const LoginPage: React.FC<LoginPageProps> = ({ onClose, onLoginSuccess, onSwitchToSignUp }) => {
   const [loading, setLoading] = useState(false);
 
   // Freeze background scrolling when login modal is active
@@ -50,7 +56,7 @@ const LoginPage: React.FC<{ onClose: () => void; onLoginSuccess: () => void; }> 
       onClick={onClose}
     >
       <div 
-        className="relative w-full max-w-[380px] bg-white/70 dark:bg-zinc-900/60 border border-white/20 dark:border-white/10 backdrop-blur-[20px] rounded-2xl p-8 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] overflow-hidden"
+        className="relative w-full max-w-[380px] md:max-w-[440px] bg-white/70 dark:bg-zinc-900/60 border border-white/20 dark:border-white/10 backdrop-blur-[20px] rounded-2xl p-8 md:p-10 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.25)] overflow-hidden transition-all duration-300"
         onClick={e => e.stopPropagation()}
       >
         {/* Top Left iOS Style Back Button */}
@@ -66,25 +72,36 @@ const LoginPage: React.FC<{ onClose: () => void; onLoginSuccess: () => void; }> 
         </button>
 
         {/* Subtle Glow Effect */}
-        <div className="absolute -top-[20%] -right-[20%] w-[250px] h-[250px] bg-red-500/20 rounded-full blur-[60px] pointer-events-none" />
+        <div className="absolute -top-[20%] -right-[20%] w-[280px] h-[280px] bg-red-500/20 rounded-full blur-[70px] pointer-events-none" />
         
         <div className="relative z-10 text-center mt-6">
            <Logo />
-           <h2 className="text-[26px] font-bold text-zinc-900 dark:text-white tracking-tight">Welcome</h2>
-           <p className="text-[13.5px] text-zinc-600 dark:text-zinc-400 mt-1 mb-8">Sign in to start labeling images.</p>
+           <h2 className="text-[26px] md:text-[28px] font-bold text-zinc-900 dark:text-white tracking-tight">Welcome</h2>
+           <p className="text-[13.5px] md:text-[14px] text-zinc-600 dark:text-zinc-400 mt-1 mb-8">Sign in to start labeling images.</p>
         </div>
 
         <div className="relative z-10">
             <button
                 onClick={handleGoogleLogin}
                 disabled={loading}
-                className="w-full flex justify-center items-center gap-3 py-3 px-5 rounded-xl text-[14.5px] font-semibold bg-white dark:bg-black/20 border border-zinc-200 dark:border-white/10 text-zinc-900 dark:text-white hover:bg-zinc-50 dark:hover:bg-white/5 transition-all duration-300 shadow-[0_2px_8px_rgba(0,0,0,0.04)] active:scale-[0.98]"
+                className="w-full flex justify-center items-center gap-3 py-3 px-5 md:py-3.5 rounded-xl text-[14.5px] font-semibold bg-white dark:bg-black/20 border border-zinc-200 dark:border-white/10 text-zinc-900 dark:text-white hover:bg-zinc-50 dark:hover:bg-white/5 transition-all duration-300 shadow-[0_2px_8px_rgba(0,0,0,0.04)] active:scale-[0.98]"
             >
                 <GoogleIcon />
                 {loading ? 'Authenticating...' : 'Continue with Google'}
             </button>
             
-            <p className="text-[11.5px] text-zinc-500 dark:text-zinc-500 mt-6 text-center leading-relaxed">
+            {/* New to Ladamark? Sign Up Action Link Section */}
+            <div className="mt-6 text-center text-[13px] font-medium text-zinc-600 dark:text-zinc-400">
+                New to Ladamark?{' '}
+                <button 
+                    onClick={onSwitchToSignUp} 
+                    className="text-red-500 dark:text-red-400 font-semibold hover:underline bg-transparent border-none outline-none cursor-pointer inline-block ml-1 transition"
+                >
+                    Sign Up
+                </button>
+            </div>
+
+            <p className="text-[11.5px] md:text-[12px] text-zinc-500 dark:text-zinc-500 mt-5 text-center leading-relaxed px-2">
                 By signing in, you agree to our Terms of Service and Privacy Policy.
             </p>
         </div>
